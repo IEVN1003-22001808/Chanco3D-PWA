@@ -1,0 +1,29 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <a routerLink="/home" class="navbar-logo">
+      CHANCO<span class="highlight">3D</span>
+    </a>
+
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a routerLink="/home" routerLinkActive="active" class="nav-links">Inicio</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/catalog" routerLinkActive="active" class="nav-links">Tienda</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/quote" routerLinkActive="active" class="nav-links">Cotizador</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/admin" routerLinkActive="active" class="nav-links">Admin</a>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <a routerLink="/cart" class="icon-btn" title="Carrito">
+        🛒 <span class="badge">0</span>
+      </a>
+      <a routerLink="/login" class="btn-primary">Ingresar</a>
+    </div>
+  </div>
+</nav>

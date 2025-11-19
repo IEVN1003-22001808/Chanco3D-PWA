@@ -1,0 +1,58 @@
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-header"><h3>CHANCO<span class="highlight">ADMIN</span></h3></div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" class="nav-item">Dashboard</a>
+      <a routerLink="/admin/inventory" class="nav-item active">Inventario</a>
+      <a routerLink="/admin/metrics" class="nav-item">Métricas</a>
+      <a routerLink="/home" class="nav-item return">Volver a la Tienda</a>
+    </nav>
+  </aside>
+
+  <main class="admin-content">
+    <div class="content-header-row">
+      <h1>Gestión de Insumos</h1>
+      <button class="btn-primary">+ Agregar Insumo</button>
+    </div>
+
+    <div class="inventory-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Insumo</th>
+            <th>Tipo</th>
+            <th>Stock</th>
+            <th>Caducidad</th> <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of inventoryItems">
+            <td>
+              <div class="item-info">
+                <strong>{{ item.name }}</strong>
+                <small>Lote: {{ item.batch }}</small>
+              </div>
+            </td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.stock }} {{ item.unit }}</td>
+            <td>{{ item.expiryDate }}</td>
+            <td>
+              <span class="status-badge" 
+                [class.danger]="isExpired(item.expiryDate)" 
+                [class.warning]="isNearExpiry(item.expiryDate)"
+                [class.success]="!isNearExpiry(item.expiryDate)">
+                {{ getStatus(item.expiryDate) }}
+              </span>
+            </td>
+            <td>
+              <button class="btn-icon" title="Entrada">+</button>
+              <button class="btn-icon" title="Salida">-</button>
+              <button class="btn-icon delete">🗑</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>

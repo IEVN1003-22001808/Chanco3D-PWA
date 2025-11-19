@@ -1,0 +1,37 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Bienvenido Maker</h2>
+      <p>Ingresa para materializar tus ideas</p>
+    </div>
+
+    <form>
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <div class="input-wrapper">
+          <span class="input-icon">✉️</span>
+          <input type="email" id="email" placeholder="ejemplo@chanco3d.com" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+        <div class="forgot-pass">
+          <a href="#">¿Olvidaste tu contraseña?</a>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        INGRESAR
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a></p>
+    </div>
+  </div>
+</div>

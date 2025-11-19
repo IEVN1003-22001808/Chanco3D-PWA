@@ -1,0 +1,70 @@
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <h3>CHANCO<span class="highlight">ADMIN</span></h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" class="nav-item active">Dashboard General</a>
+      <a routerLink="/admin/inventory" class="nav-item">Inventario</a>
+      <a routerLink="/admin/metrics" class="nav-item">Métricas</a>
+      <a routerLink="/home" class="nav-item return">Volver a la Tienda</a>
+    </nav>
+  </aside>
+
+  <main class="admin-content">
+    <header class="content-header">
+      <h1>Panel de Control</h1>
+      <p>Bienvenido, Administrador.</p>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card blue">
+        <h3>Ventas Totales</h3>
+        <p class="stat-value">$15,450.00</p>
+        <span class="stat-trend">⬆ +12% este mes</span>
+      </div>
+      <div class="stat-card purple">
+        <h3>Pedidos Pendientes</h3>
+        <p class="stat-value">8</p>
+        <span class="stat-trend">Requieren atención</span>
+      </div>
+      <div class="stat-card green">
+        <h3>Inventario Crítico</h3>
+        <p class="stat-value">2 Insumos</p>
+        <span class="stat-trend">⚠ Resurtir pronto</span>
+      </div>
+    </div>
+
+    <div class="recent-orders">
+      <h2>📦 Últimos Pedidos</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Total</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of recentOrders">
+              <td>#{{ order.id }}</td>
+              <td>{{ order.client }}</td>
+              <td>{{ order.date }}</td>
+              <td>
+                <span class="status-badge" [ngClass]="order.status.toLowerCase()">
+                  {{ order.status }}
+                </span>
+              </td>
+              <td>{{ order.total | currency:'MXN' }}</td>
+              <td><button class="btn-action">Ver</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>

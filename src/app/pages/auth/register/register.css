@@ -1,0 +1,90 @@
+/* Reutilizamos la base del Login para consistencia */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 160px);
+  background-color: #121212;
+  padding: 20px;
+}
+
+.auth-card {
+  background-color: #1e1e20;
+  width: 100%;
+  max-width: 480px; /* Un poco más ancho que el login */
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid #27272a;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-header { text-align: center; margin-bottom: 25px; }
+.auth-header h2 { color: white; font-size: 1.8rem; margin-bottom: 5px; }
+.auth-header p { color: #a1a1aa; font-size: 0.9rem; }
+
+/* Layout de formulario */
+.form-group { margin-bottom: 15px; }
+.form-row { display: flex; gap: 15px; }
+.half { flex: 1; }
+
+label { display: block; color: #e0e0e0; margin-bottom: 6px; font-size: 0.85rem; font-weight: 500; }
+
+.input-wrapper { position: relative; display: flex; align-items: center; }
+.input-icon { position: absolute; left: 15px; font-size: 1rem; opacity: 0.7; }
+
+input[type="text"], input[type="email"], input[type="password"] {
+  width: 100%;
+  padding: 10px 15px 10px 40px; /* Ajuste para inputs con icono */
+  background-color: #27272a;
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s;
+}
+
+/* Input sin icono (Nombre/Apellido) */
+input[type="text"] { padding-left: 15px; }
+
+input:focus { border-color: #4f46e5; background-color: #18181b; }
+
+/* Checkbox de Términos */
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 20px 0;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+}
+
+.form-check input { width: auto; margin-top: 3px; cursor: pointer; }
+.form-check a { color: #4f46e5; text-decoration: none; }
+.form-check a:hover { text-decoration: underline; }
+
+/* Botón */
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-submit:hover { background-color: #4338ca; }
+
+.auth-footer { text-align: center; margin-top: 20px; color: #a1a1aa; font-size: 0.9rem; }
+.auth-footer a { color: #4f46e5; text-decoration: none; font-weight: 600; margin-left: 5px; }
+.auth-footer a:hover { text-decoration: underline; }
