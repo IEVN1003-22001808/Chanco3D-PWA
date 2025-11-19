@@ -1,0 +1,45 @@
+<div class="chat-container">
+  <div class="chat-card">
+    
+    <header class="chat-header">
+      <div class="avatar-bot">
+        <span>🤖</span>
+        <div class="status-dot"></div>
+      </div>
+      <div class="header-info">
+        <h2>Kidik Asistente</h2>
+        <p>En línea • Responde al instante</p>
+      </div>
+    </header>
+
+    <div class="messages-area" #scrollContainer>
+      <div class="message-row" *ngFor="let msg of messages" [ngClass]="{'user-row': msg.sender === 'user', 'bot-row': msg.sender === 'bot'}">
+        <div class="bubble" [ngClass]="{'user-bubble': msg.sender === 'user', 'bot-bubble': msg.sender === 'bot'}">
+          {{ msg.text }}
+          <span class="time">{{ msg.time }}</span>
+        </div>
+      </div>
+
+      <div class="message-row bot-row" *ngIf="isTyping">
+        <div class="bubble bot-bubble typing">
+          <span>.</span><span>.</span><span>.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-options" *ngIf="!isTyping">
+      <button *ngFor="let opt of quickOptions" (click)="sendMessage(opt)">
+        {{ opt }}
+      </button>
+    </div>
+
+    <div class="input-area">
+      <input type="text" placeholder="Escribe tu duda aquí..." 
+             [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
+      <button class="btn-send" (click)="sendMessage()" [disabled]="!userInput.trim()">
+        ➤
+      </button>
+    </div>
+
+  </div>
+</div>

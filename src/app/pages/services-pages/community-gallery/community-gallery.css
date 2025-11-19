@@ -15,10 +15,13 @@ input, select { width: 100%; padding: 10px; background: #27272a; border: 1px sol
 .price-result { font-size: 1.5rem; text-align: center; margin: 20px 0; color: #4ade80; }
 .form-row { display: flex; gap: 15px; }
 .half { flex: 1; }
-.upload-content { text-align: center; color: white; }
-.upload-content h3 { color: white; font-size: 1.2rem; margin-bottom: 10px; } /* Título "Arrastra tu archivo..." en blanco puro */
-.upload-content p { color: #e0e0e0; margin-bottom: 20px; } /* Subtítulo en gris muy claro, casi blanco */
-.icon { font-size: 3rem; color: #4f46e5; margin-bottom: 15px; } /* El icono de la nube en violeta */
+
+/* Específico Galería */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+.gallery-item { position: relative; border-radius: 12px; overflow: hidden; height: 300px; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.gallery-item:hover img { transform: scale(1.1); }
+.overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, black); padding: 20px; color: white; }
 
 /* Responsive */
 @media(max-width: 768px) { .quote-grid { grid-template-columns: 1fr; } }

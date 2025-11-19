@@ -1,0 +1,55 @@
+<div class="suggestions-container">
+  <header class="page-header">
+    <h1>Buzón de <span class="highlight">Sugerencias</span></h1>
+    <p>¿Qué figura te gustaría ver en Chanco3D? ¡Tu voz define nuestro catálogo!</p>
+  </header>
+
+  <div class="layout-grid">
+    
+    <section class="form-section">
+      <div class="form-card">
+        <h3>💡 Envía tu Idea</h3>
+        <p class="hint">Ayúdanos a decidir qué modelar el próximo mes.</p>
+        
+        <form (submit)="submitSuggestion()">
+          <div class="form-group">
+            <label>Título de la Figura / Personaje</label>
+            <input type="text" [(ngModel)]="newSuggestion.title" name="title" placeholder="Ej. Guerrero Calavera" required>
+          </div>
+
+          <div class="form-group">
+            <label>Origen (Videojuego, Anime, Original)</label>
+            <input type="text" [(ngModel)]="newSuggestion.origin" name="origin" placeholder="Ej. Dark Souls" required>
+          </div>
+
+          <div class="form-group">
+            <label>Detalles Adicionales</label>
+            <textarea rows="4" [(ngModel)]="newSuggestion.details" name="details" placeholder="Me gustaría que tuviera una pose de batalla..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">ENVIAR SUGERENCIA</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="status-board">
+      <h3>📢 Estado de las Ideas</h3>
+      
+      <div class="suggestions-list">
+        <div class="suggestion-card" *ngFor="let item of suggestions">
+          <div class="card-header">
+            <h4>{{ item.title }}</h4>
+            <span class="origin-tag">{{ item.origin }}</span>
+          </div>
+          
+          <div class="status-badge" [ngClass]="getStatusClass(item.status)">
+            <span class="dot">●</span> {{ item.status }}
+          </div>
+          
+          <p class="author">Sugerido por: {{ item.user }}</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

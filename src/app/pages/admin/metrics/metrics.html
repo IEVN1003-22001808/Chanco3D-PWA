@@ -2,10 +2,30 @@
   <aside class="admin-sidebar">
     <div class="sidebar-header"><h3>CHANCO<span class="highlight">ADMIN</span></h3></div>
     <nav class="sidebar-nav">
-      <a routerLink="/admin" class="nav-item">Dashboard</a>
-      <a routerLink="/admin/inventory" class="nav-item">Inventario</a>
-      <a routerLink="/admin/metrics" class="nav-item active">Métricas</a>
-      <a routerLink="/home" class="nav-item return">Volver a la Tienda</a>
+      <a routerLink="/admin" 
+         class="nav-item" 
+         routerLinkActive="active" 
+         [routerLinkActiveOptions]="{exact: true}">
+         Dashboard General
+      </a>
+      <a routerLink="/admin/inventory" 
+         class="nav-item" 
+         routerLinkActive="active">
+         Inventario
+      </a>
+      <a routerLink="/admin/metrics" 
+         class="nav-item" 
+         routerLinkActive="active">
+         Métricas
+      </a>
+      <a routerLink="/admin/suppliers" 
+         class="nav-item" 
+         routerLinkActive="active">
+         Proveedores
+      </a>
+      <a routerLink="/home" class="nav-item return">
+         Volver a la Tienda
+      </a>
     </nav>
   </aside>
 

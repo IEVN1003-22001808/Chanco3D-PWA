@@ -1,1 +1,73 @@
-<p>custom-quote works!</p>
+<div class="quote-container">
+  <header class="quote-header">
+    <h1>Cotizador <span class="highlight">Inteligente</span></h1>
+    <p>Sube tu modelo 3D y obtén un precio estimado al instante.</p>
+  </header>
+
+  <div class="quote-grid">
+    <div class="upload-zone" [class.dragging]="isDragging" 
+         (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+      
+      <div class="upload-content" *ngIf="!fileSelected">
+        <div class="icon">☁️</div>
+        <h3>Arrastra tu archivo STL aquí</h3>
+        <p>o haz clic para examinar (Máx 100MB)</p>
+        <input type="file" accept=".stl,.obj" (change)="onFileSelected($event)">
+      </div>
+
+      <div class="file-preview" *ngIf="fileSelected">
+        <div class="file-icon">🧊</div>
+        <div class="file-info">
+          <h4>{{ fileName }}</h4>
+          <p>{{ fileSize }} MB</p>
+        </div>
+        <button class="btn-remove" (click)="removeFile()">✖</button>
+      </div>
+    </div>
+
+    <div class="config-panel">
+      <h2>Configuración de Impresión</h2>
+      
+      <form (submit)="calculatePrice($event)">
+        <div class="form-group">
+          <label>Material y Acabado</label>
+          <select [(ngModel)]="selectedMaterial" name="material">
+            <option value="standard">Resina Estándar (Gris)</option>
+            <option value="tough">Resina Tough (Alta Resistencia)</option>
+            <option value="clear">Resina Clear (Transparente)</option>
+            <option value="8k">Resina 8K (Máximo Detalle)</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Altura (cm)</label>
+            <input type="number" [(ngModel)]="height" name="height" min="1" placeholder="Ej. 10">
+          </div>
+          <div class="form-group half">
+            <label>Relleno (%)</label>
+            <select [(ngModel)]="infill" name="infill">
+              <option value="20">20% (Ligero)</option>
+              <option value="50">50% (Estándar)</option>
+              <option value="100">100% (Sólido)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Cantidad</label>
+          <input type="number" [(ngModel)]="quantity" name="quantity" min="1" value="1">
+        </div>
+
+        <div class="price-result" *ngIf="estimatedPrice > 0">
+          <span>Precio Estimado:</span>
+          <strong class="price">{{ estimatedPrice | currency:'MXN' }}</strong>
+        </div>
+
+        <button type="submit" class="btn-calculate" [disabled]="!fileSelected">
+          {{ estimatedPrice > 0 ? 'AGREGAR AL PEDIDO' : 'CALCULAR PRECIO' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
