@@ -1,3 +1,10 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s;
+}
+
 .catalog-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -9,9 +16,20 @@
   text-align: center;
   margin-bottom: 40px;
 }
-.catalog-header h1 { color: white; font-size: 2.5rem; margin-bottom: 10px; }
-.highlight { color: #4f46e5; }
-.catalog-header p { color: #a1a1aa; }
+
+.catalog-header h1 { 
+  color: var(--text-main); /* Título adaptable */
+  font-size: 2.5rem; 
+  margin-bottom: 10px; 
+}
+
+.highlight { 
+  color: var(--primary); 
+}
+
+.catalog-header p { 
+  color: var(--text-muted); /* Texto secundario adaptable */
+}
 
 /* Layout Principal */
 .catalog-layout {
@@ -22,13 +40,15 @@
 
 /* --- SIDEBAR FILTROS --- */
 .filters-sidebar {
-  background-color: #1e1e20;
+  background-color: var(--card-bg); /* Fondo sidebar dinámico */
   padding: 20px;
   border-radius: 12px;
-  border: 1px solid #27272a;
+  border: 1px solid var(--border-color);
   height: fit-content;
   position: sticky;
   top: 100px;
+  /* Sombra sutil para separarlo del fondo en modo claro */
+  box-shadow: 0 4px 12px var(--shadow);
 }
 
 /* Buscador */
@@ -36,37 +56,59 @@
   position: relative;
   margin-bottom: 30px;
 }
+
 .search-box input {
   width: 100%;
   padding: 10px 10px 10px 35px;
-  background-color: #27272a;
-  border: 1px solid #3f3f46;
+  background-color: var(--input-bg); /* Fondo input dinámico */
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  color: white;
+  color: var(--text-main);
   outline: none;
+  transition: border-color 0.3s;
 }
-.search-box input:focus { border-color: #4f46e5; }
-.search-icon { position: absolute; left: 10px; top: 10px; opacity: 0.7; }
+
+.search-box input:focus { 
+  border-color: var(--primary); 
+}
+
+.search-icon { 
+  position: absolute; 
+  left: 10px; 
+  top: 10px; 
+  opacity: 0.7; 
+  color: var(--text-muted);
+}
 
 /* Categorías */
-.category-list h3 { color: white; margin-bottom: 15px; font-size: 1.1rem; }
+.category-list h3 { 
+  color: var(--text-main); 
+  margin-bottom: 15px; 
+  font-size: 1.1rem; 
+}
+
 .category-list button {
   display: block;
   width: 100%;
   text-align: left;
   background: none;
   border: none;
-  color: #a1a1aa;
+  color: var(--text-muted); /* Texto normal */
   padding: 8px 10px;
   cursor: pointer;
   border-radius: 6px;
   transition: all 0.2s;
   margin-bottom: 5px;
 }
-.category-list button:hover { background-color: rgba(255,255,255,0.05); color: white; }
+
+.category-list button:hover { 
+  background-color: var(--border-color); /* Hover sutil */
+  color: var(--text-main); 
+}
+
 .category-list button.active {
-  background-color: #4f46e5;
-  color: white;
+  background-color: var(--primary);
+  color: white; /* Texto blanco siempre para resaltar */
   font-weight: bold;
 }
 
@@ -79,56 +121,65 @@
 
 /* Tarjeta de Producto */
 .product-card {
-  background-color: #1e1e20;
+  background-color: var(--card-bg); /* Fondo tarjeta */
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid #27272a;
+  border: 1px solid var(--border-color);
   transition: transform 0.3s, box-shadow 0.3s;
   position: relative;
+  box-shadow: 0 2px 8px var(--shadow); /* Sombra base */
 }
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-  border-color: #4f46e5;
+  box-shadow: 0 10px 20px var(--shadow); /* Sombra elevada */
+  border-color: var(--primary);
 }
 
 .badge-new {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #ef4444;
+  background-color: #ef4444; /* Rojo siempre */
   color: white;
   font-size: 0.7rem;
   padding: 2px 8px;
   border-radius: 4px;
   font-weight: bold;
+  z-index: 2;
 }
 
 .card-image {
   height: 200px;
   width: 100%;
   overflow: hidden;
+  background-color: var(--border-color); /* Fondo mientras carga imagen */
 }
+
 .card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s;
 }
-.product-card:hover .card-image img { transform: scale(1.1); }
 
-.card-content { padding: 20px; }
+.product-card:hover .card-image img { 
+  transform: scale(1.1); 
+}
+
+.card-content { 
+  padding: 20px; 
+}
 
 .category-tag {
   font-size: 0.75rem;
-  color: #a1a1aa;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .card-content h3 {
-  color: white;
+  color: var(--text-main);
   font-size: 1.1rem;
   margin: 5px 0 15px;
   white-space: nowrap;
@@ -143,15 +194,15 @@
 }
 
 .price {
-  color: white;
+  color: var(--text-main); /* Precio destacado pero legible */
   font-weight: bold;
   font-size: 1.2rem;
 }
 
 .btn-add {
-  background-color: #27272a;
-  color: white;
-  border: 1px solid #3f3f46;
+  background-color: var(--input-bg); /* Botón sutil por defecto */
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
@@ -160,15 +211,16 @@
 }
 
 .btn-add:hover {
-  background-color: #4f46e5;
-  border-color: #4f46e5;
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white; /* Al hover se vuelve violeta con texto blanco */
 }
 
 .no-results {
   grid-column: 1 / -1;
   text-align: center;
   padding: 50px;
-  color: #a1a1aa;
+  color: var(--text-muted);
   font-size: 1.2rem;
 }
 

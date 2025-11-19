@@ -1,5 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* src/styles.css */
+
+:root {
+  /* --- MODO OSCURO (Por defecto) --- */
+  --bg-color: #121212;           /* Fondo Principal */
+  --card-bg: #1e1e20;            /* Fondo de Tarjetas */
+  --text-main: #ffffff;          /* Texto Principal */
+  --text-muted: #a1a1aa;         /* Texto Secundario */
+  --border-color: #27272a;       /* Bordes */
+  --primary: #4f46e5;            /* Violeta Chanco */
+  --primary-hover: #4338ca;      /* Violeta Oscuro */
+  --input-bg: #27272a;           /* Fondo Inputs */
+  --shadow: rgba(0, 0, 0, 0.4);  /* Sombras */
+}
+
+/* --- MODO CLARO (Se activa con la clase .light-theme) --- */
+body.light-theme {
+  --bg-color: #f3f4f6;           /* Gris muy claro */
+  --card-bg: #ffffff;            /* Blanco puro */
+  --text-main: #111827;          /* Casi negro */
+  --text-muted: #6b7280;         /* Gris medio */
+  --border-color: #e5e7eb;       /* Gris suave */
+  --primary: #4f46e5;            /* El violeta se mantiene igual */
+  --primary-hover: #4338ca;
+  --input-bg: #f9fafb;           /* Blanco humo */
+  --shadow: rgba(0, 0, 0, 0.1);  /* Sombra suave */
+}
+
+/* RESET GLOBAL APLICANDO VARIABLES */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color); /* <--- MAGIA AQUÍ */
+  color: var(--text-main);           /* <--- Y AQUÍ */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
+
 html, body {
   margin: 0;
   padding: 0;

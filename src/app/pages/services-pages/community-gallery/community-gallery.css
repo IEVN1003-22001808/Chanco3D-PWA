@@ -1,27 +1,155 @@
-/* Cotizador y Galería comparten base */
-.quote-container, .gallery-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-.quote-header, .gallery-header { text-align: center; margin-bottom: 40px; color: white; }
-.highlight { color: #4f46e5; }
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s;
+}
 
-/* Inputs y Botones */
-input, select { width: 100%; padding: 10px; background: #27272a; border: 1px solid #3f3f46; color: white; border-radius: 6px; margin-bottom: 15px; }
-.btn-primary, .btn-calculate, .btn-share { background: #4f46e5; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
-.btn-share { width: auto; margin-top: 20px; }
+/* Estilos Base Compartidos adaptados */
+.quote-container, .gallery-container { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 40px 20px; 
+}
 
-/* Específico Cotizador */
-.quote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-.upload-zone { border: 2px dashed #4f46e5; padding: 50px; text-align: center; border-radius: 12px; background: rgba(79,70,229,0.05); cursor: pointer; }
-.config-panel { background: #1e1e20; padding: 30px; border-radius: 12px; border: 1px solid #333; color: white; }
-.price-result { font-size: 1.5rem; text-align: center; margin: 20px 0; color: #4ade80; }
-.form-row { display: flex; gap: 15px; }
-.half { flex: 1; }
+.quote-header, .gallery-header { 
+  text-align: center; 
+  margin-bottom: 40px; 
+  color: var(--text-main);
+}
+
+.highlight { 
+  color: var(--primary); 
+}
+
+/* Inputs y Botones (Formulario de subir foto) */
+input, select { 
+  width: 100%; 
+  padding: 10px; 
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color); 
+  color: var(--text-main); 
+  border-radius: 6px; 
+  margin-bottom: 15px; 
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: var(--primary);
+}
+
+.btn-primary, .btn-share { 
+  background-color: var(--primary); 
+  color: white;
+  padding: 12px 20px; 
+  border: none; 
+  border-radius: 8px; 
+  cursor: pointer; 
+  font-weight: bold; 
+  width: 100%; 
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover, .btn-share:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-share { 
+  width: auto; 
+  margin-top: 20px; 
+}
+
+/* Estilos del Formulario Desplegable */
+.post-form-container {
+  max-width: 600px;
+  margin: 0 auto 40px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.post-form {
+  background-color: var(--card-bg);
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 15px var(--shadow);
+}
+
+.post-form h3 {
+  color: var(--text-main);
+  margin-bottom: 15px;
+  text-align: center;
+}
 
 /* Específico Galería */
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-.gallery-item { position: relative; border-radius: 12px; overflow: hidden; height: 300px; }
-.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-.gallery-item:hover img { transform: scale(1.1); }
-.overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, black); padding: 20px; color: white; }
+.gallery-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+  gap: 20px; 
+}
+
+.gallery-item { 
+  position: relative; 
+  border-radius: 12px; 
+  overflow: hidden; 
+  height: 300px; 
+  background-color: var(--border-color);
+  box-shadow: 0 4px 10px var(--shadow);
+}
+
+.gallery-item img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  transition: transform 0.5s; 
+}
+
+.gallery-item:hover img { 
+  transform: scale(1.1); 
+}
+
+/* EL OVERLAY SE MANTIENE OSCURO SIEMPRE */
+/* Esto es importante: como está sobre una foto, necesitamos contraste fijo */
+.overlay { 
+  position: absolute; 
+  bottom: 0; 
+  left: 0; 
+  right: 0; 
+  background: linear-gradient(transparent, rgba(0,0,0,0.9)); /* Gradiente negro fijo */
+  padding: 20px; 
+  color: white; /* Texto blanco fijo */
+  pointer-events: none; /* Permite hacer clic a través si fuera necesario */
+}
+
+.overlay h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.overlay p {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.likes {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ef4444;
+}
 
 /* Responsive */
-@media(max-width: 768px) { .quote-grid { grid-template-columns: 1fr; } }
+@media(max-width: 768px) { 
+  .gallery-grid { 
+    grid-template-columns: 1fr; 
+  } 
+}

@@ -1,37 +1,45 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s;
+}
+
 .chat-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 160px);
-  background-color: #121212;
+  background-color: var(--bg-color); /* Fondo base dinámico */
   padding: 20px;
+  transition: background-color 0.3s;
 }
 
 .chat-card {
   width: 100%;
   max-width: 500px;
   height: 600px; /* Altura fija para el chat */
-  background-color: #1e1e20;
+  background-color: var(--card-bg); /* Tarjeta dinámica */
   border-radius: 16px;
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 30px var(--shadow); /* Sombra adaptable */
 }
 
 /* HEADER */
 .chat-header {
-  background-color: #27272a;
+  background-color: var(--input-bg); /* Un tono ligeramente distinto a la tarjeta */
   padding: 15px 20px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .avatar-bot {
   width: 45px; height: 45px;
-  background-color: #4f46e5;
+  background-color: var(--primary);
   border-radius: 50%;
   display: flex; justify-content: center; align-items: center;
   font-size: 1.5rem;
@@ -41,22 +49,31 @@
 
 .status-dot {
   width: 10px; height: 10px;
-  background-color: #4ade80; /* Verde online */
+  background-color: #4ade80; /* Verde online siempre */
   border-radius: 50%;
   position: absolute;
   bottom: 0; right: 0;
-  border: 2px solid #27272a;
+  border: 2px solid var(--input-bg); /* Borde del color del header para recortarlo */
 }
 
-.header-info h2 { color: white; font-size: 1.1rem; margin: 0; }
-.header-info p { color: #4ade80; font-size: 0.8rem; margin: 2px 0 0 0; }
+.header-info h2 { 
+  color: var(--text-main); 
+  font-size: 1.1rem; 
+  margin: 0; 
+}
+
+.header-info p { 
+  color: #4ade80; 
+  font-size: 0.8rem; 
+  margin: 2px 0 0 0; 
+}
 
 /* ÁREA DE MENSAJES */
 .messages-area {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background-color: #18181b;
+  background-color: var(--bg-color); /* Fondo de chat (oscuro en dark, gris en light) */
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -73,17 +90,19 @@
   font-size: 0.95rem;
   position: relative;
   line-height: 1.4;
+  box-shadow: 0 1px 2px var(--shadow);
 }
 
 .bot-bubble {
-  background-color: #27272a;
-  color: #e0e0e0;
+  background-color: var(--card-bg); /* Burbuja del bot (blanca en light, gris en dark) */
+  color: var(--text-main);
   border-bottom-left-radius: 2px;
+  border: 1px solid var(--border-color);
 }
 
 .user-bubble {
-  background-color: #4f46e5;
-  color: white;
+  background-color: var(--primary);
+  color: white; /* Burbuja del usuario siempre violeta con texto blanco */
   border-bottom-right-radius: 2px;
 }
 
@@ -112,51 +131,59 @@
   gap: 10px;
   overflow-x: auto;
   white-space: nowrap;
-  background-color: #1e1e20;
-  border-top: 1px solid #333;
+  background-color: var(--input-bg);
+  border-top: 1px solid var(--border-color);
 }
 .quick-options::-webkit-scrollbar { height: 4px; }
 
 .quick-options button {
   background-color: rgba(79, 70, 229, 0.1);
-  color: #818cf8;
-  border: 1px solid rgba(79, 70, 229, 0.3);
+  color: var(--primary);
+  border: 1px solid var(--primary);
   padding: 5px 12px;
   border-radius: 20px;
   cursor: pointer;
   font-size: 0.85rem;
   transition: all 0.2s;
 }
-.quick-options button:hover { background-color: rgba(79, 70, 229, 0.3); }
+.quick-options button:hover { 
+  background-color: var(--primary);
+  color: white;
+}
 
 /* INPUT AREA */
 .input-area {
   padding: 15px;
-  background-color: #1e1e20;
+  background-color: var(--input-bg);
   display: flex;
   gap: 10px;
-  border-top: 1px solid #333;
+  border-top: 1px solid var(--border-color);
 }
 
 .input-area input {
   flex: 1;
-  background-color: #27272a;
-  border: 1px solid #3f3f46;
+  background-color: var(--bg-color); /* Input contrasta con el área */
+  border: 1px solid var(--border-color);
   border-radius: 25px;
   padding: 10px 20px;
-  color: white;
-  margin: 0; /* Reset del estilo global */
+  color: var(--text-main);
+  margin: 0;
+  outline: none;
 }
-.input-area input:focus { border-color: #4f46e5; }
+.input-area input:focus { border-color: var(--primary); }
 
 .btn-send {
   width: 45px; height: 45px;
   border-radius: 50%;
-  background-color: #4f46e5;
+  background-color: var(--primary);
   color: white;
   border: none;
   cursor: pointer;
   display: flex; justify-content: center; align-items: center;
   font-size: 1.2rem;
+  transition: background-color 0.3s;
 }
-.btn-send:disabled { background-color: #3f3f46; cursor: not-allowed; }
+.btn-send:disabled { 
+  background-color: var(--border-color); 
+  cursor: not-allowed; 
+}

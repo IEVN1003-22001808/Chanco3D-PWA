@@ -1,22 +1,24 @@
-/* Reutilizamos la base del Login para consistencia */
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 160px);
-  background-color: #121212;
+  background-color: var(--bg-color);
   padding: 20px;
+  transition: background-color 0.3s;
 }
 
 .auth-card {
-  background-color: #1e1e20;
+  background-color: var(--card-bg);
   width: 100%;
   max-width: 480px; /* Un poco más ancho que el login */
   padding: 40px;
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  border: 1px solid #27272a;
+  /* Sombra que se adapta: suave en light, profunda en dark */
+  box-shadow: 0 10px 40px var(--shadow);
+  border: 1px solid var(--border-color);
   animation: fadeIn 0.5s ease-out;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
 @keyframes fadeIn {
@@ -25,26 +27,48 @@
 }
 
 .auth-header { text-align: center; margin-bottom: 25px; }
-.auth-header h2 { color: white; font-size: 1.8rem; margin-bottom: 5px; }
-.auth-header p { color: #a1a1aa; font-size: 0.9rem; }
+
+.auth-header h2 { 
+  color: var(--text-main);
+  font-size: 1.8rem; 
+  margin-bottom: 5px; 
+}
+
+.auth-header p { 
+  color: var(--text-muted);
+  font-size: 0.9rem; 
+}
 
 /* Layout de formulario */
 .form-group { margin-bottom: 15px; }
 .form-row { display: flex; gap: 15px; }
 .half { flex: 1; }
 
-label { display: block; color: #e0e0e0; margin-bottom: 6px; font-size: 0.85rem; font-weight: 500; }
+label { 
+  display: block; 
+  color: var(--text-main);
+  margin-bottom: 6px; 
+  font-size: 0.85rem; 
+  font-weight: 500; 
+}
 
 .input-wrapper { position: relative; display: flex; align-items: center; }
-.input-icon { position: absolute; left: 15px; font-size: 1rem; opacity: 0.7; }
+
+.input-icon { 
+  position: absolute; 
+  left: 15px; 
+  font-size: 1rem; 
+  opacity: 0.7; 
+  color: var(--text-muted);
+}
 
 input[type="text"], input[type="email"], input[type="password"] {
   width: 100%;
-  padding: 10px 15px 10px 40px; /* Ajuste para inputs con icono */
-  background-color: #27272a;
-  border: 1px solid #3f3f46;
+  padding: 10px 15px 10px 40px;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  color: white;
+  color: var(--text-main);
   font-size: 0.95rem;
   outline: none;
   transition: all 0.3s;
@@ -53,7 +77,11 @@ input[type="text"], input[type="email"], input[type="password"] {
 /* Input sin icono (Nombre/Apellido) */
 input[type="text"] { padding-left: 15px; }
 
-input:focus { border-color: #4f46e5; background-color: #18181b; }
+input:focus { 
+  border-color: var(--primary); 
+  background-color: var(--bg-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
 
 /* Checkbox de Términos */
 .form-check {
@@ -62,18 +90,23 @@ input:focus { border-color: #4f46e5; background-color: #18181b; }
   gap: 10px;
   margin: 20px 0;
   font-size: 0.85rem;
-  color: #a1a1aa;
+  color: var(--text-muted);
 }
 
 .form-check input { width: auto; margin-top: 3px; cursor: pointer; }
-.form-check a { color: #4f46e5; text-decoration: none; }
+
+.form-check a { 
+  color: var(--primary); 
+  text-decoration: none; 
+}
+
 .form-check a:hover { text-decoration: underline; }
 
 /* Botón */
 .btn-submit {
   width: 100%;
   padding: 12px;
-  background-color: #4f46e5;
+  background-color: var(--primary);
   color: white;
   border: none;
   border-radius: 8px;
@@ -83,8 +116,20 @@ input:focus { border-color: #4f46e5; background-color: #18181b; }
   transition: background 0.3s;
 }
 
-.btn-submit:hover { background-color: #4338ca; }
+.btn-submit:hover { background-color: var(--primary-hover); }
 
-.auth-footer { text-align: center; margin-top: 20px; color: #a1a1aa; font-size: 0.9rem; }
-.auth-footer a { color: #4f46e5; text-decoration: none; font-weight: 600; margin-left: 5px; }
+.auth-footer { 
+  text-align: center; 
+  margin-top: 20px; 
+  color: var(--text-muted); 
+  font-size: 0.9rem; 
+}
+
+.auth-footer a { 
+  color: var(--primary); 
+  text-decoration: none; 
+  font-weight: 600; 
+  margin-left: 5px; 
+}
+
 .auth-footer a:hover { text-decoration: underline; }
