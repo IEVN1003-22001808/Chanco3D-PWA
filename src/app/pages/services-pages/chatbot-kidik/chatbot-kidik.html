@@ -1,45 +1,56 @@
-<div class="chat-container">
-  <div class="chat-card">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kidik - Asistente Virtual</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<div class="chatbox">
     
-    <header class="chat-header">
-      <div class="avatar-bot">
-        <span>🤖</span>
-        <div class="status-dot"></div>
-      </div>
-      <div class="header-info">
-        <h2>Kidik Asistente</h2>
-        <p>En línea • Responde al instante</p>
-      </div>
-    </header>
-
-    <div class="messages-area" #scrollContainer>
-      <div class="message-row" *ngFor="let msg of messages" [ngClass]="{'user-row': msg.sender === 'user', 'bot-row': msg.sender === 'bot'}">
-        <div class="bubble" [ngClass]="{'user-bubble': msg.sender === 'user', 'bot-bubble': msg.sender === 'bot'}">
-          {{ msg.text }}
-          <span class="time">{{ msg.time }}</span>
-        </div>
-      </div>
-
-      <div class="message-row bot-row" *ngIf="isTyping">
-        <div class="bubble bot-bubble typing">
-          <span>.</span><span>.</span><span>.</span>
-        </div>
-      </div>
+  <div class="contenedor-mensajes" id="contenedorMensajes">
+    
+    <div class="mensaje-bienvenida" aria-live="polite">
+      <strong>¡Bienvenido a Kidik Asistencia!</strong><br><br>
+      ¿En qué podemos ayudarte hoy? Escribe tu pregunta o elige una opción abajo.
     </div>
 
-    <div class="quick-options" *ngIf="!isTyping">
-      <button *ngFor="let opt of quickOptions" (click)="sendMessage(opt)">
-        {{ opt }}
-      </button>
+    <div class="caja-faq" role="region" aria-label="Preguntas frecuentes">
+      <div class="titulo-faq">Preguntas frecuentes</div>
+      <div class="botones">
+        <button (click)="sendMessage('Tengo un problema con mi producto')">Tengo un problema con mi producto</button>
+        <button (click)="sendMessage('quiénes somos?')">¿Quiénes somos?</button>
+        <button (click)="sendMessage('tiempo estimado de la entrega')">Tiempo estimado de entrega</button>
+        <button (click)="sendMessage('qué materiales trabajamos en la empresa')">¿Qué materiales utilizan?</button>
+        <button (click)="sendMessage('por qué elegirnos?')">¿Por qué elegirnos?</button>
+        <button (click)="sendMessage('ventajas del uso de resina')">Ventajas de la resina</button>
+        <button (click)="sendMessage('en donde se hacen entregas')">Zonas de entrega</button>
+        <button (click)="sendMessage('qué tipo de figuras imprimen en 3d')">¿Qué figuras imprimen?</button>
+        <button (click)="sendMessage('Que pasa si mi modelo tiene errores?')">¿Qué pasa si mi modelo personalizado propio tiene errores?</button>
+      </div>
     </div>
-
-    <div class="input-area">
-      <input type="text" placeholder="Escribe tu duda aquí..." 
-             [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
-      <button class="btn-send" (click)="sendMessage()" [disabled]="!userInput.trim()">
-        ➤
-      </button>
-    </div>
-
   </div>
+
+  <div class="contenedor-busqueda">
+    <div class="wrapper-busqueda">
+      <input 
+        type="text" 
+        #searchBar 
+        id="barraBusqueda" 
+        placeholder="Escribe tu pregunta aquí..." 
+        aria-label="Campo para escribir pregunta"
+        (keyup.enter)="sendMessageFromSearch(searchBar.value)"
+      />
+    </div>
+    <div class="button-group">
+      <button id="botonEnviar" (click)="sendMessageFromSearch(searchBar.value)" aria-label="Enviar mensaje">Enviar</button>
+    </div>
+  </div>
+
+  <div id="response" class="indicador-escritura" [style.display]="isTyping ? 'block' : 'none'" aria-live="polite" aria-atomic="true">Escribiendo...</div>
+
 </div>
+</body>
+</html>
