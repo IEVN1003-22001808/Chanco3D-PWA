@@ -8,25 +8,40 @@
       <li class="nav-item">
         <a routerLink="/home" routerLinkActive="active" class="nav-links">Inicio</a>
       </li>
-      <li class="nav-item">
-        <a routerLink="/catalog" routerLinkActive="active" class="nav-links">Tienda</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/community" routerLinkActive="active" class="nav-links">Galería</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/quote" routerLinkActive="active" class="nav-links">Cotizador</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/admin" routerLinkActive="active" class="nav-links">Admin</a>
-      </li>
+
+      @if (!isAdmin) {
+        <li class="nav-item">
+          <a [routerLink]="['/shop/catalog']" routerLinkActive="active" class="nav-links">Tienda</a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/services/community']" routerLinkActive="active" class="nav-links">Galería</a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/services/quote']" routerLinkActive="active" class="nav-links">Cotizador</a>
+        </li>
+      }
+
+      @if (isAdmin) {
+        <li class="nav-item">
+          <a [routerLink]="['/admin']" routerLinkActive="active" class="nav-links" style="color: #ff4d4d;">Panel Admin</a>
+        </li>
+      }
     </ul>
 
     <div class="nav-actions">
-      <a routerLink="/cart" class="icon-btn" title="Carrito">
-        🛒 <span class="badge">0</span>
-      </a>
-      <a routerLink="/login" class="btn-primary">Ingresar</a>
+      @if (!isAdmin) {
+        <a [routerLink]="['/shop/cart']" class="icon-btn" title="Carrito">
+          🛒 <span class="badge">0</span>
+        </a>
+      }
+
+      @if (!isLoggedIn) {
+        <a [routerLink]="['/auth/login']" class="btn-primary">Ingresar</a>
+      }
+
+      @if (isLoggedIn) {
+        <button (click)="logout()" class="btn-primary" style="background-color: #dc3545;">Salir</button>
+      }
     </div>
   </div>
 
@@ -39,5 +54,4 @@
       </div>
     </label>
   </div>
-
 </nav>
