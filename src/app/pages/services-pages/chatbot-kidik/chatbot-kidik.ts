@@ -1,140 +1,165 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-chatbot',
+  selector: 'app-chatbot', 
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './chatbot-kidik.html',
   styleUrl: './chatbot-kidik.css',
   encapsulation: ViewEncapsulation.None 
 })
-export class ChatbotComponent implements OnInit {
+export class ChatbotComponent {
 
-  isTyping: boolean = false;
 
-  constructor() {}
+  abrirVen: boolean = false; 
+  escribiendo: boolean = false;
+  Arrastre = false;
+  
+  // posicion mouse
+  posX = 0;
+  posY = 0;
 
-  ngOnInit(): void {
+  //posicion rt
+  posicion = { x: 0, y: 0 }; 
+  FinalPos = { x: 0, y: 0 };
+
+
+  alternarChat(): void {
+    this.abrirVen = !this.abrirVen;
   }
 
-  goHome(): void {
-    window.location.reload();
+  // funcion para arrastrar
+  iniciarArrastre(evento: MouseEvent): void {
+    this.Arrastre = true;
+    this.posX = evento.clientX;
+    this.posY = evento.clientY;
+    evento.preventDefault(); 
   }
 
-  /**
-   * Agrega un mensaje visualmente al chat
-   */
-  appendMessage(message: string, sender: string, isHTML: boolean = false): void {
-    // ACTUALIZADO: Busca el ID en español
-    const messageContainer = document.getElementById("contenedorMensajes");
-    if (!messageContainer) return;
+  // Escucha el movimiento del mouse en todo el documento.
+  @HostListener('document:mousemove', ['$event'])
+  alMoverMouse(evento: MouseEvent): void {
+    if (!this.Arrastre) return; 
 
-    const newMessage = document.createElement("div");
-    // ACTUALIZADO: Usa la clase 'mensaje' y 'usuario' (si sender es 'usuario')
-    newMessage.classList.add("mensaje", sender);
+    // Calcula cuánto se ha movido el mouse desde el click inicial.
+    const deltaX = evento.clientX - this.posX;
+    const deltaY = evento.clientY - this.posY;
 
-    if (isHTML) newMessage.innerHTML = message;
-    else newMessage.textContent = message;
-
-    messageContainer.appendChild(newMessage);
-    messageContainer.scrollTop = messageContainer.scrollHeight;
+    // Actualiza la posición sumando el desplazamiento a la última posición guardada.
+    this.posicion.x = this.FinalPos.x + deltaX;
+    this.posicion.y = this.FinalPos.y + deltaY;
   }
 
-  /**
-   * Envía el mensaje a la API y maneja la respuesta
-   */
-  async sendMessage(message: string): Promise<void> {
-    // 1. Muestra el mensaje del usuario (enviamos "usuario" para que coincida con el CSS)
-    this.appendMessage(message, "usuario", false);
-
-    // 2. Activa indicador
-    this.isTyping = true;
-
-    // ACTUALIZADO: Busca el ID en español
-    const messageContainer = document.getElementById("contenedorMensajes");
-    if (!messageContainer) {
-      console.error("Error: No se encontró el contenedor de mensajes.");
-      this.isTyping = false;
-      return;
+  // Escucha cuando se suelta el click en cualquier parte.
+  @HostListener('document:mouseup')
+  alSoltarMouse(): void {
+    if (this.Arrastre) {
+      this.Arrastre = false; // Detiene el modo arrastre.
+      this.FinalPos = { ...this.posicion }; // Guarda la nueva posición final.
     }
+  }
+
+
+
+  // contenedor
+  agregarMensaje(mensaje: string, remitente: string, esHTML: boolean = false): void {
+    const contenedorMensajes = document.getElementById("contenedorMensajes");
+    if (!contenedorMensajes) return;
+
+    const nuevoMensaje = document.createElement("div");
+    nuevoMensaje.classList.add("mensaje", remitente);
+    if (esHTML) nuevoMensaje.innerHTML = mensaje;
+    else nuevoMensaje.textContent = mensaje;
+
+    contenedorMensajes.appendChild(nuevoMensaje);
+
+    // scroll
+    contenedorMensajes.scrollTop = contenedorMensajes.scrollHeight;
+  }
+
+  // env mensaje
+  async enviarMensaje(mensaje: string): Promise<void> {
+    this.agregarMensaje(mensaje, "usuario", false);
+    //efecto
+    this.escribiendo = true; 
+
+    const contenedorMensajes = document.getElementById("contenedorMensajes");
+    if (!contenedorMensajes) { this.escribiendo = false; return; }
 
     try {
-      // 3. Conexión con la API
-      const response = await fetch('https://kidik2-0.onrender.com/chat', {
+      // api en render api (se va a borrar )
+      const respuesta = await fetch('https://kidik2-0.onrender.com/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: message })
+        body: JSON.stringify({ message: mensaje })
       });
 
-      const data = await response.json();
-      const responseMessage: string = data.reply;
-      const isHTML = responseMessage.includes('<a ') || responseMessage.includes('<br');
+      const datos = await respuesta.json();
+      const mensajeRespuesta: string = datos.reply;
+      
+      
+      const esHTML = mensajeRespuesta.includes('<a ') || mensajeRespuesta.includes('<br');
 
-      // 4. Prepara la burbuja del bot
-      this.appendMessage('', 'bot', isHTML);
-      const botMessageContainer = messageContainer.lastChild as HTMLElement;
+      this.agregarMensaje('', 'bot', esHTML);
+      const contenedorMensajeBot = contenedorMensajes.lastChild as HTMLElement;
 
-      if (message.trim().toLowerCase() === 'tengo un problema con mi producto') {
-        if (botMessageContainer) {
-          botMessageContainer.innerHTML = responseMessage;
-        }
-        this.isTyping = false;
+      // mensaje con link 
+      if (mensaje.trim().toLowerCase() === 'tengo un problema con mi producto') {
+        if (contenedorMensajeBot) contenedorMensajeBot.innerHTML = mensajeRespuesta;
+        this.escribiendo = false;
         return;
       }
 
-      // 5. Efecto de escritura
+      // efecto
       setTimeout(() => {
         let i = 0;
-        const typingCursor = document.createElement('span');
-        // ACTUALIZADO: Usa la clase en español
-        typingCursor.classList.add('cursor-escritura');
+        // efecto
+        const cursorEscritura = document.createElement('span');
+        cursorEscritura.classList.add('cursor-escritura');
+        
+        if (contenedorMensajeBot) contenedorMensajeBot.appendChild(cursorEscritura);
 
-        if (botMessageContainer) botMessageContainer.appendChild(typingCursor);
-
-        const typeLetter = () => {
-          if (i < responseMessage.length && botMessageContainer) {
-            const char = responseMessage.charAt(i);
-            // ACTUALIZADO: Reemplaza la clase en español
-            botMessageContainer.innerHTML = botMessageContainer.innerHTML.replace(/<span class="cursor-escritura"><\/span>/g, '') + char;
+        // eefcto
+        const escribirLetra = () => {
+          if (i < mensajeRespuesta.length && contenedorMensajeBot) {
+            const caracter = mensajeRespuesta.charAt(i);
             
-            if (botMessageContainer.lastChild !== typingCursor) {
-              botMessageContainer.appendChild(typingCursor);
-            }
+            // efecto
+            contenedorMensajeBot.innerHTML = contenedorMensajeBot.innerHTML.replace(/<span class="cursor-escritura"><\/span>/g, '') + caracter;
+            if (contenedorMensajeBot.lastChild !== cursorEscritura) contenedorMensajeBot.appendChild(cursorEscritura);
             i++;
             
-            // Auto-scroll (ID actualizado)
-            const localContainer = document.getElementById("contenedorMensajes");
-            if (localContainer) localContainer.scrollTop = localContainer.scrollHeight;
-
-            let delay = Math.floor(Math.random() * 20) + 5;
-            if (char === '.' || char === ',') delay += 100;
-
-            setTimeout(typeLetter, delay);
-          } else if (botMessageContainer) {
-            typingCursor.remove();
-            this.isTyping = false;
+            // scroll 
+            const contenedorLocal = document.getElementById("contenedorMensajes");
+            if (contenedorLocal) contenedorLocal.scrollTop = contenedorLocal.scrollHeight;
+            
+            //efecto
+            let retraso = Math.floor(Math.random() * 20) + 5;
+            if (caracter === '.' || caracter === ',') retraso += 100; 
+            
+            setTimeout(escribirLetra, retraso);
+          } else if (contenedorMensajeBot) {
+            cursorEscritura.remove();
+            this.escribiendo = false;
           }
         }
-        typeLetter();
-      }, 1500);
+        escribirLetra(); 
+      }, 1500); 
 
+
+      
     } catch (error) {
       console.error('API Error:', error);
-      this.appendMessage("Lo siento, hubo un error de conexión.", "bot");
-      this.isTyping = false;
+      this.agregarMensaje("Error de conexión.", "bot");
+      this.escribiendo = false;
     }
   }
 
-  async sendMessageFromSearch(message: string): Promise<void> {
-    const cleanMessage = message ? message.trim() : '';
-    if (cleanMessage) {
-      await this.sendMessage(cleanMessage);
-      
-      // ACTUALIZADO: Busca el ID en español
-      const input = document.getElementById('barraBusqueda') as HTMLInputElement;
-      if (input) input.value = '';
-    }
-  }
+
+enviarMsg(mensaje: string) {
+  this.enviarMensaje(mensaje.trim());
+  (document.getElementById('barraBusqueda') as HTMLInputElement).value = '';
+}
 }

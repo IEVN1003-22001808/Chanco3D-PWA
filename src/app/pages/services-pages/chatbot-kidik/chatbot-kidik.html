@@ -1,56 +1,50 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kidik - Asistente Virtual</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body>
-<div class="chatbox">
-    
-  <div class="contenedor-mensajes" id="contenedorMensajes">
-    
-    <div class="mensaje-bienvenida" aria-live="polite">
-      <strong>¡Bienvenido a Kidik Asistencia!</strong><br><br>
-      ¿En qué podemos ayudarte hoy? Escribe tu pregunta o elige una opción abajo.
-    </div>
+<button class="abrirchat" (click)="alternarChat()" aria-label="Abrir chat">
+  <span class="material-icons">Chat</span>
+</button>
 
-    <div class="caja-faq" role="region" aria-label="Preguntas frecuentes">
-      <div class="titulo-faq">Preguntas frecuentes</div>
-      <div class="botones">
-        <button (click)="sendMessage('Tengo un problema con mi producto')">Tengo un problema con mi producto</button>
-        <button (click)="sendMessage('quiénes somos?')">¿Quiénes somos?</button>
-        <button (click)="sendMessage('tiempo estimado de la entrega')">Tiempo estimado de entrega</button>
-        <button (click)="sendMessage('qué materiales trabajamos en la empresa')">¿Qué materiales utilizan?</button>
-        <button (click)="sendMessage('por qué elegirnos?')">¿Por qué elegirnos?</button>
-        <button (click)="sendMessage('ventajas del uso de resina')">Ventajas de la resina</button>
-        <button (click)="sendMessage('en donde se hacen entregas')">Zonas de entrega</button>
-        <button (click)="sendMessage('qué tipo de figuras imprimen en 3d')">¿Qué figuras imprimen?</button>
-        <button (click)="sendMessage('Que pasa si mi modelo tiene errores?')">¿Qué pasa si mi modelo personalizado propio tiene errores?</button>
+<div class="ventana" [class.open]="abrirVen" [style.transform]="'translate3d(' + posicion.x + 'px, ' + posicion.y + 'px, 0)'">
+  
+  <div class="chatbox">
+      
+    <div class="header" (mousedown)="iniciarArrastre($event)" style="cursor: move; user-select: none;">
+            
+      <div class="chatima">
+        <img src="https://i.postimg.cc/Sn2qpm6g/Chat-IMG.png" class="chat" alt="Logo" />
       </div>
     </div>
-  </div>
 
-  <div class="contenedor-busqueda">
-    <div class="wrapper-busqueda">
-      <input 
-        type="text" 
-        #searchBar 
-        id="barraBusqueda" 
-        placeholder="Escribe tu pregunta aquí..." 
-        aria-label="Campo para escribir pregunta"
-        (keyup.enter)="sendMessageFromSearch(searchBar.value)"
-      />
+    <div class="contenedor-mensajes" id="contenedorMensajes">
+      
+      <div class="mensaje-bienvenida">
+        Soy el asistente de Kidik. ¿En qué te ayudo?
+      </div>
+
+      <div class="caja-faq">
+        <div class="titulo-faq">Opciones rápidas</div>
+        <div class="botones">
+          <button (click)="enviarMensaje('Tengo un problema con mi producto')">Problema con producto</button>
+          <button (click)="enviarMensaje('quiénes somos?')">¿Quiénes somos?</button>
+          <button (click)="enviarMensaje('tiempo estimado de la entrega')">Tiempo de entrega</button>
+          <button (click)="enviarMensaje('qué materiales trabajamos en la empresa')">Materiales</button>
+          <button (click)="enviarMensaje('en donde se hacen entregas')">Zonas de entrega</button>
+        </div>
+      </div>
     </div>
-    <div class="button-group">
-      <button id="botonEnviar" (click)="sendMessageFromSearch(searchBar.value)" aria-label="Enviar mensaje">Enviar</button>
+
+    <div class="contenedor-busqueda">
+      <div class="busqueda">
+        <input type="text" #searchBar id="barraBusqueda" placeholder="Escribe aquí..." (keyup.enter)="enviarMsg(searchBar.value)"/>
+      </div>
+
+      <div class="button-group">
+        <button id="botonEnviar" (click)="enviarMsg(searchBar.value)">
+          <span style="font-size: 18px;">➥</span>
+        </button>
+      </div>
+
     </div>
+
+    <div id="response" class="indicador-escritura" [style.display]="escribiendo ? 'block' : 'none'">Escribiendo...</div>
+
   </div>
-
-  <div id="response" class="indicador-escritura" [style.display]="isTyping ? 'block' : 'none'" aria-live="polite" aria-atomic="true">Escribiendo...</div>
-
 </div>
-</body>
-</html>

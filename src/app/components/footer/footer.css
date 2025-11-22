@@ -7,7 +7,7 @@
   background-color: var(--card-bg); 
   color: var(--text-muted);
   padding: 60px 0 20px;
-  border-top: 1px solid var(--border-color); /* Borde dinámico */
+  border-top: 1px solid var(--border-color);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   transition: background-color 0.3s, border-color 0.3s;
 }
@@ -96,21 +96,27 @@ h3 {
   gap: 15px;
 }
 
-.social-icon {
-  font-size: 1.5rem;
+.twt {
+  width: 5px;
+  height: 5px;
   text-decoration: none;
   transition: transform 0.3s;
-  /* En modo claro queremos que se vean oscuros, en modo oscuro blancos. 
-     Usamos el color de texto principal */
   color: var(--text-main); 
 }
 
-.social-icon:hover {
-  transform: scale(1.2);
-  color: var(--primary); /* Al pasar el mouse, se pone violeta */
+.redes{
+  width: 30px;
+  height: 30px;
+  text-decoration: none;
+  transition: transform 0.3s;
+  color: var(--text-main); 
 }
 
-/* Barra inferior */
+.redes:hover {
+  transform: scale(1.2);
+}
+
+
 .footer-bottom {
   margin-top: 50px;
   padding-top: 20px;

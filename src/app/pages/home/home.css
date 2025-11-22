@@ -93,16 +93,15 @@
   background-color: var(--border-color);
 }
 
-/* Placeholder para imagen (círculo brillante) */
-.placeholder-circle {
-  width: 400px;
-  height: 400px;
-  /* Ajustamos el gradiente para que se difumine a transparente, no a negro */
+
+.efectoCirculo {
+  width: 600px;
+  height: 600px;
   background: radial-gradient(circle, rgba(79,70,229,0.2) 0%, transparent 70%);
   border-radius: 50%;
+  z-index: -999;
 }
 
-/* --- FEATURES SECTION --- */
 .features {
   max-width: 1200px;
   margin: 0 auto;
@@ -133,7 +132,6 @@
 .card:hover {
   border-color: var(--primary);
   transform: translateY(-5px);
-  /* Sombra dinámica (suave en light, oscura en dark) */
   box-shadow: 0 10px 30px var(--shadow);
 }
 
