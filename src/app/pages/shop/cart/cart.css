@@ -1,226 +1,199 @@
 :host {
-  display: block;
-  min-height: 100vh;
-  background-color: var(--bg-color);
-  transition: background-color 0.3s;
+    display: block;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    transition: background-color 0.3s;
 }
-
-.cart-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  min-height: 80vh;
+.contenedorCarrito {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 80vh;
 }
-
-.page-title {
-  color: var(--text-main);
-  font-size: 2rem;
-  margin-bottom: 30px;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 15px;
+.tituloPagina {
+    color: var(--text-main);
+    font-size: 2rem;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
 }
-
-/* Layout Grid (Escritorio) */
-.cart-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 30px;
+.grillaCarrito {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
 }
-
-/* --- ITEM CARDS --- */
-.item-card {
-  display: flex;
-  align-items: center;
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 15px;
-  transition: all 0.3s;
-  box-shadow: 0 2px 8px var(--shadow);
+.tarjetaItem {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px var(--shadow);
 }
-
-.item-card:hover {
-  border-color: var(--primary);
+.tarjetaItem:hover {
+    border-color: var(--primary);
 }
-
-.item-image img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-right: 20px;
-  background-color: var(--border-color);
+.imagenItem img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+    background-color: var(--border-color);
 }
-
-.item-details {
-  flex: 1;
+.detallesItem {
+    flex: 1;
 }
-
-.item-details h3 {
-  color: var(--text-main);
-  font-size: 1.1rem;
-  margin: 0 0 5px 0;
+.detallesItem h3 {
+    color: var(--text-main);
+    font-size: 1.1rem;
+    margin: 0 0 5px 0;
 }
-
-.item-type {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  margin: 0;
+.tipoItem {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin: 0;
 }
-
-.unit-price {
-  color: var(--primary);
-  font-size: 0.9rem;
-  margin-top: 5px;
+.precioUnitario {
+    color: var(--primary);
+    font-size: 0.9rem;
+    margin-top: 5px;
 }
-
-/* Controles de cantidad */
-.item-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin: 0 20px;
+.accionesItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0 20px;
 }
-
-.qty-selector {
-  display: flex;
-  align-items: center;
-  background-color: var(--input-bg);
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid var(--border-color);
+.selectorCantidad {
+    display: flex;
+    align-items: center;
+    background-color: var(--input-bg);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
 }
-
-.qty-selector button {
-  background: none;
-  border: none;
-  color: var(--text-main);
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  transition: background 0.2s;
+.selectorCantidad button {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.2s;
 }
-
-.qty-selector button:hover { 
-  background-color: var(--border-color);
+.selectorCantidad button:hover {
+    background-color: var(--border-color);
 }
-
-.qty-selector span {
-  color: var(--text-main);
-  padding: 0 10px;
-  font-weight: bold;
+.selectorCantidad span {
+    color: var(--text-main);
+    padding: 0 10px;
+    font-weight: bold;
 }
-
-.btn-delete {
-  background: none;
-  border: none;
-  color: #ef4444;
-  cursor: pointer;
-  font-size: 0.85rem;
+.btnEliminar {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 0.85rem;
 }
-
-.btn-delete:hover { text-decoration: underline; }
-
-.item-total {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: var(--text-main);
-  min-width: 100px;
-  text-align: right;
+.btnEliminar:hover { text-decoration: underline; }
+.totalItem {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-main);
+    min-width: 100px;
+    text-align: right;
 }
-
-/* --- RESUMEN (DERECHA) --- */
-.summary-card {
-  background-color: var(--card-bg);
-  padding: 30px;
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  position: sticky;
-  top: 100px;
-  box-shadow: 0 4px 20px var(--shadow);
+.tarjetaResumen {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    position: sticky;
+    top: 100px;
+    box-shadow: 0 4px 20px var(--shadow);
 }
-
-.summary-card h2 { 
-  color: var(--text-main); 
-  font-size: 1.5rem; 
-  margin-bottom: 20px; 
+.tarjetaResumen h2 {
+    color: var(--text-main);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  color: var(--text-muted);
-  margin-bottom: 15px;
+.filaResumen {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-muted);
+    margin-bottom: 15px;
 }
-
-.divider { 
-  height: 1px; 
-  background-color: var(--border-color); 
-  margin: 20px 0; 
+.divisor {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 20px 0;
 }
-
 .total {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
 }
-
-.btn-checkout {
-  width: 100%;
-  padding: 15px;
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.3s;
+.btnPago {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
 }
-
-.btn-checkout:hover { 
-  background-color: var(--primary-hover); 
-  transform: scale(1.02); 
+.btnPago:hover {
+    background-color: var(--primary-hover);
+    transform: scale(1.02);
 }
-
-.secure-note {
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  margin-top: 15px;
+.notaSeguridad {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 15px;
 }
-
-/* --- EMPTY STATE --- */
-.empty-state {
-  text-align: center;
-  padding: 60px;
-  background-color: var(--card-bg);
-  border-radius: 16px;
-  border: 2px dashed var(--border-color);
+.estadoVacio {
+    text-align: center;
+    padding: 60px;
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    border: 2px dashed var(--border-color);
 }
-
-.empty-icon { font-size: 4rem; margin-bottom: 20px; }
-.empty-state h2 { color: var(--text-main); margin-bottom: 10px; }
-.empty-state p { color: var(--text-muted); margin-bottom: 30px; }
-
-.btn-store {
-  display: inline-block;
-  padding: 12px 30px;
-  background-color: var(--primary);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
+.iconoVacio {
+    font-size: 4rem;
+    margin-bottom: 20px;
 }
-
-/* Responsive */
+.estadoVacio h2 {
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+.estadoVacio p {
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+.btnTienda {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
 @media (max-width: 768px) {
-  .cart-grid { grid-template-columns: 1fr; }
-  .item-card { flex-direction: column; text-align: center; }
-  .item-image img { margin: 0 0 15px 0; }
-  .item-actions { margin: 15px 0; }
-  .item-total { text-align: center; margin-top: 10px; }
+    .grillaCarrito { grid-template-columns: 1fr; }
+    .tarjetaItem { flex-direction: column; text-align: center; }
+    .imagenItem img { margin: 0 0 15px 0; }
+    .accionesItem { margin: 15px 0; }
+    .totalItem { text-align: center; margin-top: 10px; }
 }

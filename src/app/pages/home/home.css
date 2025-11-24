@@ -1,174 +1,172 @@
 :host {
-  display: block;
-  min-height: 100vh;
-  background-color: var(--bg-color); 
-  /* El texto principal se adapta (blanco en dark, negro en light) */
-  color: var(--text-main); 
-  padding-bottom: 50px;
-  transition: background-color 0.3s, color 0.3s;
+    display: block;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    padding-bottom: 50px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* --- HERO SECTION --- */
-.hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 80px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  gap: 40px;
+
+.seccionHero { 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
 }
 
-.hero-content {
-  max-width: 600px;
+.contenidoHero { 
+    max-width: 600px;
 }
 
-.badge-pill {
-  /* Fondo semitransparente violeta, funciona bien en ambos modos */
-  background-color: rgba(79, 70, 229, 0.1); 
-  color: var(--primary); /* Violeta principal */
-  padding: 5px 12px;
-  border-radius: 50px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-  display: inline-block;
-  border: 1px solid rgba(79, 70, 229, 0.2);
+.etiquetaPill { 
+    background-color: rgba(79, 70, 229, 0.1); 
+    color: var(--primary);
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: inline-block;
+    border: 1px solid rgba(79, 70, 229, 0.2);
 }
 
-.hero-title {
-  font-size: 3.5rem;
-  line-height: 1.1;
-  margin-bottom: 20px;
-  font-weight: 800;
-  color: var(--text-main);
+.tituloHero { 
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    font-weight: 800;
+    color: var(--text-main);
 }
 
-.text-gradient {
-  background: linear-gradient(to right, var(--primary), #a855f7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.textoGradiente { 
+    background: linear-gradient(to right, var(--primary), #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.hero-subtitle {
-  color: var(--text-muted);
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  line-height: 1.6;
+.subtituloHero { 
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
 }
 
-.hero-buttons {
-  display: flex;
-  gap: 15px;
+.botonesHero { 
+    display: flex;
+    gap: 15px;
 }
 
 /* Botones */
 .btn {
-  padding: 12px 30px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: transform 0.2s, background-color 0.3s;
+    padding: 12px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s, background-color 0.3s;
 }
 
 .btn:hover {
-  transform: translateY(-2px);
+    transform: translateY(-2px);
 }
 
-.btn-primary {
-  background-color: var(--primary);
-  color: white;
+.btnPrimario { 
+    background-color: var(--primary);
+    color: white;
 }
 
-.btn-primary:hover {
-  background-color: var(--primary-hover);
+.btnPrimario:hover {
+    background-color: var(--primary-hover);
 }
 
-.btn-outline {
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
+.btnOutline { 
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
 }
 
-.btn-outline:hover {
-  background-color: var(--border-color);
+.btnOutline:hover {
+    background-color: var(--border-color);
 }
 
 
 .efectoCirculo {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(79,70,229,0.2) 0%, transparent 70%);
-  border-radius: 50%;
-  z-index: -999;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(79,70,229,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -999;
 }
 
-.features {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-.section-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 50px;
-  color: var(--text-main);
-}
-
-.grid-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.card {
-  background-color: var(--card-bg);
-  padding: 30px;
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  border-color: var(--primary);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px var(--shadow);
-}
-
-.icon {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  color: var(--text-main);
-}
-
-.card p {
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    text-align: center;
+.caracteristicas { 
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 40px 20px;
-  }
-  
-  .hero-buttons {
-    justify-content: center;
-  }
-  
-  .hero-title {
+}
+
+.tituloSeccion { 
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 50px;
+    color: var(--text-main);
+}
+
+.grillaTarjetas { 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.tarjeta { 
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.tarjeta:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px var(--shadow);
+}
+
+.icono { 
     font-size: 2.5rem;
-  }
-  
-  .placeholder-circle {
-    width: 250px;
-    height: 250px;
-  }
+    margin-bottom: 20px;
+}
+
+.tarjeta h3 { 
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.tarjeta p { 
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+
+@media (max-width: 768px) {
+    .seccionHero { 
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+    
+    .botonesHero { 
+        justify-content: center;
+    }
+    
+    .tituloHero { 
+        font-size: 2.5rem;
+    }
+    
+    .efectoCirculo { 
+        width: 250px;
+        height: 250px;
+    }
 }

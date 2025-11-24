@@ -5,61 +5,60 @@
   transition: background-color 0.3s;
 }
 
-.suggestions-container {
+.contenedorSugerencias { 
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-.page-header { 
+.encabezadoPagina { 
   text-align: center; 
   margin-bottom: 50px; 
 }
 
-.page-header h1 { 
-  color: var(--text-main); /* Título dinámico */
+.encabezadoPagina h1 { 
+  color: var(--text-main);
   font-size: 2.5rem; 
   margin-bottom: 10px; 
 }
 
-.highlight { 
+.resaltado { 
   color: var(--primary); 
 }
 
-.page-header p { 
-  color: var(--text-muted); /* Subtítulo dinámico */
+.encabezadoPagina p { 
+  color: var(--text-muted); 
 }
 
-/* Grid Layout */
-.layout-grid {
+
+.disenoGrid { 
   display: grid;
-  grid-template-columns: 1fr 1.5fr; /* Formulario más angosto, lista más ancha */
+  grid-template-columns: 1fr 1.5fr; 
   gap: 40px;
 }
 
-/* --- FORMULARIO --- */
-.form-card {
-  background-color: var(--card-bg); /* Fondo dinámico */
+.tarjetaFormulario { 
+  background-color: var(--card-bg);
   padding: 30px;
   border-radius: 12px;
   border: 1px solid var(--border-color);
   position: sticky;
   top: 100px;
-  box-shadow: 0 4px 12px var(--shadow); /* Sombra para modo claro */
+  box-shadow: 0 4px 12px var(--shadow);
 }
 
-.form-card h3 { 
+.tarjetaFormulario h3 { 
   color: var(--text-main); 
   margin-bottom: 5px; 
 }
 
-.hint { 
+.ayuda { 
   color: var(--text-muted); 
   font-size: 0.9rem; 
   margin-bottom: 25px; 
 }
 
-.form-group { 
+.grupoFormulario { 
   margin-bottom: 20px; 
 }
 
@@ -73,7 +72,7 @@ label {
 input, textarea {
   width: 100%;
   padding: 12px;
-  background-color: var(--input-bg); /* Fondo input dinámico */
+  background-color: var(--input-bg);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   color: var(--text-main);
@@ -86,11 +85,11 @@ input:focus, textarea:focus {
   border-color: var(--primary); 
 }
 
-.btn-submit {
+.btnEnviar { 
   width: 100%;
   padding: 12px;
   background-color: var(--primary);
-  color: white; /* Texto blanco siempre */
+  color: white;
   border: none;
   border-radius: 8px;
   font-weight: bold;
@@ -98,26 +97,25 @@ input:focus, textarea:focus {
   transition: background 0.3s;
 }
 
-.btn-submit:hover { 
+.btnEnviar:hover { 
   background-color: var(--primary-hover); 
 }
 
-/* --- LISTA DE ESTADOS --- */
-.status-board h3 { 
+.tableroEstado h3 { 
   color: var(--text-main); 
   margin-bottom: 20px; 
   border-bottom: 1px solid var(--border-color); 
   padding-bottom: 10px; 
 }
 
-.suggestions-list {
+.listaSugerencias { 
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
   gap: 20px;
 }
 
-.suggestion-card {
-  background-color: var(--card-bg); /* Fondo tarjeta dinámico */
+.tarjetaSugerencia { 
+  background-color: var(--card-bg);
   border: 1px solid var(--border-color);
   padding: 20px;
   border-radius: 12px;
@@ -125,36 +123,36 @@ input:focus, textarea:focus {
   box-shadow: 0 2px 5px var(--shadow);
 }
 
-.suggestion-card:hover { 
+.tarjetaSugerencia:hover { 
   transform: translateY(-3px); 
   border-color: var(--primary); 
   box-shadow: 0 8px 15px var(--shadow);
 }
 
-.card-header { 
+.encabezadoTarjeta { 
   display: flex; 
   justify-content: space-between; 
   align-items: flex-start; 
   margin-bottom: 15px; 
 }
 
-.card-header h4 { 
+.encabezadoTarjeta h4 { 
   color: var(--text-main); 
   margin: 0; 
   font-size: 1.1rem; 
 }
 
-.origin-tag { 
+.etiquetaOrigen { 
   font-size: 0.75rem; 
   color: var(--text-muted); 
-  background: var(--input-bg); /* Fondo sutil dinámico */
+  background: var(--input-bg);
   padding: 2px 8px; 
   border-radius: 4px; 
   border: 1px solid var(--border-color);
 }
 
-/* Badges de Estado */
-.status-badge {
+
+.etiquetaEstado { 
   display: inline-flex; 
   align-items: center; 
   gap: 5px;
@@ -165,18 +163,10 @@ input:focus, textarea:focus {
   margin-bottom: 15px;
 }
 
-/* Los colores de estado los dejamos fijos o semitransparentes para que funcionen en ambos modos */
 .status-approved { 
   background-color: rgba(74, 222, 128, 0.15); 
-  color: #4ade80; /* Verde claro para dark mode */
+  color: #4ade80; 
   border: 1px solid rgba(74, 222, 128, 0.3); 
-}
-
-/* Ajuste específico para light mode si es necesario (opcional, el verde anterior se lee bien) */
-:host-context(.light-theme) .status-approved {
-  color: #16a34a; /* Verde más oscuro para fondo blanco */
-  background-color: rgba(22, 163, 74, 0.1);
-  border-color: rgba(22, 163, 74, 0.2);
 }
 
 .status-review { 
@@ -185,38 +175,30 @@ input:focus, textarea:focus {
   border: 1px solid rgba(250, 204, 21, 0.3); 
 }
 
-:host-context(.light-theme) .status-review {
-  color: #ca8a04; 
-  background-color: rgba(202, 138, 4, 0.1);
-  border-color: rgba(202, 138, 4, 0.2);
-}
-
 .status-new { 
   background-color: rgba(148, 163, 184, 0.15); 
   color: #94a3b8; 
   border: 1px solid rgba(148, 163, 184, 0.3); 
 }
 
-:host-context(.light-theme) .status-new {
-  color: #64748b; 
-  background-color: rgba(100, 116, 139, 0.1);
-  border-color: rgba(100, 116, 139, 0.2);
-}
-
-.dot { 
+.punto { 
   font-size: 1.2rem; 
   line-height: 0; 
 }
 
-.author { 
+.autor { 
   font-size: 0.8rem; 
   color: var(--text-muted); 
   text-align: right; 
   margin: 0; 
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
-  .layout-grid { grid-template-columns: 1fr; }
-  .form-card { position: static; }
+  .disenoGrid { 
+    grid-template-columns: 1fr; 
+}
+  .tarjetaFormulario { 
+    position: static; 
+}
 }

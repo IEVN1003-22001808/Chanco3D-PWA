@@ -9,14 +9,13 @@
          (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
       
       <div class="upload-content" *ngIf="!fileSelected">
-        <div class="icon">☁️</div>
+        <div class="icon">☁︎</div>
         <h3>Arrastra tu archivo STL aquí</h3>
-        <p>o haz clic para examinar (Máx 100MB)</p>
+        <p>o haz clic para examinar</p>
         <input type="file" accept=".stl,.obj" (change)="onFileSelected($event)">
       </div>
 
       <div class="file-preview" *ngIf="fileSelected">
-        <div class="file-icon">🧊</div>
         <div class="file-info">
           <h4>{{ fileName }}</h4>
           <p>{{ fileSize }} MB</p>

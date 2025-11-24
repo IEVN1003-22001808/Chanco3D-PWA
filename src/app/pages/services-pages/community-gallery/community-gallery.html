@@ -1,29 +1,29 @@
-<div class="gallery-container">
-  <header class="gallery-header">
-    <h1>Galería de la <span class="highlight">Comunidad</span></h1>
-    <p>Inspiración y talento maker. ¡Comparte tu creación!</p>
-    <button class="btn-share" (click)="showForm = !showForm">
+<div class="contenedorGaleria">
+  <header class="encabezadoGaleria">
+    <h1>Galería de la <span class="resaltado">Comunidad</span></h1>
+    <p>Inspiración y talento. ¡Comparte tu creación!</p>
+    <button class="btnCompartir" (click)="showForm = !showForm">
       {{ showForm ? 'Cancelar' : '+ Compartir mi Creación' }}
     </button>
   </header>
 
-  <div class="post-form-container" *ngIf="showForm">
-    <div class="post-form">
+  <div class="contenedorFormularioPost" *ngIf="showForm">
+    <div class="formularioPost">
       <h3>Nueva Publicación</h3>
       <input type="text" placeholder="Título de tu obra" [(ngModel)]="newPost.title">
       <input type="text" placeholder="Descripción breve" [(ngModel)]="newPost.description">
       <input type="text" placeholder="Pega la URL de tu imagen (https://...)" [(ngModel)]="newPost.image">
-      <button class="btn-primary" (click)="publishPost()">Publicar</button>
+      <button class="btnPrimario" (click)="publishPost()">Publicar</button>
     </div>
   </div>
 
-  <div class="gallery-grid">
-    <div class="gallery-item" *ngFor="let post of posts">
+  <div class="Galeria">
+    <div class="itemGaleria" *ngFor="let post of posts">
       <img [src]="post.image" [alt]="post.title">
-      <div class="overlay">
+      <div class="capa">
         <h3>{{ post.title }}</h3>
         <p>Por: {{ post.author }}</p>
-        <span class="likes">❤ {{ post.likes }}</span>
+        <span class="meGusta">❤ {{ post.likes }}</span>
       </div>
     </div>
   </div>

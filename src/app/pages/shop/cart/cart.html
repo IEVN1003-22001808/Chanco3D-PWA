@@ -1,65 +1,62 @@
-<div class="cart-container">
-  <h1 class="page-title">Tu Carrito Maker 🛒</h1>
+<div class="contenedorCarrito">
+  <h1 class="tituloPagina">Tu Carrito</h1>
 
-  <div class="cart-grid" *ngIf="cartItems.length > 0; else emptyCart">
-    
-    <div class="cart-items">
-      <div class="item-card" *ngFor="let item of cartItems; let i = index">
-        <div class="item-image">
+  <div class="grillaCarrito" *ngIf="cartItems.length > 0; else carritoVacio">
+    <div class="itemsCarrito">
+      <div class="tarjetaItem" *ngFor="let item of cartItems; let i = index">
+        <div class="imagenItem">
           <img [src]="item.image" alt="{{ item.name }}">
         </div>
         
-        <div class="item-details">
+        <div class="detallesItem">
           <h3>{{ item.name }}</h3>
-          <p class="item-type">{{ item.type }}</p>
-          <p class="unit-price">{{ item.price | currency:'MXN':'symbol-narrow' }} unitario</p>
+          <p class="tipoItem">{{ item.type }}</p>
+          <p class="precioUnitario">{{ item.price | currency:'MXN':'symbol-narrow' }} unitario</p>
         </div>
 
-        <div class="item-actions">
-          <div class="qty-selector">
+        <div class="accionesItem">
+          <div class="selectorCantidad">
             <button (click)="decreaseQty(item)">-</button>
             <span>{{ item.quantity }}</span>
             <button (click)="increaseQty(item)">+</button>
           </div>
-          <button class="btn-delete" (click)="removeItem(i)">🗑️ Eliminar</button>
+          <button class="btnEliminar" (click)="removeItem(i)">Eliminar</button>
         </div>
 
-        <div class="item-total">
+        <div class="totalItem">
           {{ item.price * item.quantity | currency:'MXN':'symbol-narrow' }}
         </div>
       </div>
     </div>
 
-    <div class="cart-summary">
-      <div class="summary-card">
+    <div class="resumenCarrito">
+      <div class="tarjetaResumen">
         <h2>Resumen del Pedido</h2>
-        <div class="summary-row">
+        <div class="filaResumen">
           <span>Subtotal</span>
           <span>{{ getSubtotal() | currency:'MXN':'symbol-narrow' }}</span>
         </div>
-        <div class="summary-row">
+        <div class="filaResumen">
           <span>Envío Estimado</span>
           <span>{{ shippingCost | currency:'MXN':'symbol-narrow' }}</span>
         </div>
-        <div class="divider"></div>
-        <div class="summary-row total">
+        <div class="divisor"></div>
+        <div class="filaResumen total">
           <span>Total</span>
           <span>{{ getTotal() | currency:'MXN':'symbol-narrow' }}</span>
         </div>
 
-        <button class="btn-checkout">PROCEDER AL PAGO 💳</button>
-        <p class="secure-note">🔒 Pago 100% Seguro y Encriptado</p>
+        <button class="btnPago">PROCEDER AL PAGO</button>
+        <p class="notaSeguridad">Pago 100% Seguro y Encriptado</p>
       </div>
     </div>
-
   </div>
 
-  <ng-template #emptyCart>
-    <div class="empty-state">
-      <div class="empty-icon">📦</div>
+  <ng-template #carritoVacio>
+    <div class="estadoVacio">
       <h2>Tu carrito está vacío</h2>
       <p>¡Parece que aún no has materializado ninguna idea!</p>
-      <a routerLink="/catalog" class="btn-store">Ir a la Tienda</a>
+      <a routerLink="/catalog" class="btnTienda">Ir a la Tienda</a>
     </div>
   </ng-template>
 </div>

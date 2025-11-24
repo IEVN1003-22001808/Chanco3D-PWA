@@ -5,7 +5,6 @@
   transition: background-color 0.3s;
 }
 
-/* Cotizador y Galería comparten base */
 .quote-container, .gallery-container { 
   max-width: 1200px; 
   margin: 0 auto; 
@@ -22,7 +21,7 @@
   color: var(--primary); 
 }
 
-/* Inputs y Botones */
+
 input, select { 
   width: 100%; 
   padding: 10px; 
@@ -60,7 +59,7 @@ input:focus, select:focus {
   margin-top: 20px; 
 }
 
-/* Específico Cotizador */
+
 .quote-grid { 
   display: grid; 
   grid-template-columns: 1fr 1fr; 
@@ -97,7 +96,7 @@ input:focus, select:focus {
   color: #4ade80;
 }
 
-/* Ajuste opcional para el precio en modo claro */
+
 :host-context(.light-theme) .price-result {
   color: #16a34a;
 }
@@ -133,7 +132,7 @@ input:focus, select:focus {
   margin-bottom: 15px; 
 }
 
-/* Responsive */
+
 @media(max-width: 768px) { 
   .quote-grid { 
     grid-template-columns: 1fr; 
