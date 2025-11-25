@@ -1,199 +1,245 @@
 :host {
-    display: block;
-    min-height: 100vh;
-    background-color: var(--bg-color);
-    transition: background-color 0.3s;
+  display: block;
+  min-height: 100vh;
+  background-color: var(--colorFondo);
+  transition: background-color 0.3s;
 }
+
 .contenedorCarrito {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    min-height: 80vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 80vh;
 }
+
 .tituloPagina {
-    color: var(--text-main);
-    font-size: 2rem;
-    margin-bottom: 30px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
+  color: var(--textoPrincipal);
+  font-size: 2rem;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--colorBorde);
+  padding-bottom: 15px;
 }
-.grillaCarrito {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
+
+.Carrito {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
 }
+
 .tarjetaItem {
-    display: flex;
-    align-items: center;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 15px;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px var(--shadow);
+  display: flex;
+  align-items: center;
+  background-color: var(--fondoTarjeta);
+  border: 1px solid var(--colorBorde);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px var(--sombra);
 }
+
 .tarjetaItem:hover {
-    border-color: var(--primary);
+  border-color: var(--colorPrimario);
 }
+
 .imagenItem img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-right: 20px;
-    background-color: var(--border-color);
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+  background-color: var(--colorBorde);
 }
+
 .detallesItem {
-    flex: 1;
+  flex: 1;
 }
+
 .detallesItem h3 {
-    color: var(--text-main);
-    font-size: 1.1rem;
-    margin: 0 0 5px 0;
+  color: var(--textoPrincipal);
+  font-size: 1.1rem;
+  margin: 0 0 5px 0;
 }
+
 .tipoItem {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    margin: 0;
+  color: var(--textoSecundario);
+  font-size: 0.85rem;
+  margin: 0;
 }
+
 .precioUnitario {
-    color: var(--primary);
-    font-size: 0.9rem;
-    margin-top: 5px;
+  color: var(--colorPrimario);
+  font-size: 0.9rem;
+  margin-top: 5px;
 }
+
 .accionesItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 0 20px;
 }
+
 .selectorCantidad {
-    display: flex;
-    align-items: center;
-    background-color: var(--input-bg);
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  background-color: var(--fondoInput);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--colorBorde);
 }
+
 .selectorCantidad button {
-    background: none;
-    border: none;
-    color: var(--text-main);
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: background 0.2s;
+  background: none;
+  border: none;
+  color: var(--textoPrincipal);
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background 0.2s;
 }
+
 .selectorCantidad button:hover {
-    background-color: var(--border-color);
+  background-color: var(--colorBorde);
 }
+
 .selectorCantidad span {
-    color: var(--text-main);
-    padding: 0 10px;
-    font-weight: bold;
+  color: var(--textoPrincipal);
+  padding: 0 10px;
+  font-weight: bold;
 }
+
 .btnEliminar {
-    background: none;
-    border: none;
-    color: #ef4444;
-    cursor: pointer;
-    font-size: 0.85rem;
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 0.85rem;
 }
-.btnEliminar:hover { text-decoration: underline; }
+
+.btnEliminar:hover {
+  text-decoration: underline;
+}
+
 .totalItem {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--text-main);
-    min-width: 100px;
-    text-align: right;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--textoPrincipal);
+  min-width: 100px;
+  text-align: right;
 }
+
 .tarjetaResumen {
-    background-color: var(--card-bg);
-    padding: 30px;
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    position: sticky;
-    top: 100px;
-    box-shadow: 0 4px 20px var(--shadow);
+  background-color: var(--fondoTarjeta);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid var(--colorBorde);
+  position: sticky;
+  top: 100px;
+  box-shadow: 0 4px 20px var(--sombra);
 }
+
 .tarjetaResumen h2 {
-    color: var(--text-main);
-    font-size: 1.5rem;
-    margin-bottom: 20px;
+  color: var(--textoPrincipal);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
+
 .filaResumen {
-    display: flex;
-    justify-content: space-between;
-    color: var(--text-muted);
-    margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--textoSecundario);
+  margin-bottom: 15px;
 }
+
 .divisor {
-    height: 1px;
-    background-color: var(--border-color);
-    margin: 20px 0;
+  height: 1px;
+  background-color: var(--colorBorde);
+  margin: 20px 0;
 }
+
 .total {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--colorPrimario);
 }
+
 .btnPago {
-    width: 100%;
-    padding: 15px;
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.3s;
+  width: 100%;
+  padding: 15px;
+  background-color: var(--colorPrimario);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s;
 }
+
 .btnPago:hover {
-    background-color: var(--primary-hover);
-    transform: scale(1.02);
+  background-color: var(--colorPrimarioHover);
+  transform: scale(1.02);
 }
+
 .notaSeguridad {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    margin-top: 15px;
+  text-align: center;
+  color: var(--textoSecundario);
+  font-size: 0.8rem;
+  margin-top: 15px;
 }
+
 .estadoVacio {
-    text-align: center;
-    padding: 60px;
-    background-color: var(--card-bg);
-    border-radius: 16px;
-    border: 2px dashed var(--border-color);
+  text-align: center;
+  padding: 60px;
+  background-color: var(--fondoTarjeta);
+  border-radius: 16px;
+  border: 2px dashed var(--colorBorde);
 }
+
 .iconoVacio {
-    font-size: 4rem;
-    margin-bottom: 20px;
+  font-size: 4rem;
+  margin-bottom: 20px;
 }
+
 .estadoVacio h2 {
-    color: var(--text-main);
-    margin-bottom: 10px;
+  color: var(--textoPrincipal);
+  margin-bottom: 10px;
 }
+
 .estadoVacio p {
-    color: var(--text-muted);
-    margin-bottom: 30px;
+  color: var(--textoSecundario);
+  margin-bottom: 30px;
 }
+
 .btnTienda {
-    display: inline-block;
-    padding: 12px 30px;
-    background-color: var(--primary);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: var(--colorPrimario);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
 }
+
 @media (max-width: 768px) {
-    .grillaCarrito { grid-template-columns: 1fr; }
-    .tarjetaItem { flex-direction: column; text-align: center; }
-    .imagenItem img { margin: 0 0 15px 0; }
-    .accionesItem { margin: 15px 0; }
-    .totalItem { text-align: center; margin-top: 10px; }
+  .Carrito {
+    grid-template-columns: 1fr;
+  }
+  .tarjetaItem {
+    flex-direction: column;
+    text-align: center;
+  }
+  .imagenItem img {
+    margin: 0 0 15px 0;
+  }
+  .accionesItem {
+    margin: 15px 0;
+  }
+  .totalItem {
+    text-align: center;
+    margin-top: 10px;
+  }
 }

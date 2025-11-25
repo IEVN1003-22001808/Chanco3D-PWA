@@ -1,172 +1,169 @@
 :host {
-    display: block;
-    min-height: 100vh;
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    padding-bottom: 50px;
-    transition: background-color 0.3s, color 0.3s;
+  display: block;
+  min-height: 100vh;
+  background-color: var(--colorFondo);
+  color: var(--textoPrincipal);
+  padding-bottom: 50px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-
 .seccionHero { 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 80px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
 }
 
 .contenidoHero { 
-    max-width: 600px;
+  max-width: 600px;
 }
 
 .etiquetaPill { 
-    background-color: rgba(79, 70, 229, 0.1); 
-    color: var(--primary);
-    padding: 5px 12px;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    display: inline-block;
-    border: 1px solid rgba(79, 70, 229, 0.2);
+  background-color: rgba(79, 70, 229, 0.1); 
+  color: var(--colorPrimario);
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: inline-block;
+  border: 1px solid rgba(79, 70, 229, 0.2);
 }
 
 .tituloHero { 
-    font-size: 3.5rem;
-    line-height: 1.1;
-    margin-bottom: 20px;
-    font-weight: 800;
-    color: var(--text-main);
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  font-weight: 800;
+  color: var(--textoPrincipal);
 }
 
 .textoGradiente { 
-    background: linear-gradient(to right, var(--primary), #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  background: linear-gradient(to right, var(--colorPrimario), #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .subtituloHero { 
-    color: var(--text-muted);
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    line-height: 1.6;
+  color: var(--textoSecundario);
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  line-height: 1.6;
 }
 
 .botonesHero { 
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 }
 
-/* Botones */
+
 .btn {
-    padding: 12px 30px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: transform 0.2s, background-color 0.3s;
+  padding: 12px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
 .btn:hover {
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 
 .btnPrimario { 
-    background-color: var(--primary);
-    color: white;
+  background-color: var(--colorPrimario);
+  color: white;
 }
 
 .btnPrimario:hover {
-    background-color: var(--primary-hover);
+  background-color: var(--colorPrimarioHover);
 }
 
 .btnOutline { 
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
+  border: 1px solid var(--colorBorde);
+  color: var(--textoPrincipal);
 }
 
 .btnOutline:hover {
-    background-color: var(--border-color);
+  background-color: var(--colorBorde);
 }
 
-
 .efectoCirculo {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(79,70,229,0.2) 0%, transparent 70%);
-    border-radius: 50%;
-    z-index: -999;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(79,70,229,0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: -999;
 }
 
 .caracteristicas { 
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
 .tituloSeccion { 
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 50px;
-    color: var(--text-main);
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 50px;
+  color: var(--textoPrincipal);
 }
 
-.grillaTarjetas { 
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+.Tarjetas { 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
 }
 
 .tarjeta { 
-    background-color: var(--card-bg);
-    padding: 30px;
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+  background-color: var(--fondoTarjeta);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid var(--colorBorde);
+  transition: all 0.3s ease;
 }
 
 .tarjeta:hover {
-    border-color: var(--primary);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px var(--shadow);
+  border-color: var(--colorPrimario);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px var(--sombra);
 }
 
 .icono { 
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
 .tarjeta h3 { 
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: var(--text-main);
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--textoPrincipal);
 }
 
 .tarjeta p { 
-    color: var(--text-muted);
-    line-height: 1.5;
+  color: var(--textoSecundario);
+  line-height: 1.5;
 }
 
-
 @media (max-width: 768px) {
-    .seccionHero { 
-        flex-direction: column;
-        text-align: center;
-        padding: 40px 20px;
-    }
-    
-    .botonesHero { 
-        justify-content: center;
-    }
-    
-    .tituloHero { 
-        font-size: 2.5rem;
-    }
-    
-    .efectoCirculo { 
-        width: 250px;
-        height: 250px;
-    }
+  .seccionHero { 
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  
+  .botonesHero { 
+    justify-content: center;
+  }
+  
+  .tituloHero { 
+    font-size: 2.5rem;
+  }
+  
+  .efectoCirculo { 
+    width: 250px;
+    height: 250px;
+  }
 }

@@ -1,0 +1,67 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--colorFondo);
+  transition: background-color 0.3s;
+}
+
+.disenoAdmin { 
+  display: flex; 
+  min-height: 100vh; 
+  background-color: var(--colorFondo);
+  color: var(--textoPrincipal); 
+}
+
+/* Estilos de la Barra Lateral */
+.barraLateralAdmin { 
+  width: 250px; 
+  background-color: var(--fondoTarjeta);
+  border-right: 1px solid var(--colorBorde); 
+  padding: 20px; 
+  display: flex; 
+  flex-direction: column; 
+  position: sticky; /* Opcional: para que se quede fija al hacer scroll */
+  top: 0;
+  height: 100vh;
+}
+
+.encabezadoLateral h3 { 
+  color: var(--textoPrincipal); 
+  margin-bottom: 40px; 
+  letter-spacing: 2px; 
+}
+
+.resaltado { color: var(--colorPrimario); }
+
+.itemNavegacion { 
+  display: block; 
+  padding: 12px 15px; 
+  color: var(--textoSecundario); 
+  text-decoration: none; 
+  margin-bottom: 5px; 
+  border-radius: 8px; 
+  transition: all 0.3s; 
+}
+
+.itemNavegacion:hover { 
+  background-color: var(--fondoInput);
+  color: var(--textoPrincipal); 
+}
+
+.itemNavegacion.activo { 
+  background-color: var(--colorPrimario); 
+  color: white;
+}
+
+.itemNavegacion.retorno { 
+  margin-top: auto; 
+  border: 1px solid var(--colorBorde); 
+}
+
+/* Estilo del Contenedor Principal donde se inyectan las páginas */
+.contenidoAdmin { 
+  flex: 1; 
+  padding: 40px; 
+  overflow-y: auto; 
+  height: 100vh;
+}

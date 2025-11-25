@@ -1,14 +1,10 @@
-/* Variables de color (basadas en estilo oscuro/maker) */
 :host {
-  --primary-color: #4f46e5; /* Un violeta/azul maker */
-  --dark-bg: #1a1a1a;
-  --text-color: #ffffff;
-  --hover-color: #6366f1;
+  display: block;
 }
 
-.navbar {
-  background-color: var(--card-bg);
-  border-bottom: 1px solid var(--border-color);
+.barraNavegacion { 
+  background-color: var(--fondoTarjeta);
+  border-bottom: 1px solid var(--colorBorde);
   height: 80px;
   display: flex;
   justify-content: center;
@@ -17,10 +13,10 @@
   position: sticky;
   top: 0;
   z-index: 999;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 10px var(--sombra);
 }
 
-.navbar-container {
+.contenedorBarra { 
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,9 +26,8 @@
   padding: 0 20px;
 }
 
-/* Logo */
-.navbar-logo {
-  color: var(--text-main);
+.logoBarra { 
+  color: var(--textoPrincipal);
   font-size: 1.8rem;
   font-weight: bold;
   text-decoration: none;
@@ -40,12 +35,11 @@
   letter-spacing: 2px;
 }
 
-.highlight {
-  color: var(--primary-color);
+.resaltado { 
+  color: var(--colorPrimario);
 }
 
-/* Menú */
-.nav-menu {
+.menuNavegacion { 
   display: flex;
   list-style: none;
   gap: 20px;
@@ -53,8 +47,8 @@
   padding: 0;
 }
 
-.nav-links {
-  color: var(--text-main);
+.enlaceNavegacion { 
+  color: var(--textoPrincipal);
   text-decoration: none;
   padding: 10px 15px;
   border-radius: 4px;
@@ -62,35 +56,38 @@
   font-weight: 500;
 }
 
-.nav-links:hover {
-  background-color: var(--border-color);
-  color: var(--primary-color);
+.enlaceNavegacion:hover { 
+  background-color: var(--colorBorde);
+  color: var(--colorPrimario);
 }
 
-.nav-links.active {
-  color: var(--primary-color);
-  border-bottom: 2px solid var(--primary-color);
+.enlaceNavegacion.activo { 
+  color: var(--colorPrimario);
+  border-bottom: 2px solid var(--colorPrimario);
 }
 
-/* Botones y Acciones */
-.nav-actions {
+.enlaceAdmin {
+  color: #ff4d4d;
+}
+
+.accionesNavegacion { 
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.icon-btn {
+.btnIcono { 
   text-decoration: none;
   font-size: 1.5rem;
   position: relative;
   transition: transform 0.2s;
 }
 
-.icon-btn:hover {
+.btnIcono:hover { 
   transform: scale(1.1);
 }
 
-.badge {
+.etiquetaConteo { 
   position: absolute;
   top: -5px;
   right: -10px;
@@ -101,42 +98,45 @@
   border-radius: 50%;
 }
 
-.btn-primary {
+.btnPrimario { 
   padding: 8px 20px;
-  background-color: var(--primary-color);
+  background-color: var(--colorPrimario);
   color: white;
   border-radius: 4px;
   text-decoration: none;
   font-weight: bold;
   transition: background 0.3s;
+  border: none;
+  cursor: pointer;
 }
 
-.btn-primary:hover {
-  background-color: var(--hover-color);
+.btnPrimario:hover { 
+  background-color: var(--colorPrimarioHover);
 }
 
-/* ----------------------------------------- */
+.btnSalir {
+  background-color: #dc3545;
+}
 
-/* Wrapper del switch */
-.theme-switch-wrapper {
+.contenedorSwitchTema { 
   display: flex;
   align-items: center;
   margin-right: 15px;
 }
 
-.theme-switch {
+.switchTema { 
   display: inline-block;
   height: 26px;
   position: relative;
   width: 54px;
 }
 
-.theme-switch input {
-  display: none; /* Ocultar checkbox feo */
+.switchTema input { 
+  display: none; 
 }
 
-.slider {
-  background-color: #818cf8; /* Color Claro (Día) */
+.deslizador { 
+  background-color: #818cf8; 
   bottom: 0;
   cursor: pointer;
   left: 0;
@@ -149,11 +149,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 5px;
-  border: 2px solid var(--primary);
+  border: 2px solid var(--colorPrimario);
 }
 
-/* El círculo que se mueve */
-.slider:before {
+.deslizador:before { 
   background-color: white;
   bottom: 3px;
   content: "";
@@ -166,18 +165,16 @@
   z-index: 2;
 }
 
-/* Cuando está activado (Modo Oscuro) */
-input:checked + .slider {
-  background-color: #1e1e2a; /* Color Oscuro (Noche) */
-  border-color: #4f46e5;
+input:checked + .deslizador { 
+  background-color: var(--fondoTarjeta); 
+  border-color: var(--colorPrimario);
 }
 
-input:checked + .slider:before {
+input:checked + .deslizador:before { 
   transform: translateX(26px);
 }
 
-/* Iconos */
-.icon-sun, .icon-moon {
+.iconoSol, .iconoLuna { 
   font-size: 14px;
   z-index: 1;
   user-select: none;

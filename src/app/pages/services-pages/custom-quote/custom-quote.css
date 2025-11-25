@@ -1,7 +1,7 @@
 :host {
   display: block;
   min-height: 100vh;
-  background-color: var(--bg-color); 
+  background-color: var(--colorFondo); 
   transition: background-color 0.3s;
 }
 
@@ -14,20 +14,20 @@
 .quote-header, .gallery-header { 
   text-align: center; 
   margin-bottom: 40px; 
-  color: var(--text-main);
+  color: var(--textoPrincipal);
 }
 
 .highlight { 
-  color: var(--primary); 
+  color: var(--colorPrimario); 
 }
 
 
 input, select { 
   width: 100%; 
   padding: 10px; 
-  background-color: var(--input-bg);
-  border: 1px solid var(--border-color); 
-  color: var(--text-main);
+  background-color: var(--fondoInput);
+  border: 1px solid var(--colorBorde); 
+  color: var(--textoPrincipal);
   border-radius: 6px; 
   margin-bottom: 15px; 
   outline: none;
@@ -35,11 +35,11 @@ input, select {
 }
 
 input:focus, select:focus {
-  border-color: var(--primary);
+  border-color: var(--colorPrimario);
 }
 
 .btn-primary, .btn-calculate, .btn-share { 
-  background-color: var(--primary); 
+  background-color: var(--colorPrimario); 
   color: white;
   padding: 12px 20px; 
   border: none; 
@@ -51,7 +51,7 @@ input:focus, select:focus {
 }
 
 .btn-primary:hover, .btn-calculate:hover, .btn-share:hover {
-  background-color: var(--primary-hover);
+  background-color: var(--colorPrimarioHover);
 }
 
 .btn-share { 
@@ -67,7 +67,7 @@ input:focus, select:focus {
 }
 
 .upload-zone { 
-  border: 2px dashed var(--primary); 
+  border: 2px dashed var(--colorPrimario); 
   padding: 50px; 
   text-align: center; 
   border-radius: 12px; 
@@ -81,12 +81,12 @@ input:focus, select:focus {
 }
 
 .config-panel { 
-  background-color: var(--card-bg);
+  background-color: var(--fondoTarjeta);
   padding: 30px; 
   border-radius: 12px; 
-  border: 1px solid var(--border-color); 
-  color: var(--text-main);
-  box-shadow: 0 4px 12px var(--shadow);
+  border: 1px solid var(--colorBorde); 
+  color: var(--textoPrincipal);
+  box-shadow: 0 4px 12px var(--sombra);
 }
 
 .price-result { 
@@ -112,23 +112,23 @@ input:focus, select:focus {
 
 .upload-content { 
   text-align: center; 
-  color: var(--text-main);
+  color: var(--textoPrincipal);
 }
 
 .upload-content h3 { 
-  color: var(--text-main);
+  color: var(--textoPrincipal);
   font-size: 1.2rem; 
   margin-bottom: 10px; 
 }
 
 .upload-content p { 
-  color: var(--text-muted);
+  color: var(--textoSecundario);
   margin-bottom: 20px; 
 }
 
 .icon { 
   font-size: 3rem; 
-  color: var(--primary); 
+  color: var(--colorPrimario); 
   margin-bottom: 15px; 
 }
 

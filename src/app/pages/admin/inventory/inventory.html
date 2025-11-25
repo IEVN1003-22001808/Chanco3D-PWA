@@ -1,41 +1,12 @@
-<div class="admin-layout">
-  <aside class="admin-sidebar">
-    <div class="sidebar-header"><h3>CHANCO<span class="highlight">ADMIN</span></h3></div>
-    <nav class="sidebar-nav">
-      <a routerLink="/admin" 
-         class="nav-item" 
-         routerLinkActive="active" 
-         [routerLinkActiveOptions]="{exact: true}">
-         Dashboard General
-      </a>
-      <a routerLink="/admin/inventory" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Inventario
-      </a>
-      <a routerLink="/admin/metrics" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Métricas
-      </a>
-      <a routerLink="/admin/suppliers" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Proveedores
-      </a>
-      <a routerLink="/home" class="nav-item return">
-         Volver a la Tienda
-      </a>
-    </nav>
-  </aside>
+<div class="disenoAdmin">
 
-  <main class="admin-content">
-    <div class="content-header-row">
+  <main class="contenidoAdmin">
+    <div class="filaEncabezadoContenido">
       <h1>Gestión de Insumos</h1>
-      <button class="btn-primary">+ Agregar Insumo</button>
+      <button class="btnPrimario">+ Agregar Insumo</button>
     </div>
 
-    <div class="inventory-card">
+    <div class="tarjetaInventario">
       <table>
         <thead>
           <tr>
@@ -49,7 +20,7 @@
         <tbody>
           <tr *ngFor="let item of inventoryItems">
             <td>
-              <div class="item-info">
+              <div class="infoItem">
                 <strong>{{ item.name }}</strong>
                 <small>Lote: {{ item.batch }}</small>
               </div>
@@ -58,17 +29,17 @@
             <td>{{ item.stock }} {{ item.unit }}</td>
             <td>{{ item.expiryDate }}</td>
             <td>
-              <span class="status-badge" 
-                [class.danger]="isExpired(item.expiryDate)" 
-                [class.warning]="isNearExpiry(item.expiryDate)"
-                [class.success]="!isNearExpiry(item.expiryDate)">
+              <span class="etiquetaEstado" 
+                [class.peligro]="isExpired(item.expiryDate)" 
+                [class.advertencia]="isNearExpiry(item.expiryDate)"
+                [class.exito]="!isNearExpiry(item.expiryDate)">
                 {{ getStatus(item.expiryDate) }}
               </span>
             </td>
             <td>
-              <button class="btn-icon" title="Entrada">+</button>
-              <button class="btn-icon" title="Salida">-</button>
-              <button class="btn-icon delete">🗑</button>
+              <button class="btnIcono" title="Entrada">+</button>
+              <button class="btnIcono" title="Salida">-</button>
+              <button class="btnIcono eliminar">🗑</button>
             </td>
           </tr>
         </tbody>

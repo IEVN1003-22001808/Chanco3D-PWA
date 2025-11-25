@@ -1,59 +1,59 @@
-<nav class="navbar">
-  <div class="navbar-container">
-    <a routerLink="/home" class="navbar-logo">
-      CHANCO<span class="highlight">3D</span>
+<nav class="barraNavegacion">
+  <div class="contenedorBarra">
+    <a routerLink="/home" class="logoBarra">
+      CHANCO<span class="resaltado">3D</span>
     </a>
 
-    <ul class="nav-menu">
-      <li class="nav-item">
-        <a routerLink="/home" routerLinkActive="active" class="nav-links">Inicio</a>
+    <ul class="menuNavegacion">
+      <li class="itemNavegacion">
+        <a routerLink="/home" routerLinkActive="activo" class="enlaceNavegacion">Inicio</a>
       </li>
 
       @if (!isAdmin) {
-        <li class="nav-item">
-          <a [routerLink]="['/shop/catalog']" routerLinkActive="active" class="nav-links">Tienda</a>
+        <li class="itemNavegacion">
+          <a [routerLink]="['/shop/catalog']" routerLinkActive="activo" class="enlaceNavegacion">Tienda</a>
         </li>
-        <li class="nav-item">
-          <a [routerLink]="['/services/community']" routerLinkActive="active" class="nav-links">Galería</a>
+        <li class="itemNavegacion">
+          <a [routerLink]="['/services/community']" routerLinkActive="activo" class="enlaceNavegacion">Galería</a>
         </li>
-        <li class="nav-item">
-          <a [routerLink]="['/services/quote']" routerLinkActive="active" class="nav-links">Cotizador</a>
+        <li class="itemNavegacion">
+          <a [routerLink]="['/services/quote']" routerLinkActive="activo" class="enlaceNavegacion">Cotizador</a>
         </li>
-        <li class="nav-item">
-          <a [routerLink]="['/services/suggestions']" routerLinkActive="active" class="nav-links">Sugerencias</a>
+        <li class="itemNavegacion">
+          <a [routerLink]="['/services/suggestions']" routerLinkActive="activo" class="enlaceNavegacion">Sugerencias</a>
         </li>
       }
 
       @if (isAdmin) {
-        <li class="nav-item">
-          <a [routerLink]="['/admin']" routerLinkActive="active" class="nav-links" style="color: #ff4d4d;">Panel Admin</a>
+        <li class="itemNavegacion">
+          <a [routerLink]="['/admin']" routerLinkActive="activo" class="enlaceNavegacion enlaceAdmin">Panel Admin</a>
         </li>
       }
     </ul>
 
-    <div class="nav-actions">
+    <div class="accionesNavegacion">
       @if (!isAdmin) {
-        <a [routerLink]="['/shop/cart']" class="icon-btn" title="Carrito">
-          🛒 <span class="badge">0</span>
+        <a [routerLink]="['/shop/cart']" class="btnIcono" title="Carrito">
+          <img src="https://i.ibb.co/rKSvrGGk/carrito-de-compras-1.png" alt="" style="width: 30px;"> <span class="etiquetaConteo">0</span>
         </a>
       }
 
       @if (!isLoggedIn) {
-        <a [routerLink]="['/auth/login']" class="btn-primary">Ingresar</a>
+        <a [routerLink]="['/auth/login']" class="btnPrimario">Ingresar</a>
       }
 
       @if (isLoggedIn) {
-        <button (click)="logout()" class="btn-primary" style="background-color: #dc3545;">Salir</button>
+        <button (click)="logout()" class="btnPrimario btnSalir">Salir</button>
       }
     </div>
   </div>
 
-  <div class="theme-switch-wrapper">
-    <label class="theme-switch" for="checkbox">
+  <div class="contenedorSwitchTema">
+    <label class="switchTema" for="checkbox">
       <input type="checkbox" id="checkbox" (change)="toggleTheme()" [checked]="isDarkMode" />
-      <div class="slider round">
-        <span class="icon-sun">☀️</span>
-        <span class="icon-moon">🌙</span>
+      <div class="deslizador redondo">
+        <span class="iconoSol">☀</span>
+        <span class="iconoLuna">🌒︎</span>
       </div>
     </label>
   </div>

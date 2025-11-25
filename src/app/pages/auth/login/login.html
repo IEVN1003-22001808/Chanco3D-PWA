@@ -1,17 +1,15 @@
-<div class="auth-container">
-  <div class="auth-card">
-    <div class="auth-header">
+<div class="contenedorAutenticacion">
+  <div class="tarjetaAutenticacion">
+    <div class="encabezadoAutenticacion">
       <h2>Bienvenido Maker</h2>
       <p>Ingresa para materializar tus ideas</p>
     </div>
 
     <form [formGroup]="formLogin" (ngSubmit)="login()">
 
-      <div class="form-group">
+      <div class="grupoFormulario">
         <label for="email">Correo Electrónico</label>
-        <div class="input-wrapper">
-          <span class="input-icon">✉️</span>
-
+        <div class="contenedorInput">
           <input
             type="email"
             formControlName="email"
@@ -19,36 +17,35 @@
           >
         </div>
         @if (formLogin.get('email')?.invalid && formLogin.get('email')?.touched) {
-          <small class="error-text" style="color: red; font-size: 0.8rem;">Correo inválido o vacío</small>
+          <small class="textoError" style="color: red; font-size: 0.8rem;">Correo inválido o vacío</small>
         }
       </div>
 
-      <div class="form-group">
+      <div class="grupoFormulario">
         <label for="password">Contraseña</label>
-        <div class="input-wrapper">
-          <span class="input-icon">🔒</span>
-
+        <div class="contenedorInput">
+          <span class="iconoInput"><img src="https://cdn-icons-png.flaticon.com/128/8638/8638613.png" alt="" style="width: 20px;" class="c"></span>
           <input
             type="password"
             formControlName="password"
             placeholder="••••••••"
           >
         </div>
-        <div class="forgot-pass">
+        <div class="olvidarContrasena">
           <a href="#">¿Olvidaste tu contraseña?</a>
         </div>
          @if (formLogin.get('password')?.invalid && formLogin.get('password')?.touched) {
-          <small class="error-text" style="color: red; font-size: 0.8rem;">La contraseña es requerida</small>
+          <small class="textoError" style="color: red; font-size: 0.8rem;">La contraseña es requerida</small>
         }
       </div>
 
-      <button type="submit" class="btn-submit">
+      <button type="submit" class="btnIngresar">
         INGRESAR
       </button>
 
     </form>
 
-    <div class="auth-footer">
+    <div class="pieAutenticacion">
       <p>¿No tienes cuenta? <a [routerLink]="['/auth/register']">Regístrate aquí</a></p>
     </div>
   </div>

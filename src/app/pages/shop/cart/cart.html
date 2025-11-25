@@ -1,7 +1,7 @@
 <div class="contenedorCarrito">
   <h1 class="tituloPagina">Tu Carrito</h1>
 
-  <div class="grillaCarrito" *ngIf="cartItems.length > 0; else carritoVacio">
+  <div class="Carrito" *ngIf="cartItems.length > 0; else carritoVacio">
     <div class="itemsCarrito">
       <div class="tarjetaItem" *ngFor="let item of cartItems; let i = index">
         <div class="imagenItem">
@@ -20,7 +20,7 @@
             <span>{{ item.quantity }}</span>
             <button (click)="increaseQty(item)">+</button>
           </div>
-          <button class="btnEliminar" (click)="removeItem(i)">Eliminar</button>
+          <button class="btnEliminar" (click)="removeItem(i)">Eliminar 🗑</button>
         </div>
 
         <div class="totalItem">
@@ -47,7 +47,6 @@
         </div>
 
         <button class="btnPago">PROCEDER AL PAGO</button>
-        <p class="notaSeguridad">Pago 100% Seguro y Encriptado</p>
       </div>
     </div>
   </div>

@@ -32,7 +32,7 @@ export class SuggestionsBoxComponent {
         user: 'Tú (Maker)'
       });
       
-      // Limpiar formulario
+  
       this.newSuggestion = { title: '', origin: '', details: '' };
       alert('¡Gracias! Tu idea ha sido enviada al buzón. 📬');
     } else {

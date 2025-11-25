@@ -29,7 +29,7 @@ export const routes: Routes = [
       import('./pages/admin/admin.routes').then(m => m.default)
   },
 
-  // Rutas: /services/quote, /services/community
+  // Rutas: /services/quote, /services/community, service/suggestions
   {
     path: 'services',
     loadChildren: () =>
