@@ -12,7 +12,7 @@
   color: var(--textoPrincipal); 
 }
 
-/* Estilos de la Barra Lateral */
+
 .barraLateralAdmin { 
   width: 250px; 
   background-color: var(--fondoTarjeta);
@@ -20,9 +20,11 @@
   padding: 20px; 
   display: flex; 
   flex-direction: column; 
-  position: sticky; /* Opcional: para que se quede fija al hacer scroll */
+  position: sticky; 
   top: 0;
-  height: 100vh;
+  height: 100vh; 
+  overflow-y: auto; 
+  flex-shrink: 0; 
 }
 
 .encabezadoLateral h3 { 
@@ -31,7 +33,9 @@
   letter-spacing: 2px; 
 }
 
-.resaltado { color: var(--colorPrimario); }
+.resaltado { 
+  color: var(--colorPrimario); 
+}
 
 .itemNavegacion { 
   display: block; 
@@ -44,7 +48,7 @@
 }
 
 .itemNavegacion:hover { 
-  background-color: var(--fondoInput);
+  background-color: var(--fondoInput); 
   color: var(--textoPrincipal); 
 }
 
@@ -58,10 +62,9 @@
   border: 1px solid var(--colorBorde); 
 }
 
-/* Estilo del Contenedor Principal donde se inyectan las páginas */
 .contenidoAdmin { 
   flex: 1; 
-  padding: 40px; 
-  overflow-y: auto; 
-  height: 100vh;
+  padding: 40px;
+
+  min-width: 0; 
 }

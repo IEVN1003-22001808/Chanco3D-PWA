@@ -27,10 +27,22 @@ export default [
         path: 'suppliers',
         loadComponent: () => import('./suppliers/suppliers').then(m => m.SuppliersComponent)
       },
-       {
+      {
         path: 'suggestion',
         loadComponent: () => import('./suggestion/suggestion').then(m => m.SuggestionComponent)
-      }
+      },
+      {
+        path: 'suggestions',
+        loadComponent: () => import('./suggestions/suggestions').then(m => m.SuggestionsComponent)
+      },
+      {
+        path: 'products',
+        loadComponent: () => import('./products/products').then(m => m.ProductsComponent)
+      },
+      {
+        path: 'gallery',
+        loadComponent: () => import('./gallery/gallery').then(m => m.GalleryComponent)
+      },
     ]
   }
 ] as Routes;

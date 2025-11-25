@@ -24,18 +24,18 @@
     <div class="columnaFinal">
       <h3>Explora</h3>
       <ul class="enlacesFinal">
-        <li><a routerLink="/home">Inicio</a></li>
-        <li><a routerLink="/catalog">Catálogo de Productos</a></li>
-        <li><a routerLink="/quote">Cotizador 3D</a></li>
-        <li><a routerLink="/community">Galería de la Comunidad</a></li>
+        <li><a [routerLink]="['/home']">Inicio</a></li>
+        <li><a [routerLink]="['/shop/catalog']">Catálogo de Productos</a></li>
+        <li><a [routerLink]="['/services/quote']">Cotizador 3D</a></li>
+        <li><a [routerLink]="['/services/community']">Galería de la Comunidad</a></li>
       </ul>
     </div>
 
     <div class="columnaFinal">
       <h3>Soporte</h3>
       <ul class="enlacesFinal">
-        <li><a routerLink="/contact">Contacto</a></li>
-        <li><a href="#">Términos y Condiciones</a></li>
+        <li><a [routerLink]="['/contact']">Contacto</a></li>
+        <li><a [routerLink]="['/auth/terms-conditions']">Términos y Condiciones</a></li>
       </ul>
     </div>
 

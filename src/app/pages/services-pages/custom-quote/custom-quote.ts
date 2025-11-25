@@ -18,9 +18,12 @@ export class CustomQuoteComponent {
   // Datos del formulario
   selectedMaterial = 'standard';
   height: number | null = null;
-  infill = '50';
+  infill = '20'; // Por defecto ligero
   quantity = 1;
-  estimatedPrice = 0;
+  totalPrice = 0;
+
+  // Historial de Cotizaciones (Mock Data inicial vacío)
+  quoteHistory: any[] = [];
 
   // Eventos Drag & Drop
   onDragOver(e: Event) { e.preventDefault(); this.isDragging = true; }
@@ -36,8 +39,8 @@ export class CustomQuoteComponent {
   }
 
   handleFile(file: File) {
-    if (!file.name.toLowerCase().endsWith('.stl')) {
-      alert('Solo se permiten archivos .STL');
+    if (!file.name.toLowerCase().endsWith('.stl') && !file.name.toLowerCase().endsWith('.obj')) {
+      alert('Solo se permiten archivos .STL o .OBJ');
       return;
     }
     this.fileSelected = true;
@@ -48,21 +51,68 @@ export class CustomQuoteComponent {
   removeFile() {
     this.fileSelected = false;
     this.fileName = '';
-    this.estimatedPrice = 0;
+    this.totalPrice = 0;
   }
 
   calculatePrice(e: Event) {
     e.preventDefault();
-    if (!this.height) {
-      alert('Por favor ingresa la altura deseada.');
+    if (!this.height || !this.fileSelected) {
+      alert('Sube un archivo e ingresa la altura.');
       return;
     }
     
-    // Algoritmo "Fake" de cotización basado en altura y material
-    const baseRate = this.selectedMaterial === '8k' ? 15 : 8; // Costo por cm
-    const volumeFactor = this.height * 1.5; 
-    const infillFactor = parseInt(this.infill) / 50;
+    // --- FÓRMULA DE COTIZACIÓN ---
     
-    this.estimatedPrice = (volumeFactor * baseRate * infillFactor) * this.quantity;
+    // 1. Costo Base por cm de altura (aprox)
+    const baseCostPerCm = 15; 
+
+    // 2. Multiplicador de Material [cite: 43]
+    let materialFactor = 1;
+    switch(this.selectedMaterial) {
+      case 'standard': materialFactor = 1; break; // Resina Gris
+      case 'tough': materialFactor = 1.3; break; // Alta resistencia
+      case 'clear': materialFactor = 1.4; break; // Transparente
+      case '8k': materialFactor = 1.8; break; // Alta Definición (Más caro)
+    }
+
+    // 3. Multiplicador de Relleno (Más resina = más caro)
+    let infillFactor = 1;
+    switch(this.infill) {
+      case '20': infillFactor = 1.0; break;
+      case '50': infillFactor = 1.4; break;
+      case '100': infillFactor = 2.0; break; // Pieza sólida
+    }
+
+    // Cálculo final
+    const unitPrice = (this.height * baseCostPerCm * materialFactor * infillFactor);
+    this.totalPrice = unitPrice * this.quantity;
+
+    // --- GUARDAR EN HISTORIAL ---
+    this.addToHistory();
+  }
+
+  addToHistory() {
+    const newQuote = {
+      id: Date.now(), // ID temporal
+      file: this.fileName,
+      settings: `${this.getMaterialName(this.selectedMaterial)} - ${this.infill}%`,
+      qty: this.quantity,
+      total: this.totalPrice,
+      date: new Date().toLocaleDateString()
+    };
+    
+    // Agregamos al inicio de la lista
+    this.quoteHistory.unshift(newQuote);
+  }
+
+  // Helper para mostrar nombre bonito
+  getMaterialName(slug: string): string {
+    const names: {[key: string]: string} = {
+      'standard': 'Resina Estándar',
+      'tough': 'Resina Tough',
+      'clear': 'Resina Clear',
+      '8k': 'Resina 8K'
+    };
+    return names[slug] || slug;
   }
 }

@@ -1,0 +1,44 @@
+<div class="disenoAdmin">
+  <main class="contenidoAdmin">
+    <div class="filaEncabezadoContenido">
+      <h1>Gestión de Sugerencias</h1>
+      <p>Revisa las ideas de la comunidad y actualiza su estado.</p>
+    </div>
+
+    <div class="tarjetaInventario">
+      <table>
+        <thead>
+          <tr>
+            <th>Idea / Personaje</th>
+            <th>Origen</th>
+            <th>Usuario</th>
+            <th>Fecha</th>
+            <th>Estado Actual</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of suggestions">
+            <td><strong>{{ s.title }}</strong></td>
+            <td><span class="etiquetaOrigen">{{ s.origin }}</span></td>
+            <td>{{ s.user }}</td>
+            <td>{{ s.date }}</td>
+            <td>
+              <span class="etiquetaEstado" [ngClass]="getClass(s.status)">
+                {{ s.status }}
+              </span>
+            </td>
+            <td>
+              <select [ngModel]="s.status" (ngModelChange)="updateStatus(s, $event)" class="selectorEstado">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En Revisión">En Revisión</option>
+                <option value="Aprobada">Aprobada</option>
+                <option value="Rechazada">Rechazada</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>

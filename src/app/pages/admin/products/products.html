@@ -1,0 +1,91 @@
+<div class="disenoAdmin">
+  <main class="contenidoAdmin">
+    <div class="filaEncabezadoContenido">
+      <h1>Gestión de Catálogo</h1>
+      <button class="btnPrimario" (click)="abrirModal()">+ Nuevo Producto</button>
+    </div>
+
+    <div class="tarjetaInventario">
+      <table>
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre del Producto</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>
+              <div class="img-preview">
+                <img [src]="product.image" alt="preview">
+              </div>
+            </td>
+            <td>
+              <strong>{{ product.name }}</strong>
+              <div class="category-badge">{{ product.category }}</div>
+            </td>
+            <td>
+              <p class="desc-text">{{ product.description }}</p>
+            </td>
+            <td class="price-text">
+              {{ product.price | currency:'MXN' }}
+            </td>
+            <td>
+              <button class="btnIcono" title="Editar" (click)="editarProducto(product)">✎</button>
+              <button class="btnIcono eliminar" title="Eliminar" (click)="deleteProduct(product.id)">🗑</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <div class="superposicionModal" *ngIf="mostrarModal">
+    <div class="tarjetaModal">
+      <div class="encabezadoModal">
+        <h3>{{ editingId ? 'Editar Producto' : 'Registrar Nuevo Producto' }}</h3>
+        <button class="btnCerrar" (click)="cerrarModal()">✖</button>
+      </div>
+      
+      <form (submit)="guardarProducto()">
+        <div class="grupoFormulario">
+          <label>Nombre del Producto</label>
+          <input type="text" [(ngModel)]="nuevoProducto.name" name="name" required>
+        </div>
+
+        <div class="filaFormulario">
+          <div class="grupoFormulario mitad">
+            <label>Categoría</label>
+            <select [(ngModel)]="nuevoProducto.category" name="category">
+              <option value="Figuras">Figuras</option>
+              <option value="Tabletop">Tabletop / D&D</option>
+              <option value="Accesorios">Accesorios</option>
+              <option value="Ingeniería">Ingeniería</option>
+            </select>
+          </div>
+          <div class="grupoFormulario mitad">
+            <label>Precio (MXN)</label>
+            <input type="number" [(ngModel)]="nuevoProducto.price" name="price" required min="0">
+          </div>
+        </div>
+
+        <div class="grupoFormulario">
+          <label>URL de Imagen</label>
+          <input type="text" [(ngModel)]="nuevoProducto.image" name="image" placeholder="https://...">
+        </div>
+
+        <div class="grupoFormulario">
+          <label>Descripción</label>
+          <textarea rows="3" [(ngModel)]="nuevoProducto.description" name="description"></textarea>
+        </div>
+
+        <button type="submit" class="btnPrimario anchoTotal">
+          {{ editingId ? 'Guardar Cambios' : 'Publicar en Tienda' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

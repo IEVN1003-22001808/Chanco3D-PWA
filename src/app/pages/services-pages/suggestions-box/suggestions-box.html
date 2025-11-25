@@ -31,21 +31,24 @@
       </div>
     </section>
 
-    <section class="tableroEstado">
-      <h3>Estado de las Ideas</h3>
+    <section class="status-board">
+      <h3>Próximos Proyectos (Aprobados)</h3>
       
-      <div class="listaSugerencias">
-        <div class="tarjetaSugerencia" *ngFor="let item of suggestions">
-          <div class="encabezadoTarjeta">
+      <div class="suggestions-list">
+        <div class="suggestion-card" *ngFor="let item of publicSuggestions">
+          <div class="card-header">
             <h4>{{ item.title }}</h4>
-            <span class="etiquetaOrigen">{{ item.origin }}</span>
+            <span class="origin-tag">{{ item.origin }}</span>
           </div>
           
-          <div class="etiquetaEstado" [ngClass]="getStatusClass(item.status)">
-            <span class="punto">●</span> {{ item.status }}
+          <div class="card-footer">
+            <p class="author">Sugerido por: {{ item.user }}</p>
+            <small class="date">{{ item.date }}</small>
           </div>
-          
-          <p class="autor">Sugerido por: {{ item.user }}</p>
+        </div>
+        
+        <div *ngIf="publicSuggestions.length === 0" class="no-results">
+          <p>Aún no hay sugerencias aprobadas. ¡Envía la tuya!</p>
         </div>
       </div>
     </section>

@@ -36,5 +36,10 @@ export const routes: Routes = [
       import('./pages/services-pages/services.routes').then(m => m.default)
   },
 
+  {
+    path: 'contact',
+    loadComponent: () => import('./pages/contact/contact').then(m => m.Contact)
+  },
+
 
 ];

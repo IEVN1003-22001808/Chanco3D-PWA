@@ -21,7 +21,7 @@
           <input type="text" placeholder="Teléfono" [(ngModel)]="newSupplier.phone">
           <input type="text" placeholder="Insumos que vende (separados por coma)" [(ngModel)]="newSupplier.supplies">
         </div>
-        <button class="btnGuardar" (click)="addSupplier()">Guardar Proveedor</button>
+        <button class="btnGuardar" (click)="saveSupplier()">Guardar Proveedor</button>
       </div>
     </section>
 
@@ -32,7 +32,8 @@
             <th>ID</th>
             <th>Empresa</th>
             <th>Contacto Directo</th>
-            <th>Insumos Surtidos</th> <th>Acciones</th>
+            <th>Insumos Surtidos</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -49,14 +50,14 @@
               <div class="etiquetaTelefono">{{ s.phone }}</div>
             </td>
             <td>
-              <div class="contenedorEtiquetas">
-                <span class="etiquetaInsumo" *ngFor="let supply of s.supplies">{{ supply }}</span>
+              <div class="contenedorTags">
+                <span class="tagInsumo" *ngFor="let supply of s.supplies">{{ supply }}</span>
               </div>
             </td>
             <td>
-              <div class="botonesAccion">
-                <button class="btnIcono editar">✎</button>
-                <button class="btnIcono eliminar" (click)="deleteSupplier(s.id)">🗑</button>
+              <div class="acciones">
+                <button class="btnIcono editar" title="Editar" (click)="editSupplier(s)">✎</button>
+                <button class="btnIcono eliminar" title="Eliminar" (click)="deleteSupplier(s.id)">🗑</button>
               </div>
             </td>
           </tr>

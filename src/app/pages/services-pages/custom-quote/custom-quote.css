@@ -127,7 +127,7 @@ input:focus, select:focus {
 }
 
 .icon { 
-  font-size: 3rem; 
+  font-size: 5rem; 
   color: var(--colorPrimario); 
   margin-bottom: 15px; 
 }
@@ -137,4 +137,64 @@ input:focus, select:focus {
   .quote-grid { 
     grid-template-columns: 1fr; 
   } 
+}
+
+.history-card {
+  margin-top: 30px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.history-card h3 {
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+
+th { 
+  text-align: left; 
+  color: var(--text-muted); 
+  padding: 8px; 
+  font-size: 0.8rem;
+}
+
+td { 
+  padding: 10px 8px; 
+  border-bottom: 1px solid var(--border-color); 
+  color: var(--text-main);
+}
+
+.price-cell {
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.btn-add-cart {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  background-color: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-add-cart:hover {
+  background-color: var(--primary);
+  color: white;
 }

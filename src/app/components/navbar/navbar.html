@@ -34,7 +34,8 @@
     <div class="accionesNavegacion">
       @if (!isAdmin) {
         <a [routerLink]="['/shop/cart']" class="btnIcono" title="Carrito">
-          <img src="https://i.ibb.co/rKSvrGGk/carrito-de-compras-1.png" alt="" style="width: 30px;"> <span class="etiquetaConteo">0</span>
+          <i class="iconoCar bi bi-cart2"></i>
+          <span class="etiquetaConteo">0</span>
         </a>
       }
 
@@ -52,8 +53,10 @@
     <label class="switchTema" for="checkbox">
       <input type="checkbox" id="checkbox" (change)="toggleTheme()" [checked]="isDarkMode" />
       <div class="deslizador redondo">
-        <span class="iconoSol">☀</span>
-        <span class="iconoLuna">🌒︎</span>
+        <i class="iconoSol bi bi-brightness-high-fill"></i>
+        <!-- ícono de https://emojicombos.com/sol  -->
+        <i class="iconoLuna bi bi-moon-fill"></i>
+        <!-- ícono de https://emojicombos.com/luna -->
       </div>
     </label>
   </div>

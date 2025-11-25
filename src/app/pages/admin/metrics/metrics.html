@@ -1,5 +1,4 @@
 <div class="disenoAdmin">
-  
 
   <main class="contenidoAdmin">
     <header class="encabezadoContenido">
@@ -8,8 +7,7 @@
     </header>
 
     <section class="seccionCarga">
-      <div class="cajaCarga" [class.arrastrando]="isDragging">
-        <div class="icono">🡅</div>
+      <div class="cajaCarga">
         <h3>Sube tu archivo CSV aquí</h3>
         <p>Arrastra el archivo o haz clic para buscar</p>
         <input type="file" accept=".csv" (change)="onFileSelected($event)">
@@ -17,7 +15,7 @@
       
       <div class="estadoArchivo" *ngIf="fileName">
         <span class="nombreArchivo">{{ fileName }}</span>
-        <button class="btnPrimario" (click)="processData()">Procesar Datos</button>
+        <button class="btnPrimario" (click)="processData()">Ejecutar Análisis</button>
       </div>
     </section>
 
@@ -25,42 +23,15 @@
       
       <div class="tarjetaGrafico">
         <h3>Popularidad por Figura</h3>
-        <div class="graficoBarras">
-          <div class="grupoBarra">
-            <div class="barra" style="height: 85%;"></div>
-            <span class="etiqueta">Hollow K.</span>
-          </div>
-          <div class="grupoBarra">
-            <div class="barra" style="height: 45%;"></div>
-            <span class="etiqueta">D&D Pack</span>
-          </div>
-          <div class="grupoBarra">
-            <div class="barra resaltado" style="height: 95%;"></div> <span class="etiqueta">Guardian</span>
-          </div>
-          <div class="grupoBarra">
-            <div class="barra" style="height: 60%;"></div>
-            <span class="etiqueta">Pokemon</span>
-          </div>
-          <div class="grupoBarra">
-            <div class="barra" style="height: 30%;"></div>
-            <span class="etiqueta">Soporte</span>
-          </div>
+        <div class="contenedorCanvas">
+          <canvas #barCanvas></canvas>
         </div>
       </div>
 
       <div class="tarjetaGrafico">
         <h3>Interacciones por Ciudad</h3>
-        <div class="contenedorMapa">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1200px-World_map_-_low_resolution.svg.png" alt="Mapa de calor" class="imagenMapa">
-          
-          <div class="puntoCaliente" style="top: 40%; left: 25%;" title="León"></div>
-          <div class="puntoCaliente" style="top: 35%; left: 28%;" title="CDMX"></div>
-          <div class="puntoCaliente" style="top: 38%; left: 22%;" title="Guadalajara"></div>
-        </div>
-        <div class="leyendaMapa">
-          <span>León: 45%</span>
-          <span>CDMX: 30%</span>
-          <span>GDL: 25%</span>
+        <div class="contenedorCanvas">
+          <canvas #pieCanvas></canvas>
         </div>
       </div>
 

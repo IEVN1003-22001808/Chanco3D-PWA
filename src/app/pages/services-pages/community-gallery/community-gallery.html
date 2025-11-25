@@ -18,13 +18,16 @@
   </div>
 
   <div class="Galeria">
-    <div class="itemGaleria" *ngFor="let post of posts">
+    <div class="itemGaleria" *ngFor="let post of approvedPosts">
       <img [src]="post.image" [alt]="post.title">
       <div class="capa">
         <h3>{{ post.title }}</h3>
         <p>Por: {{ post.author }}</p>
-        <span class="meGusta">❤ {{ post.likes }}</span>
       </div>
     </div>
+  </div>
+  
+  <div *ngIf="approvedPosts.length === 0" class="no-results">
+    <p>Aún no hay creaciones aprobadas. ¡Sé el primero!</p>
   </div>
 </div>

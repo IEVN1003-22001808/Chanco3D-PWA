@@ -179,3 +179,8 @@ input:checked + .deslizador:before {
   z-index: 1;
   user-select: none;
 }
+
+.iconoCar {
+  color: var(--textoPrincipal);
+  font-size: 30px;
+}
