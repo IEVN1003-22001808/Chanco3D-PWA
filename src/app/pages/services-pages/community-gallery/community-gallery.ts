@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+declare var instgrm: any;
 
 @Component({
   selector: 'app-community-gallery',
@@ -10,40 +13,77 @@ import { RouterLink } from '@angular/router';
   templateUrl: './community-gallery.html',
   styleUrl: './community-gallery.css'
 })
-export class CommunityGalleryComponent {
+export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
   showForm = false;
-  
+
   // Objeto para nuevo post
   newPost = { title: '', description: '', image: '' };
 
-  // Mock Data de la comunidad
-  posts = [
-    { title: 'Caballero Blanco', author: 'MasterPainter', image: 'https://images.unsplash.com/photo-1663120788441-23335e40dea7?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', status: 'Aprobada' },
-    { title: 'Golem de Pantano', author: 'Rogelio', image: 'https://i.etsystatic.com/41836915/r/il/f83fed/6972103517/il_794xN.6972103517_tt8l.jpg', status: 'Aprobada' },
-    { title: 'Mecha Suit', author: 'GeorgeL', image: 'https://p.turbosquid.com/ts-thumb/Jn/Egzosx/NP/bhwts11/jpg/1636663200/1920x1080/fit_q99/686f4fca135930e37f7317e52cf11cac303050da/bhwts11.jpg', status: 'Aprobada' },
-    { title: 'Cerebro Venoso y grueso', author: 'Troll', image: 'https://cbx-prod.b-cdn.net/COLOURBOX8224180.jpg?width=800&height=800&quality=70', status: 'Rechazada'},
-    { title: 'Baby Yoda 8K', author: 'Leo3D', image: 'https://p.turbosquid.com/ts-thumb/Z2/YLcrod/w9/grogubabyyodabowlreadyto3dprint_tournaround_00/jpg/1619093787/1920x1080/fit_q99/1631e16db9a56bba2b54d18584fed994c2ceaecf/grogubabyyodabowlreadyto3dprint_tournaround_00.jpg', status: 'Aprobada' }
+  // Ahora definimos la estructura con un campo extra opcional 'safeHtml'
+  posts: any[] = [
+    { title: 'Figura Anime', author: 'Maker1', image: 'https://www.instagram.com/p/DNCVgWDuCiw/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', status: 'Aprobada' },
+    { title: 'Setup 3D', author: 'Rogelio', image: 'https://www.instagram.com/p/DNOpgacP_EU/', status: 'Aprobada' },
+    { title: 'Error de impresión', author: 'Troll', image: 'https://www.instagram.com/p/DNCVgWDuCiw/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', status: 'Rechazada'},
+    { title: 'Modelo Custom', author: 'ClienteX', image: 'https://www.instagram.com/p/DNOpgacP_EU/', status: 'Aprobada' }
   ];
 
+  constructor(private sanitizer: DomSanitizer) {}
+
+  // 1. Calculamos el HTML seguro AL INICIAR, una sola vez.
+  ngOnInit(): void {
+    this.posts.forEach(post => {
+      post.safeHtml = this.generateSafeHtml(post.image);
+    });
+  }
+
+  // 2. Solo devolvemos los que ya están aprobados
   get approvedPosts() {
     return this.posts.filter(post => post.status === 'Aprobada');
   }
 
+  // 3. Controlamos que Instagram procese los embeds sin volverse loco
+  ngAfterViewChecked(): void {
+    if (typeof instgrm !== 'undefined') {
+        // Usamos setTimeout para sacarlo del ciclo de detección de cambios de Angular
+        setTimeout(() => {
+            instgrm.Embeds.process();
+        }, 0);
+    }
+  }
+
+  // Función auxiliar privada (ya no se llama desde el HTML)
+  private generateSafeHtml(url: string): SafeHtml {
+    const cleanUrl = url.split('?')[0];
+    const html = `
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="${cleanUrl}"
+        data-instgrm-version="14"
+        style="background:#FFF; border:0; margin: 1px; max-width:540px; min-width:326px; width:calc(100% - 2px);">
+      </blockquote>
+    `;
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
   publishPost() {
-    if(!this.newPost.image.startsWith('http')) {
-      alert('La URL de la imagen no es válida');
+    const instagramRegex = /^https:\/\/(www\.)?instagram\.com\/p\/[a-zA-Z0-9_-]+\/?/;
+
+    if(!instagramRegex.test(this.newPost.image)) {
+      alert('URL inválida');
       return;
     }
-    // Agregamos al inicio (simulado)
-    this.posts.unshift({
+
+    // Al crear uno nuevo, le generamos su HTML seguro al momento
+    const nuevoPost = {
       title: this.newPost.title,
       author: 'Tú (Maker)',
       image: this.newPost.image,
-      status: 'Pendiente' // <--- IMPORTANTE: No se verá hasta que el Admin apruebe
-    });
+      status: 'Pendiente',
+      safeHtml: this.generateSafeHtml(this.newPost.image) // <--- Generamos aquí
+    };
 
+    this.posts.unshift(nuevoPost);
     this.showForm = false;
     this.newPost = { title: '', description: '', image: '' };
-    alert('¡Tu creación ha sido enviada a moderación! (Simulado)');
+    alert('¡Enviado a moderación!');
   }
 }

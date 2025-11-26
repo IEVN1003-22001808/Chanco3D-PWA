@@ -1,17 +1,15 @@
 <div class="disenoAdmin">
-
   <main class="contenidoAdmin">
     <div class="filaEncabezadoContenido">
       <h1>Moderación de Galería</h1>
-      <p>Revisa y aprueba las creaciones de la comunidad.</p>
+      <p>Revisa los links de Instagram enviados.</p>
     </div>
 
     <div class="tarjetaInventario">
       <table>
         <thead>
           <tr>
-            <th>Imagen</th>
-            <th>Título / Autor</th>
+            <th>Vista Previa</th> <th>Título / Autor</th>
             <th>Fecha</th>
             <th>Estado</th>
             <th>Acciones</th>
@@ -20,19 +18,20 @@
         <tbody>
           <tr *ngFor="let post of posts">
             <td>
-              <div class="img-preview">
-                <img [src]="post.image" alt="preview" (click)="verImagenGrande(post.image)">
-              </div>
+              <button class="btn-ver-link" (click)="verPost(post)">
+                📷 Ver Post
+              </button>
             </td>
             <td>
               <div class="infoItem">
                 <strong>{{ post.title }}</strong>
                 <small>Por: {{ post.author }}</small>
+                <a [href]="post.image" target="_blank" class="link-pequeno">Abrir en IG ↗</a>
               </div>
             </td>
             <td>{{ post.date }}</td>
             <td>
-              <span class="etiquetaEstado" 
+              <span class="etiquetaEstado"
                 [class.pendiente]="post.status === 'Pendiente'"
                 [class.aprobada]="post.status === 'Aprobada'"
                 [class.rechazada]="post.status === 'Rechazada'">
@@ -44,9 +43,7 @@
                 <button class="btnIcono aprobar" title="Aprobar" (click)="aprobarPost(post.id)">✔</button>
                 <button class="btnIcono rechazar" title="Rechazar" (click)="rechazarPost(post.id)">✖</button>
               </div>
-              <span *ngIf="post.status !== 'Pendiente'" class="texto-moderado">
-                Moderado
-              </span>
+              <span *ngIf="post.status !== 'Pendiente'" class="texto-moderado">Moderado</span>
             </td>
           </tr>
         </tbody>
@@ -54,9 +51,16 @@
     </div>
   </main>
 
-  <div class="superposicionModal" *ngIf="imagenSeleccionada" (click)="cerrarImagen()">
-    <div class="contenedorImagenFull">
-      <img [src]="imagenSeleccionada" alt="Full Preview">
+  <div class="superposicionModal" *ngIf="postSeleccionado" (click)="cerrarModal($event)">
+    <div class="contenedorEmbedFull" (click)="$event.stopPropagation()">
+      <h3>Vista Previa de Publicación</h3>
+
+      <div [innerHTML]="getInstagramEmbed(postSeleccionado.image)"></div>
+
+      <div class="modal-actions">
+         <button class="btnPrimario" (click)="aprobarPost(postSeleccionado.id); cerrarModal(null)">Aprobar</button>
+         <button class="btn-cerrar" (click)="cerrarModal(null)">Cerrar</button>
+      </div>
     </div>
   </div>
 </div>

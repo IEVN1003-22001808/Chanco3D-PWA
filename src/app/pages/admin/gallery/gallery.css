@@ -114,3 +114,53 @@ th { background-color: var(--fondoInput); color: var(--textoSecundario); font-si
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
+
+/* Aqui hice cambio (SoyKmach)  */
+.btn-ver-link {
+  background-color: var(--fondoInput);
+  border: 1px solid var(--colorBorde);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.btn-ver-link:hover {
+  background-color: var(--colorPrimario);
+  color: white;
+}
+
+.link-pequeno {
+  font-size: 0.75rem;
+  color: var(--colorPrimario);
+  text-decoration: none;
+}
+
+/* Modal */
+.contenedorEmbedFull {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto; /* por si el pst es largo */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.btn-cerrar {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}

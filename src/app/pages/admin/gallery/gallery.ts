@@ -1,76 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+declare var instgrm: any;
 
 @Component({
   selector: 'app-gallery-moderation',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule],
   templateUrl: './gallery.html',
   styleUrl: './gallery.css'
 })
-export class GalleryComponent {
-  
-  imagenSeleccionada: string | null = null;
+export class GalleryComponent implements AfterViewChecked {
 
-  // Mock Data: Mezcla de pendientes y ya moderados
+  postSeleccionado: any = null;
+
   posts = [
-    { 
-      id: 1, 
-      title: 'EVA-01 Pintado a mano', 
-      author: 'Shinji_Ikari', 
-      image: 'https://media.sketchfab.com/models/1ef660db7bcc481d8700892e8a8a022d/thumbnails/d948a2322e64426491d070ddb9ccf9fe/cc14e00769f4434b88e14c20ee127882.jpeg', 
-      date: '2025-11-18',
-      status: 'Pendiente' 
-    },
-    { 
-      id: 2, 
-      title: 'Cerebro Venoso y grueso', 
-      author: 'Troll_User', 
-      image: 'https://cbx-prod.b-cdn.net/COLOURBOX8224180.jpg?width=800&height=800&quality=70', 
-      date: '2025-11-19',
-      status: 'Rechazada' 
-    },
-    { 
-      id: 3, 
-      title: 'Dragón D&D Rojo', 
-      author: 'DungeonMaster', 
-      image: 'https://i.redd.it/mdgnd7tlrq0a1.jpg', 
-      date: '2025-11-20',
-      status: 'Aprobada' 
-    },
-    { 
-      id: 4, 
-      title: 'Maceta Bulbasaur', 
-      author: 'PlantLover', 
-      image: 'https://image.made-in-china.com/202f0j00uznqjpSlgUrg/Custom-Cute-Resin-Pokemon-Bulbasaur-Planter-Pot-for-Table-Home-Decor.webp', 
-      date: '2025-11-21',
-      status: 'Pendiente' 
-    }
+    { id: 1, title: 'EVA-01', author: 'Shinji', image: 'https://www.instagram.com/p/CmzgqrOu41P/', date: '2025-11-18', status: 'Pendiente' },
+    // ... más datos mock
   ];
 
-  aprobarPost(id: number) {
-    const post = this.posts.find(p => p.id === id);
-    if (post) {
-      post.status = 'Aprobada';
-      // Aquí conectaríamos con el backend para guardar el cambio
+  constructor(private sanitizer: DomSanitizer) {}
+
+  // Cuando se abre el modal, Angular pinta el HTML, luego llamamos a Instagram
+  ngAfterViewChecked(): void {
+    if (this.postSeleccionado && typeof instgrm !== 'undefined') {
+      instgrm.Embeds.process();
     }
   }
 
-  rechazarPost(id: number) {
-    if(confirm('¿Estás seguro de rechazar esta publicación? No se mostrará en la galería.')) {
-      const post = this.posts.find(p => p.id === id);
-      if (post) {
-        post.status = 'Rechazada';
-      }
-    }
+  getInstagramEmbed(url: string): SafeHtml {
+    const cleanUrl = url.split('?')[0];
+    const html = `
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="${cleanUrl}"
+        data-instgrm-version="14"
+        style="background:#FFF; border:0; margin: 1px; max-width:540px; min-width:326px; width:100%;">
+      </blockquote>
+    `;
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  verImagenGrande(url: string) {
-    this.imagenSeleccionada = url;
+  verPost(post: any) {
+    this.postSeleccionado = post;
+    // Forzamos un pequeño delay o proceso para asegurar que el modal abra antes de procesar
+    setTimeout(() => {
+        if(typeof instgrm !== 'undefined') instgrm.Embeds.process();
+    }, 100);
   }
 
-  cerrarImagen() {
-    this.imagenSeleccionada = null;
+  cerrarModal(event: any) {
+    // Lógica simple para cerrar
+    this.postSeleccionado = null;
   }
+
+  aprobarPost(id: number) { /* ... tu lógica existente ... */ }
+  rechazarPost(id: number) { /* ... tu lógica existente ... */ }
 }
