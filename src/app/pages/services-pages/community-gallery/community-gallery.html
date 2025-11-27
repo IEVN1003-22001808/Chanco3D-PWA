@@ -1,30 +1,37 @@
-<div class="gallery-container">
-  <header class="gallery-header">
-    <h1>Galería de la <span class="highlight">Comunidad</span></h1>
-    <p>Inspiración y talento maker. ¡Comparte tu creación!</p>
-    <button class="btn-share" (click)="showForm = !showForm">
+<div class="contenedorGaleria">
+  <header class="encabezadoGaleria">
+    <h1>Galería de la <span class="resaltado">Comunidad</span></h1>
+    <p>Inspiración y talento. ¡Comparte tu creación!</p>
+    <button class="btnCompartir" (click)="showForm = !showForm">
       {{ showForm ? 'Cancelar' : '+ Compartir mi Creación' }}
     </button>
   </header>
 
-  <div class="post-form-container" *ngIf="showForm">
-    <div class="post-form">
+  <div class="contenedorFormularioPost" *ngIf="showForm">
+    <div class="formularioPost">
       <h3>Nueva Publicación</h3>
       <input type="text" placeholder="Título de tu obra" [(ngModel)]="newPost.title">
       <input type="text" placeholder="Descripción breve" [(ngModel)]="newPost.description">
-      <input type="text" placeholder="Pega la URL de tu imagen (https://...)" [(ngModel)]="newPost.image">
-      <button class="btn-primary" (click)="publishPost()">Publicar</button>
+      <input type="text" placeholder="Pega el link del post (Ej: https://www.instagram.com/p/xxxx)" [(ngModel)]="newPost.image">
+
+      <p class="nota-ayuda">Nota: Asegúrate de que tu perfil sea público.</p>
+
+      <button class="btnPrimario" (click)="publishPost()">Publicar</button>
     </div>
   </div>
 
-  <div class="gallery-grid">
-    <div class="gallery-item" *ngFor="let post of posts">
-      <img [src]="post.image" [alt]="post.title">
-      <div class="overlay">
-        <h3>{{ post.title }}</h3>
-        <p>Por: {{ post.author }}</p>
-        <span class="likes">❤ {{ post.likes }}</span>
+  <div class="Galeria">
+    <div class="itemGaleria" *ngFor="let post of approvedPosts">
+      <div class="instagram-container" [innerHTML]="post.safeHtml"></div>
+
+      <div class="info-extra">
+        <h4>{{ post.title }}</h4>
+        <small>Enviado por: {{ post.author }}</small>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="approvedPosts.length === 0" class="no-results">
+    <p>Aún no hay creaciones aprobadas o están cargando...</p>
   </div>
 </div>

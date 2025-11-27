@@ -1,15 +1,13 @@
 :host {
   display: block;
   min-height: 100vh;
-  background-color: var(--bg-color); 
-  /* El texto principal se adapta (blanco en dark, negro en light) */
-  color: var(--text-main); 
+  background-color: var(--colorFondo);
+  color: var(--textoPrincipal);
   padding-bottom: 50px;
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* --- HERO SECTION --- */
-.hero {
+.seccionHero { 
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19,14 +17,13 @@
   gap: 40px;
 }
 
-.hero-content {
+.contenidoHero { 
   max-width: 600px;
 }
 
-.badge-pill {
-  /* Fondo semitransparente violeta, funciona bien en ambos modos */
+.etiquetaPill { 
   background-color: rgba(79, 70, 229, 0.1); 
-  color: var(--primary); /* Violeta principal */
+  color: var(--colorPrimario);
   padding: 5px 12px;
   border-radius: 50px;
   font-size: 0.9rem;
@@ -36,33 +33,33 @@
   border: 1px solid rgba(79, 70, 229, 0.2);
 }
 
-.hero-title {
+.tituloHero { 
   font-size: 3.5rem;
   line-height: 1.1;
   margin-bottom: 20px;
   font-weight: 800;
-  color: var(--text-main);
+  color: var(--textoPrincipal);
 }
 
-.text-gradient {
-  background: linear-gradient(to right, var(--primary), #a855f7);
+.textoGradiente { 
+  background: linear-gradient(to right, var(--colorPrimario), #a855f7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.hero-subtitle {
-  color: var(--text-muted);
+.subtituloHero { 
+  color: var(--textoSecundario);
   font-size: 1.2rem;
   margin-bottom: 30px;
   line-height: 1.6;
 }
 
-.hero-buttons {
+.botonesHero { 
   display: flex;
   gap: 15px;
 }
 
-/* Botones */
+
 .btn {
   padding: 12px 30px;
   border-radius: 8px;
@@ -75,101 +72,97 @@
   transform: translateY(-2px);
 }
 
-.btn-primary {
-  background-color: var(--primary);
+.btnPrimario { 
+  background-color: var(--colorPrimario);
   color: white;
 }
 
-.btn-primary:hover {
-  background-color: var(--primary-hover);
+.btnPrimario:hover {
+  background-color: var(--colorPrimarioHover);
 }
 
-.btn-outline {
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
+.btnOutline { 
+  border: 1px solid var(--colorBorde);
+  color: var(--textoPrincipal);
 }
 
-.btn-outline:hover {
-  background-color: var(--border-color);
+.btnOutline:hover {
+  background-color: var(--colorBorde);
 }
 
-/* Placeholder para imagen (círculo brillante) */
-.placeholder-circle {
+.efectoCirculo {
   width: 400px;
   height: 400px;
-  /* Ajustamos el gradiente para que se difumine a transparente, no a negro */
   background: radial-gradient(circle, rgba(79,70,229,0.2) 0%, transparent 70%);
   border-radius: 50%;
+  z-index: -999;
 }
 
-/* --- FEATURES SECTION --- */
-.features {
+.caracteristicas { 
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-.section-title {
+.tituloSeccion { 
   text-align: center;
   font-size: 2rem;
   margin-bottom: 50px;
-  color: var(--text-main);
+  color: var(--textoPrincipal);
 }
 
-.grid-cards {
+.Tarjetas { 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
 }
 
-.card {
-  background-color: var(--card-bg);
+.tarjeta { 
+  background-color: var(--fondoTarjeta);
   padding: 30px;
   border-radius: 16px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--colorBorde);
   transition: all 0.3s ease;
 }
 
-.card:hover {
-  border-color: var(--primary);
+.tarjeta:hover {
+  border-color: var(--colorPrimario);
   transform: translateY(-5px);
-  /* Sombra dinámica (suave en light, oscura en dark) */
-  box-shadow: 0 10px 30px var(--shadow);
+  box-shadow: 0 10px 30px var(--sombra);
 }
 
-.icon {
+.icono { 
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
-.card h3 {
+.tarjeta h3 { 
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: var(--text-main);
+  color: var(--textoPrincipal);
 }
 
-.card p {
-  color: var(--text-muted);
+.tarjeta p { 
+  color: var(--textoSecundario);
   line-height: 1.5;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .hero {
+  .seccionHero { 
     flex-direction: column;
     text-align: center;
     padding: 40px 20px;
   }
   
-  .hero-buttons {
+  .botonesHero { 
     justify-content: center;
   }
   
-  .hero-title {
+  .tituloHero { 
     font-size: 2.5rem;
   }
   
-  .placeholder-circle {
+  .efectoCirculo { 
     width: 250px;
     height: 250px;
   }

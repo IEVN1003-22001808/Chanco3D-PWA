@@ -1,19 +1,14 @@
-<div class="catalog-container">
-  
-  <header class="catalog-header">
-    <h1>Catálogo <span class="highlight">Maker</span></h1>
+<div class="contenedorCat">
+  <header class="encabezadoCat">
+    <h1>Catálogo <span class="resaltado">3D</span></h1>
     <p>Explora nuestra colección de impresiones en resina de alta definición.</p>
   </header>
-
-  <div class="catalog-layout">
-    
-    <aside class="filters-sidebar">
-      <div class="search-box">
-        <input type="text" placeholder="Buscar figura..." [(ngModel)]="searchTerm">
-        <span class="search-icon">🔍</span>
+  <div class="disenoCatalogo">
+    <aside class="filtro">
+      <div class="recuadroBusqueda">
+        <input type="text" placeholder="Buscar figura" [(ngModel)]="searchTerm">
       </div>
-
-      <div class="category-list">
+      <div class="listaCategorias">
         <h3>Categorías</h3>
         <button [class.active]="selectedCategory === 'Todos'" (click)="selectedCategory = 'Todos'">Todas</button>
         <button [class.active]="selectedCategory === 'Figuras'" (click)="selectedCategory = 'Figuras'">Figuras</button>
@@ -22,32 +17,26 @@
         <button [class.active]="selectedCategory === 'Ingeniería'" (click)="selectedCategory = 'Ingeniería'">Prototipos</button>
       </div>
     </aside>
-
-    <main class="products-grid">
-      <div class="product-card" *ngFor="let product of filteredProducts">
-        
-        <span class="badge-new" *ngIf="product.isNew">NUEVO</span>
-
-        <div class="card-image">
+    <main class="Productos">
+      <div class="tarjetaProducto" *ngFor="let product of filteredProducts">
+        <span class="etiquetaNuevo" *ngIf="product.isNew">NUEVO</span>
+        <div class="imagenTarjeta">
           <img [src]="product.image" [alt]="product.name">
         </div>
-
-        <div class="card-content">
-          <span class="category-tag">{{ product.category }}</span>
+        <div class="contenidoTarjeta">
+          <span class="etiquetaCategoria">{{ product.category }}</span>
           <h3>{{ product.name }}</h3>
-          <div class="price-row">
-            <span class="price">{{ product.price | currency:'MXN':'symbol-narrow' }}</span>
-            <button class="btn-add" (click)="addToCart(product)">
+          <div class="filaPrecio">
+            <span class="precio">{{ product.price | currency:'MXN':'symbol-narrow' }}</span>
+            <button class="btnAgregar" (click)="addToCart(product)">
               Agregar +
             </button>
           </div>
         </div>
       </div>
-
-      <div class="no-results" *ngIf="filteredProducts.length === 0">
-        <p>😞 No encontramos nada con ese nombre.</p>
+      <div class="sinResultados" *ngIf="filteredProducts.length === 0">
+        <p>No encontramos nada con ese nombre.</p>
       </div>
     </main>
-
   </div>
 </div>

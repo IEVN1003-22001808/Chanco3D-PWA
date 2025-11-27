@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Catalog } from './catalog';
+import { TermsConditions } from './terms-conditions';
 
-describe('Catalog', () => {
-  let component: Catalog;
-  let fixture: ComponentFixture<Catalog>;
+describe('TermsConditions', () => {
+  let component: TermsConditions;
+  let fixture: ComponentFixture<TermsConditions>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Catalog]
+      imports: [TermsConditions]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Catalog);
+    fixture = TestBed.createComponent(TermsConditions);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

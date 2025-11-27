@@ -1,34 +1,78 @@
 :host {
   display: block;
   min-height: 100vh;
-  background-color: var(--bg-color);
+  background-color: var(--colorFondo);
   transition: background-color 0.3s;
 }
 
-/* REUTILIZACIÓN DEL ADMIN LAYOUT */
-.admin-layout { display: flex; min-height: 100vh; background-color: var(--bg-color); color: var(--text-main); }
-.admin-sidebar { width: 250px; background-color: var(--card-bg); border-right: 1px solid var(--border-color); padding: 20px; display: flex; flex-direction: column; }
-.sidebar-header h3 { color: var(--text-main); margin-bottom: 40px; letter-spacing: 2px; }
-.highlight { color: var(--primary); }
-.nav-item { display: block; padding: 12px 15px; color: var(--text-muted); text-decoration: none; margin-bottom: 5px; border-radius: 8px; transition: all 0.3s; }
-.nav-item:hover { background-color: var(--input-bg); color: var(--text-main); }
-.nav-item.active { background-color: var(--primary); color: white; }
-.nav-item.return { margin-top: auto; border: 1px solid var(--border-color); }
+.disenoAdmin {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--colorFondo);
+  color: var(--textoPrincipal);
+}
 
-.admin-content { flex: 1; padding: 40px; overflow-y: auto; }
+.barraLateralAdmin {
+  width: 250px;
+  background-color: var(--fondoTarjeta);
+  border-right: 1px solid var(--colorBorde);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
 
-/* --- ZONA DE CARGA --- */
-.upload-section {
-  background-color: var(--card-bg);
+.encabezadoLateral h3 {
+  color: var(--textoPrincipal);
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
+
+.resaltado {
+  color: var(--colorPrimario);
+}
+
+.itemNavegacion {
+  display: block;
+  padding: 12px 15px;
+  color: var(--textoSecundario);
+  text-decoration: none;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.itemNavegacion:hover {
+  background-color: var(--fondoInput);
+  color: var(--textoPrincipal);
+}
+
+.itemNavegacion.activo {
+  background-color: var(--colorPrimario);
+  color: white;
+}
+
+.itemNavegacion.retorno {
+  margin-top: auto;
+  border: 1px solid var(--colorBorde);
+}
+
+.contenidoAdmin {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.seccionCarga {
+  background-color: var(--fondoTarjeta);
   padding: 30px;
   border-radius: 12px;
   margin-bottom: 40px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 12px var(--shadow);
+  border: 1px solid var(--colorBorde);
+  box-shadow: 0 4px 12px var(--sombra);
 }
 
-.upload-box {
-  border: 2px dashed var(--primary);
+.cajaCarga {
+  border: 2px dashed var(--colorPrimario);
   background-color: rgba(79, 70, 229, 0.05);
   border-radius: 12px;
   padding: 40px;
@@ -37,67 +81,102 @@
   transition: all 0.3s;
 }
 
-.upload-box:hover { background-color: rgba(79, 70, 229, 0.1); }
-
-.upload-box input {
-  position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer;
+.cajaCarga:hover {
+  background-color: rgba(79, 70, 229, 0.1);
 }
 
-.upload-box .icon { font-size: 3rem; margin-bottom: 10px; }
+.cajaCarga input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
 
-/* Texto de la zona de carga */
-.upload-box h3 { color: var(--text-main); margin-bottom: 5px; }
-.upload-box p { color: var(--text-muted); }
+.cajaCarga .icono {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
 
-.file-status {
+.cajaCarga h3 {
+  color: var(--textoPrincipal);
+  margin-bottom: 5px;
+}
+
+.cajaCarga p {
+  color: var(--textoSecundario);
+}
+
+.estadoArchivo {
   margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--input-bg);
+  background-color: var(--fondoInput);
   padding: 15px;
   border-radius: 8px;
   animation: slideDown 0.3s;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--colorBorde);
 }
-.file-status .file-name { color: var(--text-main); font-weight: bold; }
 
-@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+.estadoArchivo .nombreArchivo {
+  color: var(--textoPrincipal);
+  font-weight: bold;
+}
 
-.btn-primary { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-/* --- DASHBOARD DE GRÁFICOS --- */
-.metrics-dashboard {
+.btnPrimario {
+  background-color: var(--colorPrimario);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.tableroMetricas {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
   animation: fadeIn 1s ease;
 }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-.chart-card {
-  background-color: var(--card-bg);
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  min-height: 300px;
-  box-shadow: 0 4px 12px var(--shadow);
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.chart-card h3 { margin-bottom: 20px; color: var(--text-muted); font-size: 1rem; }
+.tarjetaGrafico {
+  background-color: var(--fondoTarjeta);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--colorBorde);
+  min-height: 300px;
+  box-shadow: 0 4px 12px var(--sombra);
+}
 
-/* GRÁFICO DE BARRAS CSS */
-.bar-chart {
+.tarjetaGrafico h3 {
+  margin-bottom: 20px;
+  color: var(--textoSecundario);
+  font-size: 1rem;
+}
+
+.graficoBarras {
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
   height: 200px;
   padding-top: 20px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--colorBorde);
 }
 
-.bar-group {
+.grupoBarra {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -106,25 +185,29 @@
   width: 15%;
 }
 
-.bar {
+.barra {
   width: 100%;
-  background-color: #3b82f6; 
+  background-color: #3b82f6;
   border-radius: 4px 4px 0 0;
   transition: height 1s ease-out;
   position: relative;
 }
 
-.bar:hover { background-color: #60a5fa; }
-.bar.highlight { background-color: var(--primary);}  /* Usa tu color primario */ 
-
-.label {
-  margin-top: 10px;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+.barra:hover {
+  background-color: #60a5fa;
 }
 
-/* MAPA */
-.map-container {
+.barra.resaltado {
+  background-color: var(--colorPrimario);
+}
+
+.etiqueta {
+  margin-top: 10px;
+  font-size: 0.75rem;
+  color: var(--textoSecundario);
+}
+
+.contenedorMapa {
   position: relative;
   height: 200px;
   background-color: #000;
@@ -132,21 +215,25 @@
   overflow: hidden;
 }
 
- /* Invertimos solo en modo oscuro para que sea mapa negro. En modo claro, lo dejamos normal */
-.map-image {
+.imagenMapa {
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0.6;
-  filter: grayscale(100%) invert(1); 
+  filter: grayscale(100%) invert(1);
   transition: filter 0.3s;
 }
 
-/* Truco para el mapa en modo claro: quitamos la inversión */
-:host-context(.light-theme) .map-image { filter: grayscale(100%); opacity: 0.4; }
-:host-context(.light-theme) .map-container { background-color: #e5e7eb; }
+:host-context(.light-theme) .imagenMapa {
+  filter: grayscale(100%);
+  opacity: 0.4;
+}
 
-.hotspot {
+:host-context(.light-theme) .contenedorMapa {
+  background-color: #e5e7eb;
+}
+
+.puntoCaliente {
   position: absolute;
   width: 15px;
   height: 15px;
@@ -162,10 +249,33 @@
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
-.map-legend {
+.leyendaMapa {
   margin-top: 15px;
   display: flex;
   gap: 15px;
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--textoSecundario);
+}
+
+.contenedorCanvas {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.tarjetaGrafico {
+  background-color: var(--fondoTarjeta);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--colorBorde);
+  min-height: 350px;
+  box-shadow: 0 4px 12px var(--sombra);
+  display: flex;
+  flex-direction: column;
+}
+
+.tarjetaGrafico h3 {
+  margin-bottom: 20px;
+  color: var(--textoPrincipal);
+  font-size: 1rem;
 }

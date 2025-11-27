@@ -1,22 +1,21 @@
-.auth-container {
+.contenedorAutenticacion {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 160px);
-  background-color: var(--bg-color);
+  background-color: var(--colorFondo); 
   padding: 20px;
   transition: background-color 0.3s;
 }
 
-.auth-card {
-  background-color: var(--card-bg);
+.tarjetaAutenticacion {
+  background-color: var(--fondoTarjeta); 
   width: 100%;
-  max-width: 480px; /* Un poco más ancho que el login */
+  max-width: 480px; 
   padding: 40px;
   border-radius: 16px;
-  /* Sombra que se adapta: suave en light, profunda en dark */
-  box-shadow: 0 10px 40px var(--shadow);
-  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 40px var(--sombra);
+  border: 1px solid var(--colorBorde);
   animation: fadeIn 0.5s ease-out;
   transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
@@ -26,87 +25,107 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-.auth-header { text-align: center; margin-bottom: 25px; }
+.encabezadoAutenticacion { 
+  text-align: center; 
+  margin-bottom: 25px; 
+}
 
-.auth-header h2 { 
-  color: var(--text-main);
+.encabezadoAutenticacion h2 { 
+  color: var(--textoPrincipal);
   font-size: 1.8rem; 
   margin-bottom: 5px; 
 }
 
-.auth-header p { 
-  color: var(--text-muted);
+.encabezadoAutenticacion p { 
+  color: var(--textoSecundario);
   font-size: 0.9rem; 
 }
 
-/* Layout de formulario */
-.form-group { margin-bottom: 15px; }
-.form-row { display: flex; gap: 15px; }
-.half { flex: 1; }
+.grupoFormulario { 
+  margin-bottom: 15px; 
+}
+
+.filaFormulario { 
+  display: flex; 
+  gap: 15px; 
+}
+
+.mitad { 
+  flex: 1; 
+}
 
 label { 
   display: block; 
-  color: var(--text-main);
+  color: var(--textoPrincipal);
   margin-bottom: 6px; 
   font-size: 0.85rem; 
   font-weight: 500; 
 }
 
-.input-wrapper { position: relative; display: flex; align-items: center; }
+.contenedorInput { 
+  position: relative; 
+  display: flex; 
+  align-items: center; 
+}
 
-.input-icon { 
+.iconoInput { 
   position: absolute; 
   left: 15px; 
   font-size: 1rem; 
   opacity: 0.7; 
-  color: var(--text-muted);
+  color: var(--textoSecundario);
 }
 
 input[type="text"], input[type="email"], input[type="password"] {
   width: 100%;
   padding: 10px 15px 10px 40px;
-  background-color: var(--input-bg);
-  border: 1px solid var(--border-color);
+  background-color: var(--fondoInput);
+  border: 1px solid var(--colorBorde);
   border-radius: 8px;
-  color: var(--text-main);
+  color: var(--textoPrincipal);
   font-size: 0.95rem;
   outline: none;
   transition: all 0.3s;
 }
 
-/* Input sin icono (Nombre/Apellido) */
-input[type="text"] { padding-left: 15px; }
+input[type="text"] { 
+  padding-left: 15px; 
+}
 
 input:focus { 
-  border-color: var(--primary); 
-  background-color: var(--bg-color);
+  border-color: var(--colorPrimario); 
+  background-color: var(--colorFondo);
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
 }
 
-/* Checkbox de Términos */
-.form-check {
+.verificacionFormulario {
   display: flex;
   align-items: flex-start;
   gap: 10px;
   margin: 20px 0;
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--textoSecundario);
 }
 
-.form-check input { width: auto; margin-top: 3px; cursor: pointer; }
+.verificacionFormulario input { 
+  width: auto; 
+  margin-top: 3px; 
+  cursor: pointer; 
+}
 
-.form-check a { 
-  color: var(--primary); 
+.verificacionFormulario a { 
+  color: var(--colorPrimario); 
   text-decoration: none; 
 }
 
-.form-check a:hover { text-decoration: underline; }
+.verificacionFormulario a:hover { 
+  text-decoration: underline; 
+}
 
-/* Botón */
-.btn-submit {
+.btnIngresar {
   width: 100%;
   padding: 12px;
-  background-color: var(--primary);
+  background-color: var(--colorPrimario);
   color: white;
   border: none;
   border-radius: 8px;
@@ -116,20 +135,24 @@ input:focus {
   transition: background 0.3s;
 }
 
-.btn-submit:hover { background-color: var(--primary-hover); }
+.btnIngresar:hover { 
+  background-color: var(--colorPrimarioHover); 
+}
 
-.auth-footer { 
+.pieAutenticacion { 
   text-align: center; 
   margin-top: 20px; 
-  color: var(--text-muted); 
+  color: var(--textoSecundario); 
   font-size: 0.9rem; 
 }
 
-.auth-footer a { 
-  color: var(--primary); 
+.pieAutenticacion a { 
+  color: var(--colorPrimario); 
   text-decoration: none; 
   font-weight: 600; 
   margin-left: 5px; 
 }
 
-.auth-footer a:hover { text-decoration: underline; }
+.pieAutenticacion a:hover { 
+  text-decoration: underline; 
+}

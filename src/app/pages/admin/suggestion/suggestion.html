@@ -1,0 +1,65 @@
+<div class="filaEncabezadoContenido">
+  <h1>Moderación de Sugerencias</h1>
+  <p class="subtitulo">Revisa y aprueba las ideas enviadas por la comunidad.</p>
+</div>
+
+<div class="tarjetaTabla">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título / Personaje</th>
+        <th>Origen</th>
+        <th>Detalles</th>
+        <th>Usuario</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of sugerencias">
+        <td>#{{ s.id }}</td>
+        <td>
+          <strong>{{ s.titulo }}</strong>
+        </td>
+        <td>
+          <span class="etiquetaOrigen">{{ s.origen }}</span>
+        </td>
+        <td class="celdaDetalles" title="{{ s.detalles }}">
+          {{ s.detalles }}
+        </td>
+        <td>
+          <small class="textoSecundario">{{ s.usuario }}</small>
+        </td>
+        <td>
+          <span class="etiquetaEstado" 
+            [class.pendiente]="s.estado === 'Pendiente'"
+            [class.aprobada]="s.estado === 'Aprobada'"
+            [class.rechazada]="s.estado === 'Rechazada'">
+            {{ s.estado }}
+          </span>
+        </td>
+        <td>
+          <div class="acciones">
+            <button *ngIf="s.estado === 'Pendiente'" 
+                    class="btnIcono aprobar" 
+                    (click)="cambiarEstado(s.id, 'Aprobada')" 
+                    title="Aprobar">
+              ✓
+            </button>
+            <button *ngIf="s.estado === 'Pendiente'" 
+                    class="btnIcono rechazar" 
+                    (click)="cambiarEstado(s.id, 'Rechazada')" 
+                    title="Rechazar">
+              ✕
+            </button>
+            
+            <span *ngIf="s.estado !== 'Pendiente'" class="textoBloqueado">
+              Moderado
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
