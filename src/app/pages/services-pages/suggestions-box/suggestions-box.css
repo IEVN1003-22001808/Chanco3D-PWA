@@ -5,40 +5,39 @@
   transition: background-color 0.3s;
 }
 
-.contenedorSugerencias { 
+.contenedorSugerencias {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-.encabezadoPagina { 
-  text-align: center; 
-  margin-bottom: 50px; 
+.encabezadoPagina {
+  text-align: center;
+  margin-bottom: 50px;
 }
 
-.encabezadoPagina h1 { 
+.encabezadoPagina h1 {
   color: var(--textoPrincipal);
-  font-size: 2.5rem; 
-  margin-bottom: 10px; 
+  font-size: 2.5rem;
+  margin-bottom: 10px;
 }
 
-.resaltado { 
-  color: var(--colorPrimario); 
+.resaltado {
+  color: var(--colorPrimario);
 }
 
-.encabezadoPagina p { 
-  color: var(--textoSecundario); 
+.encabezadoPagina p {
+  color: var(--textoSecundario);
 }
 
-/* Grid Layout */
-.disenoGrid { 
+
+.disenoGrid {
   display: grid;
-  grid-template-columns: 1fr 1.5fr; 
+  grid-template-columns: 1fr 1.5fr;
   gap: 40px;
 }
 
-/* --- FORMULARIO --- */
-.tarjetaFormulario { 
+.tarjetaFormulario {
   background-color: var(--fondoTarjeta);
   padding: 30px;
   border-radius: 12px;
@@ -48,29 +47,30 @@
   box-shadow: 0 4px 12px var(--sombra);
 }
 
-.tarjetaFormulario h3 { 
-  color: var(--textoPrincipal); 
-  margin-bottom: 5px; 
+.tarjetaFormulario h3 {
+  color: var(--textoPrincipal);
+  margin-bottom: 5px;
 }
 
-.ayuda { 
-  color: var(--textoSecundario); 
-  font-size: 0.9rem; 
-  margin-bottom: 25px; 
+.ayuda {
+  color: var(--textoSecundario);
+  font-size: 0.9rem;
+  margin-bottom: 25px;
 }
 
-.grupoFormulario { 
-  margin-bottom: 20px; 
+.grupoFormulario {
+  margin-bottom: 20px;
 }
 
-label { 
-  display: block; 
-  color: var(--textoPrincipal); 
-  margin-bottom: 8px; 
-  font-size: 0.9rem; 
+label {
+  display: block;
+  color: var(--textoPrincipal);
+  margin-bottom: 8px;
+  font-size: 0.9rem;
 }
 
-input, textarea {
+input,
+textarea {
   width: 100%;
   padding: 12px;
   background-color: var(--fondoInput);
@@ -82,11 +82,12 @@ input, textarea {
   transition: border-color 0.3s;
 }
 
-input:focus, textarea:focus { 
-  border-color: var(--colorPrimario); 
+input:focus,
+textarea:focus {
+  border-color: var(--colorPrimario);
 }
 
-.btnEnviar { 
+.btnEnviar {
   width: 100%;
   padding: 12px;
   background-color: var(--colorPrimario);
@@ -98,25 +99,24 @@ input:focus, textarea:focus {
   transition: background 0.3s;
 }
 
-.btnEnviar:hover { 
-  background-color: var(--colorPrimarioHover); 
+.btnEnviar:hover {
+  background-color: var(--colorPrimarioHover);
 }
 
-/* --- LISTA DE ESTADOS --- */
-.tableroEstado h3 { 
-  color: var(--textoPrincipal); 
-  margin-bottom: 20px; 
-  border-bottom: 1px solid var(--colorBorde); 
-  padding-bottom: 10px; 
+.tableroEstado h3 {
+  color: var(--textoPrincipal);
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--colorBorde);
+  padding-bottom: 10px;
 }
 
-.listaSugerencias { 
+.listaSugerencias {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
 }
 
-.tarjetaSugerencia { 
+.tarjetaSugerencia {
   background-color: var(--fondoTarjeta);
   border: 1px solid var(--colorBorde);
   padding: 20px;
@@ -125,82 +125,76 @@ input:focus, textarea:focus {
   box-shadow: 0 2px 5px var(--sombra);
 }
 
-.tarjetaSugerencia:hover { 
-  transform: translateY(-3px); 
-  border-color: var(--colorPrimario); 
+.tarjetaSugerencia:hover {
+  transform: translateY(-3px);
+  border-color: var(--colorPrimario);
   box-shadow: 0 8px 15px var(--sombra);
 }
 
-.encabezadoTarjeta { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: flex-start; 
-  margin-bottom: 15px; 
+.encabezadoTarjeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
 }
 
-.encabezadoTarjeta h4 { 
-  color: var(--textoPrincipal); 
-  margin: 0; 
-  font-size: 1.1rem; 
+.encabezadoTarjeta h4 {
+  color: var(--textoPrincipal);
+  margin: 0;
+  font-size: 1.1rem;
 }
 
-.etiquetaOrigen { 
-  font-size: 0.75rem; 
-  color: var(--textoSecundario); 
+.etiquetaOrigen {
+  font-size: 0.75rem;
+  color: var(--textoSecundario);
   background: var(--fondoInput);
-  padding: 2px 8px; 
-  border-radius: 4px; 
+  padding: 2px 8px;
+  border-radius: 4px;
   border: 1px solid var(--colorBorde);
 }
 
-/* Badges de Estado */
-.etiquetaEstado { 
-  display: inline-flex; 
-  align-items: center; 
+.etiquetaEstado {
+  display: inline-flex;
+  align-items: center;
   gap: 5px;
-  padding: 5px 12px; 
+  padding: 5px 12px;
   border-radius: 20px;
-  font-size: 0.85rem; 
+  font-size: 0.85rem;
   font-weight: bold;
   margin-bottom: 15px;
 }
 
-.status-approved { 
-  background-color: rgba(74, 222, 128, 0.15); 
-  color: #4ade80; 
-  border: 1px solid rgba(74, 222, 128, 0.3); 
+.estado-aprobado {
+  background-color: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
 }
 
-.status-review { 
-  background-color: rgba(250, 204, 21, 0.15); 
-  color: #facc15; 
-  border: 1px solid rgba(250, 204, 21, 0.3); 
+.estado-nuevo {
+  background-color: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.3);
 }
 
-.status-new { 
-  background-color: rgba(148, 163, 184, 0.15); 
-  color: #94a3b8; 
-  border: 1px solid rgba(148, 163, 184, 0.3); 
+.punto {
+  font-size: 1.2rem;
+  line-height: 0;
 }
 
-.punto { 
-  font-size: 1.2rem; 
-  line-height: 0; 
+.autor {
+  font-size: 0.8rem;
+  color: var(--textoSecundario);
+  text-align: right;
+  margin: 0;
 }
 
-.autor { 
-  font-size: 0.8rem; 
-  color: var(--textoSecundario); 
-  text-align: right; 
-  margin: 0; 
-}
 
-/* Responsive */
 @media (max-width: 768px) {
-  .disenoGrid { 
-    grid-template-columns: 1fr; 
+  .disenoGrid {
+    grid-template-columns: 1fr;
   }
-  .tarjetaFormulario { 
-    position: static; 
+
+  .tarjetaFormulario {
+    position: static;
   }
 }

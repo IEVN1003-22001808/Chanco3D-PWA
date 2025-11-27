@@ -9,7 +9,8 @@
       <table>
         <thead>
           <tr>
-            <th>Vista Previa</th> <th>Título / Autor</th>
+            <th>Vista Previa</th>
+            <th>Título / Autor</th>
             <th>Fecha</th>
             <th>Estado</th>
             <th>Acciones</th>
@@ -19,7 +20,7 @@
           <tr *ngFor="let post of posts">
             <td>
               <button class="btn-ver-link" (click)="verPost(post)">
-                📷 Ver Post
+                <i class="bi bi-camera-fill"></i> Ver Post
               </button>
             </td>
             <td>
@@ -31,10 +32,8 @@
             </td>
             <td>{{ post.date }}</td>
             <td>
-              <span class="etiquetaEstado"
-                [class.pendiente]="post.status === 'Pendiente'"
-                [class.aprobada]="post.status === 'Aprobada'"
-                [class.rechazada]="post.status === 'Rechazada'">
+              <span class="etiquetaEstado" [class.pendiente]="post.status === 'Pendiente'"
+                [class.aprobada]="post.status === 'Aprobada'" [class.rechazada]="post.status === 'Rechazada'">
                 {{ post.status }}
               </span>
             </td>
@@ -58,8 +57,8 @@
       <div [innerHTML]="getInstagramEmbed(postSeleccionado.image)"></div>
 
       <div class="modal-actions">
-         <button class="btnPrimario" (click)="aprobarPost(postSeleccionado.id); cerrarModal(null)">Aprobar</button>
-         <button class="btn-cerrar" (click)="cerrarModal(null)">Cerrar</button>
+        <button class="btnPrimario" (click)="aprobarPost(postSeleccionado.id); cerrarModal(null)">Aprobar</button>
+        <button class="btn-cerrar" (click)="cerrarModal(null)">Cerrar</button>
       </div>
     </div>
   </div>
