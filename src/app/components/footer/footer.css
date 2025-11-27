@@ -3,16 +3,16 @@
   width: 100%;
 }
 
-.footer {
-  background-color: var(--card-bg); 
-  color: var(--text-muted);
+.finalDePagina {
+  background-color: var(--fondoTarjeta); 
+  color: var(--textoSecundario);
   padding: 60px 0 20px;
-  border-top: 1px solid var(--border-color); /* Borde dinámico */
+  border-top: 1px solid var(--colorBorde);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
-.footer-container {
+.contenedorFinal {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
@@ -22,37 +22,36 @@
   gap: 40px;
 }
 
-/* Columnas */
-.footer-col {
+.columnaFinal {
   flex: 1;
   min-width: 250px;
 }
 
-.brand-col {
+.columnaMarca {
   flex: 1.5; 
 }
 
-/* Tipografía y Estilos */
-.footer-logo {
+.logoFinal {
   font-size: 1.8rem;
   margin-bottom: 15px;
-  color: var(--text-main);
+  color: var(--textoPrincipal);
   letter-spacing: 1px;
+  font-weight: bold;
 }
 
-.highlight {
-  color: var(--primary);
+.resaltado {
+  color: var(--colorPrimario);
 }
 
-.tagline {
-  color: var(--primary);
+.lema {
+  color: var(--colorPrimario);
   font-weight: 600;
   margin-bottom: 15px;
   font-style: italic;
 }
 
-.description {
-  color: var(--text-muted);
+.descripcion {
+  color: var(--textoSecundario);
   line-height: 1.6;
   font-size: 0.95rem;
   margin-bottom: 20px;
@@ -60,86 +59,82 @@
 }
 
 h3 {
-  color: var(--text-main);
+  color: var(--textoPrincipal);
   margin-bottom: 20px;
   font-size: 1.2rem;
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 2px solid var(--colorPrimario);
   display: inline-block;
   padding-bottom: 5px;
 }
 
-/* Links */
-.footer-links {
+.enlacesFinal {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.footer-links li {
+.enlacesFinal li {
   margin-bottom: 12px;
 }
 
-.footer-links a {
-  color: var(--text-muted);
+.enlacesFinal a {
+  color: var(--textoSecundario);
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.footer-links a:hover {
-  color: var(--primary);
+.enlacesFinal a:hover {
+  color: var(--colorPrimario);
   padding-left: 5px; 
 }
 
-/* Redes Sociales */
-.social-links {
+.enlacesSociales {
   display: flex;
   gap: 15px;
 }
 
-.social-icon {
-  font-size: 1.5rem;
+.enlaceSocial {
   text-decoration: none;
+  display: inline-block;
+}
+
+.iconoRed {
+  width: 30px;
+  height: 30px;
   transition: transform 0.3s;
-  /* En modo claro queremos que se vean oscuros, en modo oscuro blancos. 
-     Usamos el color de texto principal */
-  color: var(--text-main); 
 }
 
-.social-icon:hover {
+.iconoRed:hover {
   transform: scale(1.2);
-  color: var(--primary); /* Al pasar el mouse, se pone violeta */
 }
 
-/* Barra inferior */
-.footer-bottom {
+.finalInferior {
   margin-top: 50px;
   padding-top: 20px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--colorBorde);
   text-align: center;
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: var(--textoSecundario);
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.heart {
+.corazon {
   color: #ef4444;
-  animation: beat 1s infinite;
+  animation: latido 1s infinite;
 }
 
-@keyframes beat {
+@keyframes latido {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.2); }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .footer-container {
+  .contenedorFinal {
     flex-direction: column;
   }
-  
-  .footer-bottom {
+  .finalInferior {
     font-size: 0.8rem;
   }
 }

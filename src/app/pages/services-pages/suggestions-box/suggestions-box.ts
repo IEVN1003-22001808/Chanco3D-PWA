@@ -15,12 +15,16 @@ export class SuggestionsBoxComponent {
 
   // Mock Data: Sugerencias existentes con diferentes estados
   suggestions = [
-    { title: 'Casco de Spartan', origin: 'Halo', status: 'Aprobada', user: 'MasterChief117' },
-    { title: 'Espada Maestra Realista', origin: 'Zelda', status: 'En Revisión', user: 'LinkFan' },
-    { title: 'Nave Espacial Low Poly', origin: 'Original', status: 'Nueva', user: 'DM_Pro' },
-    { title: 'Dragón Anciano', origin: 'Monster Hunter', status: 'Aprobada', user: 'George' },
-    { title: 'Kurama (Zorro 9 Colas)', origin: 'Naruto', status: 'Nueva', user: 'OtakuBoy' }
+    { title: 'Casco de Spartan', origin: 'Halo', status: 'Aprobada', user: 'MasterChief117', date: '2025-11-10' },
+    { title: 'Espada Maestra Realista', origin: 'Zelda', status: 'En Revisión', user: 'LinkFan', date: '2025-11-15' },
+    { title: 'Nave Espacial Low Poly', origin: 'Original', status: 'Nueva', user: 'DM_Pro', date: '2025-11-05' },
+    { title: 'Dragón Anciano', origin: 'Monster Hunter', status: 'Aprobada', user: 'George', date: '2025-11-18' },
+    { title: 'Kurama (Zorro 9 Colas)', origin: 'Naruto', status: 'Nueva', user: 'OtakuBoy', date: '2025-11-19' }
   ];
+
+  get publicSuggestions() {
+    return this.suggestions.filter(s => s.status === 'Aprobada');
+  }
 
   // Enviar nueva sugerencia (Simulado)
   submitSuggestion() {
@@ -28,13 +32,14 @@ export class SuggestionsBoxComponent {
       this.suggestions.unshift({
         title: this.newSuggestion.title,
         origin: this.newSuggestion.origin,
-        status: 'Nueva', // Por defecto entra como nueva [cite: 455]
-        user: 'Tú (Maker)'
+        status: 'Pendiente',
+        user: 'Tú (Maker)',
+        date: new Date().toISOString().split('T')[0]
       });
       
-      // Limpiar formulario
+  
       this.newSuggestion = { title: '', origin: '', details: '' };
-      alert('¡Gracias! Tu idea ha sido enviada al buzón. 📬');
+      alert('¡Gracias! Tu idea ha sido enviada al buzón.');
     } else {
       alert('Por favor completa el título y el origen.');
     }

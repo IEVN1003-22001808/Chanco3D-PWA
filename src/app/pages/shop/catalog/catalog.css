@@ -1,99 +1,85 @@
 :host {
   display: block;
   min-height: 100vh;
-  background-color: var(--bg-color);
+  background-color: var(--colorFondo);
   transition: background-color 0.3s;
 }
 
-.catalog-container {
+.contenedorCat {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-/* Encabezado */
-.catalog-header {
+.encabezadoCat {
   text-align: center;
   margin-bottom: 40px;
 }
 
-.catalog-header h1 { 
-  color: var(--text-main); /* Título adaptable */
+.encabezadoCat h1 { 
+  color: var(--textoPrincipal); 
   font-size: 2.5rem; 
   margin-bottom: 10px; 
 }
 
-.highlight { 
-  color: var(--primary); 
+.resaltado { 
+  color: var(--colorPrimario); 
 }
 
-.catalog-header p { 
-  color: var(--text-muted); /* Texto secundario adaptable */
+.encabezadoCat p { 
+  color: var(--textoSecundario); 
 }
 
-/* Layout Principal */
-.catalog-layout {
+.disenoCatalogo { 
   display: grid;
-  grid-template-columns: 250px 1fr; /* Sidebar fijo, resto flexible */
+  grid-template-columns: 250px 1fr; 
   gap: 40px;
 }
 
-/* --- SIDEBAR FILTROS --- */
-.filters-sidebar {
-  background-color: var(--card-bg); /* Fondo sidebar dinámico */
+.filtro {
+  background-color: var(--fondoTarjeta); 
   padding: 20px;
   border-radius: 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--colorBorde);
   height: fit-content;
   position: sticky;
   top: 100px;
-  /* Sombra sutil para separarlo del fondo en modo claro */
-  box-shadow: 0 4px 12px var(--shadow);
+  box-shadow: 0 4px 12px var(--sombra);
 }
 
-/* Buscador */
-.search-box {
+.recuadroBusqueda {
   position: relative;
   margin-bottom: 30px;
 }
 
-.search-box input {
+.recuadroBusqueda input {
   width: 100%;
   padding: 10px 10px 10px 35px;
-  background-color: var(--input-bg); /* Fondo input dinámico */
-  border: 1px solid var(--border-color);
+  background-color: var(--fondoInput);
+  border: 1px solid var(--colorBorde);
   border-radius: 8px;
-  color: var(--text-main);
+  color: var(--textoPrincipal);
   outline: none;
   transition: border-color 0.3s;
 }
 
-.search-box input:focus { 
-  border-color: var(--primary); 
+.recuadroBusqueda input:focus { 
+  border-color: var(--colorPrimario); 
 }
 
-.search-icon { 
-  position: absolute; 
-  left: 10px; 
-  top: 10px; 
-  opacity: 0.7; 
-  color: var(--text-muted);
-}
-
-/* Categorías */
-.category-list h3 { 
-  color: var(--text-main); 
+.listaCategorias h3 { 
+  color: var(--textoPrincipal); 
   margin-bottom: 15px; 
   font-size: 1.1rem; 
 }
 
-.category-list button {
+.listaCategorias button {
   display: block;
   width: 100%;
   text-align: left;
   background: none;
   border: none;
-  color: var(--text-muted); /* Texto normal */
+  color: var(--textoSecundario);
   padding: 8px 10px;
   cursor: pointer;
   border-radius: 6px;
@@ -101,46 +87,44 @@
   margin-bottom: 5px;
 }
 
-.category-list button:hover { 
-  background-color: var(--border-color); /* Hover sutil */
-  color: var(--text-main); 
+.listaCategorias button:hover { 
+  background-color: var(--colorBorde);
+  color: var(--textoPrincipal); 
 }
 
-.category-list button.active {
-  background-color: var(--primary);
-  color: white; /* Texto blanco siempre para resaltar */
+.listaCategorias button.active {
+  background-color: var(--colorPrimario);
+  color: white;
   font-weight: bold;
 }
 
-/* --- GRILLA PRODUCTOS --- */
-.products-grid {
+.Productos { 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 25px;
 }
 
-/* Tarjeta de Producto */
-.product-card {
-  background-color: var(--card-bg); /* Fondo tarjeta */
+.tarjetaProducto { 
+  background-color: var(--fondoTarjeta);
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--colorBorde);
   transition: transform 0.3s, box-shadow 0.3s;
   position: relative;
-  box-shadow: 0 2px 8px var(--shadow); /* Sombra base */
+  box-shadow: 0 2px 8px var(--sombra);
 }
 
-.product-card:hover {
+.tarjetaProducto:hover { 
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px var(--shadow); /* Sombra elevada */
-  border-color: var(--primary);
+  box-shadow: 0 10px 20px var(--sombra);
+  border-color: var(--colorPrimario);
 }
 
-.badge-new {
+.etiquetaNuevo { 
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #ef4444; /* Rojo siempre */
+  background-color: #ef4444;
   color: white;
   font-size: 0.7rem;
   padding: 2px 8px;
@@ -149,37 +133,37 @@
   z-index: 2;
 }
 
-.card-image {
+.imagenTarjeta { 
   height: 200px;
   width: 100%;
   overflow: hidden;
-  background-color: var(--border-color); /* Fondo mientras carga imagen */
+  background-color: var(--colorBorde);
 }
 
-.card-image img {
+.imagenTarjeta img { 
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s;
 }
 
-.product-card:hover .card-image img { 
+.tarjetaProducto:hover .imagenTarjeta img { 
   transform: scale(1.1); 
 }
 
-.card-content { 
+.contenidoTarjeta { 
   padding: 20px; 
 }
 
-.category-tag {
+.etiquetaCategoria { 
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--textoSecundario);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.card-content h3 {
-  color: var(--text-main);
+.contenidoTarjeta h3 { 
+  color: var(--textoPrincipal);
   font-size: 1.1rem;
   margin: 5px 0 15px;
   white-space: nowrap;
@@ -187,22 +171,22 @@
   text-overflow: ellipsis;
 }
 
-.price-row {
+.filaPrecio { 
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.price {
-  color: var(--text-main); /* Precio destacado pero legible */
+.precio { 
+  color: var(--textoPrincipal);
   font-weight: bold;
   font-size: 1.2rem;
 }
 
-.btn-add {
-  background-color: var(--input-bg); /* Botón sutil por defecto */
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
+.btnAgregar { 
+  background-color: var(--fondoInput);
+  color: var(--textoPrincipal);
+  border: 1px solid var(--colorBorde);
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
@@ -210,23 +194,22 @@
   font-size: 0.9rem;
 }
 
-.btn-add:hover {
-  background-color: var(--primary);
-  border-color: var(--primary);
-  color: white; /* Al hover se vuelve violeta con texto blanco */
+.btnAgregar:hover { 
+  background-color: var(--colorPrimario);
+  border-color: var(--colorPrimario);
+  color: white;
 }
 
-.no-results {
+.sinResultados { 
   grid-column: 1 / -1;
   text-align: center;
   padding: 50px;
-  color: var(--text-muted);
+  color: var(--textoSecundario);
   font-size: 1.2rem;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .catalog-layout { grid-template-columns: 1fr; }
-  .filters-sidebar { position: static; margin-bottom: 30px; }
-  .category-list button { display: inline-block; width: auto; margin-right: 10px; }
+  .disenoCatalogo { grid-template-columns: 1fr; }
+  .filtro { position: static; margin-bottom: 30px; }
+  .listaCategorias button { display: inline-block; width: auto; margin-right: 10px; }
 }

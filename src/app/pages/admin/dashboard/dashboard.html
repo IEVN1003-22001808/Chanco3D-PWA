@@ -1,90 +1,124 @@
-<div class="admin-layout">
-  <aside class="admin-sidebar">
-    <div class="sidebar-header">
-      <h3>CHANCO<span class="highlight">ADMIN</span></h3>
-    </div>
-    <nav class="sidebar-nav">
-      <a routerLink="/admin" 
-         class="nav-item" 
-         routerLinkActive="active" 
-         [routerLinkActiveOptions]="{exact: true}">
-         Dashboard General
-      </a>
-      <a routerLink="/admin/inventory" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Inventario
-      </a>
-      <a routerLink="/admin/metrics" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Métricas
-      </a>
-      <a routerLink="/admin/suppliers" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Proveedores
-      </a>
-      <a routerLink="/home" class="nav-item return">
-         Volver a la Tienda
-      </a>
-    </nav>
-  </aside>
+<div class="disenoAdmin">
 
-  <main class="admin-content">
-    <header class="content-header">
+  <main class="contenidoAdmin">
+    <div class="filaEncabezadoContenido">
       <h1>Panel de Control</h1>
-      <p>Bienvenido, Administrador.</p>
-    </header>
+      <p class="subtitulo">Resumen general de operaciones.</p>
+    </div>
 
-    <div class="stats-grid">
-      <div class="stat-card blue">
-        <h3>Ventas Totales</h3>
-        <p class="stat-value">$15,450.00</p>
-        <span class="stat-trend">⬆ +12% este mes</span>
+    <div class="rejillaStats">
+      <div class="tarjetaStat">
+        <h3>Ventas (Últimos 3 Meses)</h3>
+        <p class="valorStat">{{ kpiData.ventas3Meses | currency:'MXN' }}</p>
+        <span class="tendencia positiva">⬆ Tendencia al alza</span>
       </div>
-      <div class="stat-card purple">
-        <h3>Pedidos Pendientes</h3>
-        <p class="stat-value">8</p>
-        <span class="stat-trend">Requieren atención</span>
+      <div class="tarjetaStat">
+        <h3>Clientes</h3>
+        <div class="infoDoble">
+          <div>
+            <span class="valorPequeno">{{ kpiData.clientesTotales }}</span>
+            <small>Totales</small>
+          </div>
+          <div class="separadorVertical"></div>
+          <div>
+            <span class="valorPequeno resalte">+{{ kpiData.clientesNuevosMes }}</span>
+            <small>Nuevos este mes</small>
+          </div>
+        </div>
       </div>
-      <div class="stat-card green">
-        <h3>Inventario Crítico</h3>
-        <p class="stat-value">2 Insumos</p>
-        <span class="stat-trend">⚠ Resurtir pronto</span>
+      <div class="tarjetaStat bordeAlerta">
+        <h3>Acción Requerida</h3>
+        <p class="valorStat">{{ kpiData.pedidosPendientes }}</p>
+        <span class="tendencia alerta">Pedidos Pendientes de Pago/Prod.</span>
       </div>
     </div>
 
-    <div class="recent-orders">
-      <h2>📦 Últimos Pedidos</h2>
-      <div class="table-responsive">
+    <div class="seccionTabla">
+      <div class="encabezadoTabla">
+        <h2>Gestión de Pedidos</h2>
+        <div class="filtroArea">
+          <label>Filtrar por Estado:</label>
+          <select [(ngModel)]="filtroEstado" class="selectorFiltro">
+            <option value="Todos">Todos</option>
+            <option value="Pendiente">Pendiente (Pago no recibido)</option>
+            <option value="En Producción">En Producción</option>
+            <option value="Enviado">Enviado</option>
+            <option value="Entregado">Entregado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tarjetaInventario">
         <table>
           <thead>
             <tr>
               <th>ID</th>
               <th>Cliente</th>
               <th>Fecha</th>
-              <th>Estado</th>
               <th>Total</th>
+              <th>Estado Actual</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let order of recentOrders">
-              <td>#{{ order.id }}</td>
-              <td>{{ order.client }}</td>
-              <td>{{ order.date }}</td>
+            <tr *ngFor="let orden of filteredOrders">
+              <td>#{{ orden.id }}</td>
+              <td><strong>{{ orden.client }}</strong></td>
+              <td>{{ orden.date }}</td>
+              <td class="textoPrecio">{{ orden.total | currency:'MXN' }}</td>
               <td>
-                <span class="status-badge" [ngClass]="order.status.toLowerCase()">
-                  {{ order.status }}
-                </span>
+                <select [ngModel]="orden.status" (ngModelChange)="actualizarEstado(orden, $event)"
+                        class="selectorEstadoTabla" [ngClass]="getClass(orden.status)">
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="En Producción">En Producción</option>
+                  <option value="Enviado">Enviado</option>
+                  <option value="Entregado">Entregado</option>
+                </select>
               </td>
-              <td>{{ order.total | currency:'MXN' }}</td>
-              <td><button class="btn-action">Ver</button></td>
+              <td>
+                <button class="btnIcono" title="Ver Detalles" (click)="verDetalles(orden)">Ver detalles</button>
+              </td>
             </tr>
           </tbody>
         </table>
+
+        <div class="sinResultados" *ngIf="filteredOrders.length === 0">
+          No hay pedidos con el estado "{{ filtroEstado }}".
+        </div>
       </div>
     </div>
   </main>
+
+  <div class="superposicionModal" *ngIf="mostrarModal">
+    <div class="tarjetaModal">
+      <div class="encabezadoModal">
+        <h3>Detalles del Pedido #{{ ordenSeleccionada.id }}</h3>
+        <button class="btnCerrar" (click)="cerrarModal()">✖</button>
+      </div>
+
+      <div class="infoPedido">
+        <p><strong>Cliente:</strong> {{ ordenSeleccionada.client }}</p>
+        <p><strong>Fecha:</strong> {{ ordenSeleccionada.date }}</p>
+        <p><strong>Estado:</strong> <span class="etiquetaEstado" [ngClass]="getClass(ordenSeleccionada.status)">{{ ordenSeleccionada.status }}</span></p>
+      </div>
+
+      <div class="listaProductos">
+        <h4>Productos Solicitados:</h4>
+        <ul>
+          <li *ngFor="let prod of ordenSeleccionada.products">
+            <span>{{ prod.name }} (x{{ prod.qty }})</span>
+            <strong>{{ prod.price | currency:'MXN' }}</strong>
+          </li>
+        </ul>
+      </div>
+
+      <div class="totalPedido">
+        <span>Total Pagado:</span>
+        <span class="montoGrande">{{ ordenSeleccionada.total | currency:'MXN' }}</span>
+      </div>
+
+      <button class="btnPrimario anchoTotal" (click)="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+
 </div>

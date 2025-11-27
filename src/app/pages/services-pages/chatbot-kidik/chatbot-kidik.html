@@ -1,45 +1,50 @@
-<div class="chat-container">
-  <div class="chat-card">
-    
-    <header class="chat-header">
-      <div class="avatar-bot">
-        <span>🤖</span>
-        <div class="status-dot"></div>
-      </div>
-      <div class="header-info">
-        <h2>Kidik Asistente</h2>
-        <p>En línea • Responde al instante</p>
-      </div>
-    </header>
+<button class="abrirchat" (click)="alternarChat()" aria-label="Abrir chat">
+  <span class="material-icons"><img src="https://i.ibb.co/3976ZqrK/chat-bot-1.png" alt="" style="width: 35px;"></span>
+</button>
 
-    <div class="messages-area" #scrollContainer>
-      <div class="message-row" *ngFor="let msg of messages" [ngClass]="{'user-row': msg.sender === 'user', 'bot-row': msg.sender === 'bot'}">
-        <div class="bubble" [ngClass]="{'user-bubble': msg.sender === 'user', 'bot-bubble': msg.sender === 'bot'}">
-          {{ msg.text }}
-          <span class="time">{{ msg.time }}</span>
+<div class="ventana" [class.open]="abrirVen" [style.transform]="'translate3d(' + posicion.x + 'px, ' + posicion.y + 'px, 0)'">
+  
+  <div class="chatbox">
+      
+    <div class="header" (mousedown)="iniciarArrastre($event)" style="cursor: move; user-select: none;">
+            
+      <div class="chatima">
+        <img src="https://i.postimg.cc/McqJ3y2X/Chat-IMG-(1).png" class="chat" alt="Logo" />
+      </div>
+    </div>
+
+    <div class="contenedor-mensajes" id="contenedorMensajes">
+      
+      <div class="mensaje-bienvenida">
+        Soy el asistente de Kidik. ¿En qué te ayudo?
+      </div>
+
+      <div class="caja-faq">
+        <div class="titulo-faq">Opciones rápidas</div>
+        <div class="botones">
+          <button (click)="enviarMensaje('Tengo un problema con mi producto')">Problema con producto</button>
+          <button (click)="enviarMensaje('quiénes somos?')">¿Quiénes somos?</button>
+          <button (click)="enviarMensaje('tiempo estimado de la entrega')">Tiempo de entrega</button>
+          <button (click)="enviarMensaje('qué materiales trabajamos en la empresa')">Materiales</button>
+          <button (click)="enviarMensaje('en donde se hacen entregas')">Zonas de entrega</button>
         </div>
       </div>
+    </div>
 
-      <div class="message-row bot-row" *ngIf="isTyping">
-        <div class="bubble bot-bubble typing">
-          <span>.</span><span>.</span><span>.</span>
-        </div>
+    <div class="contenedor-busqueda">
+      <div class="busqueda">
+        <input type="text" #searchBar id="barraBusqueda" placeholder="Escribe aquí..." (keyup.enter)="enviarMsg(searchBar.value)"/>
       </div>
+
+      <div class="button-group">
+        <button id="botonEnviar" (click)="enviarMsg(searchBar.value)">
+          <span style="font-size: 18px;">➥</span>
+        </button>
+      </div>
+
     </div>
 
-    <div class="quick-options" *ngIf="!isTyping">
-      <button *ngFor="let opt of quickOptions" (click)="sendMessage(opt)">
-        {{ opt }}
-      </button>
-    </div>
-
-    <div class="input-area">
-      <input type="text" placeholder="Escribe tu duda aquí..." 
-             [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
-      <button class="btn-send" (click)="sendMessage()" [disabled]="!userInput.trim()">
-        ➤
-      </button>
-    </div>
+    <div id="response" class="indicador-escritura" [style.display]="escribiendo ? 'block' : 'none'">Escribiendo...</div>
 
   </div>
 </div>

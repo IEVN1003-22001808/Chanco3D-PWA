@@ -1,43 +1,63 @@
-<nav class="navbar">
-  <div class="navbar-container">
-    <a routerLink="/home" class="navbar-logo">
-      CHANCO<span class="highlight">3D</span>
+<nav class="barraNavegacion">
+  <div class="contenedorBarra">
+    <a routerLink="/home" class="logoBarra">
+      CHANCO<span class="resaltado">3D</span>
     </a>
 
-    <ul class="nav-menu">
-      <li class="nav-item">
-        <a routerLink="/home" routerLinkActive="active" class="nav-links">Inicio</a>
+    <ul class="menuNavegacion">
+      <li class="itemNavegacion">
+        <a routerLink="/home" routerLinkActive="activo" class="enlaceNavegacion">Inicio</a>
       </li>
-      <li class="nav-item">
-        <a routerLink="/catalog" routerLinkActive="active" class="nav-links">Tienda</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/community" routerLinkActive="active" class="nav-links">Galería</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/quote" routerLinkActive="active" class="nav-links">Cotizador</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/admin" routerLinkActive="active" class="nav-links">Admin</a>
-      </li>
+
+      @if (!isAdmin) {
+        <li class="itemNavegacion">
+          <a [routerLink]="['/shop/catalog']" routerLinkActive="activo" class="enlaceNavegacion">Tienda</a>
+        </li>
+        <li class="itemNavegacion">
+          <a [routerLink]="['/services/community']" routerLinkActive="activo" class="enlaceNavegacion">Galería</a>
+        </li>
+        <li class="itemNavegacion">
+          <a [routerLink]="['/services/quote']" routerLinkActive="activo" class="enlaceNavegacion">Cotizador</a>
+        </li>
+        <li class="itemNavegacion">
+          <a [routerLink]="['/services/suggestions']" routerLinkActive="activo" class="enlaceNavegacion">Sugerencias</a>
+        </li>
+      }
+
+      @if (isAdmin) {
+        <li class="itemNavegacion">
+          <a [routerLink]="['/admin']" routerLinkActive="activo" class="enlaceNavegacion enlaceAdmin">Panel Admin</a>
+        </li>
+      }
     </ul>
 
-    <div class="nav-actions">
-      <a routerLink="/cart" class="icon-btn" title="Carrito">
-        🛒 <span class="badge">0</span>
-      </a>
-      <a routerLink="/login" class="btn-primary">Ingresar</a>
+    <div class="accionesNavegacion">
+      @if (!isAdmin) {
+        <a [routerLink]="['/shop/cart']" class="btnIcono" title="Carrito">
+          <i class="iconoCar bi bi-cart2"></i>
+          <span class="etiquetaConteo">0</span>
+        </a>
+      }
+
+      @if (!isLoggedIn) {
+        <a [routerLink]="['/auth/login']" class="btnPrimario">Ingresar</a>
+      }
+
+      @if (isLoggedIn) {
+        <button (click)="logout()" class="btnPrimario btnSalir">Salir</button>
+      }
     </div>
   </div>
 
-  <div class="theme-switch-wrapper">
-    <label class="theme-switch" for="checkbox">
+  <div class="contenedorSwitchTema">
+    <label class="switchTema" for="checkbox">
       <input type="checkbox" id="checkbox" (change)="toggleTheme()" [checked]="isDarkMode" />
-      <div class="slider round">
-        <span class="icon-sun">☀️</span>
-        <span class="icon-moon">🌙</span>
+      <div class="deslizador redondo">
+        <i class="iconoSol bi bi-brightness-high-fill"></i>
+        <!-- ícono de https://emojicombos.com/sol  -->
+        <i class="iconoLuna bi bi-moon-fill"></i>
+        <!-- ícono de https://emojicombos.com/luna -->
       </div>
     </label>
   </div>
-
 </nav>

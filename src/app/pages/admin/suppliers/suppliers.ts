@@ -12,6 +12,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class SuppliersComponent {
   showForm = false;
+  editingId: number | null = null;
   
   newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' };
 
@@ -43,21 +44,61 @@ export class SuppliersComponent {
     }
   ];
 
-  addSupplier() {
+  openForm() {
+    this.editingId = null;
+    this.newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' };
+    this.showForm = true;
+  }
+
+  editSupplier(supplier: any) {
+    this.editingId = supplier.id;
+    this.newSupplier = { 
+      ...supplier, 
+      supplies: supplier.supplies.join(', ') 
+    };
+    this.showForm = true;
+  }
+
+  closeForm() {
+    this.showForm = false;
+    this.editingId = null;
+  }
+
+  // Guardar (Crear o Actualizar)
+  saveSupplier() {
     if (this.newSupplier.company) {
       const suppliesArray = this.newSupplier.supplies.split(',').map(s => s.trim());
       
-      this.suppliers.push({
-        id: this.suppliers.length + 1,
-        company: this.newSupplier.company,
-        contact: this.newSupplier.contact,
-        email: this.newSupplier.email,
-        phone: this.newSupplier.phone,
-        supplies: suppliesArray
-      });
+      if (this.editingId) {
+        // --- MODO EDICIÓN ---
+        const index = this.suppliers.findIndex(s => s.id === this.editingId);
+        if (index !== -1) {
+          this.suppliers[index] = {
+            id: this.editingId,
+            company: this.newSupplier.company,
+            contact: this.newSupplier.contact,
+            email: this.newSupplier.email,
+            phone: this.newSupplier.phone,
+            supplies: suppliesArray
+          };
+          alert('Proveedor actualizado correctamente.');
+        }
+      } else {
+        // --- MODO CREACIÓN ---
+        this.suppliers.push({
+          id: Date.now(),
+          company: this.newSupplier.company,
+          contact: this.newSupplier.contact,
+          email: this.newSupplier.email,
+          phone: this.newSupplier.phone,
+          supplies: suppliesArray
+        });
+        alert('Proveedor registrado correctamente.');
+      }
       
-      this.showForm = false;
-      this.newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' };
+      this.closeForm();
+    } else {
+      alert('El nombre de la empresa es obligatorio.');
     }
   }
 

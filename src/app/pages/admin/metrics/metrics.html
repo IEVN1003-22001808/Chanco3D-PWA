@@ -1,94 +1,37 @@
-<div class="admin-layout">
-  <aside class="admin-sidebar">
-    <div class="sidebar-header"><h3>CHANCO<span class="highlight">ADMIN</span></h3></div>
-    <nav class="sidebar-nav">
-      <a routerLink="/admin" 
-         class="nav-item" 
-         routerLinkActive="active" 
-         [routerLinkActiveOptions]="{exact: true}">
-         Dashboard General
-      </a>
-      <a routerLink="/admin/inventory" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Inventario
-      </a>
-      <a routerLink="/admin/metrics" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Métricas
-      </a>
-      <a routerLink="/admin/suppliers" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Proveedores
-      </a>
-      <a routerLink="/home" class="nav-item return">
-         Volver a la Tienda
-      </a>
-    </nav>
-  </aside>
+<div class="disenoAdmin">
 
-  <main class="admin-content">
-    <header class="content-header">
-      <h1>Análisis de Métricas (BI)</h1>
+  <main class="contenidoAdmin">
+    <header class="encabezadoContenido">
+      <h1>Análisis de Métricas</h1>
       <p>Importa datos de redes sociales para tomar decisiones estratégicas.</p>
     </header>
 
-    <section class="upload-section">
-      <div class="upload-box" [class.dragging]="isDragging">
-        <div class="icon">📂</div>
+    <section class="seccionCarga">
+      <div class="cajaCarga">
         <h3>Sube tu archivo CSV aquí</h3>
         <p>Arrastra el archivo o haz clic para buscar</p>
         <input type="file" accept=".csv" (change)="onFileSelected($event)">
       </div>
       
-      <div class="file-status" *ngIf="fileName">
-        <span class="file-name">📄 {{ fileName }}</span>
-        <button class="btn-primary" (click)="processData()">⚡ Procesar Datos</button>
+      <div class="estadoArchivo" *ngIf="fileName">
+        <span class="nombreArchivo">{{ fileName }}</span>
+        <button class="btnPrimario" (click)="processData()">Ejecutar Análisis</button>
       </div>
     </section>
 
-    <section class="metrics-dashboard" *ngIf="showCharts">
+    <section class="tableroMetricas" *ngIf="showCharts">
       
-      <div class="chart-card">
+      <div class="tarjetaGrafico">
         <h3>Popularidad por Figura</h3>
-        <div class="bar-chart">
-          <div class="bar-group">
-            <div class="bar" style="height: 85%;"></div>
-            <span class="label">Hollow K.</span>
-          </div>
-          <div class="bar-group">
-            <div class="bar" style="height: 45%;"></div>
-            <span class="label">D&D Pack</span>
-          </div>
-          <div class="bar-group">
-            <div class="bar highlight" style="height: 95%;"></div> <span class="label">Guardian</span>
-          </div>
-          <div class="bar-group">
-            <div class="bar" style="height: 60%;"></div>
-            <span class="label">Pokemon</span>
-          </div>
-          <div class="bar-group">
-            <div class="bar" style="height: 30%;"></div>
-            <span class="label">Soporte</span>
-          </div>
+        <div class="contenedorCanvas">
+          <canvas #barCanvas></canvas>
         </div>
       </div>
 
-      <div class="chart-card">
-        <h3>🌍 Interacciones por Ciudad</h3>
-        <div class="map-container">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1200px-World_map_-_low_resolution.svg.png" alt="Mapa de calor" class="map-image">
-          
-          <div class="hotspot" style="top: 40%; left: 25%;" title="León"></div>
-          <div class="hotspot" style="top: 35%; left: 28%;" title="CDMX"></div>
-          <div class="hotspot" style="top: 38%; left: 22%;" title="Guadalajara"></div>
-        </div>
-        <div class="map-legend">
-          <span>🔥 León: 45%</span>
-          <span>🔵 CDMX: 30%</span>
-          <span>⚪ GDL: 25%</span>
+      <div class="tarjetaGrafico">
+        <h3>Interacciones por Ciudad</h3>
+        <div class="contenedorCanvas">
+          <canvas #pieCanvas></canvas>
         </div>
       </div>
 

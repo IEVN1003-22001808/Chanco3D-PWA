@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--colorFondo);
+  transition: background-color 0.3s;
+}
+
+.disenoAdmin { 
+  display: flex; 
+  min-height: 100vh; 
+  background-color: var(--colorFondo);
+  color: var(--textoPrincipal); 
+}
+
+
+.barraLateralAdmin { 
+  width: 250px; 
+  background-color: var(--fondoTarjeta);
+  border-right: 1px solid var(--colorBorde); 
+  padding: 20px; 
+  display: flex; 
+  flex-direction: column; 
+  position: sticky; 
+  top: 0;
+  height: 100vh; 
+  overflow-y: auto; 
+  flex-shrink: 0; 
+}
+
+.encabezadoLateral h3 { 
+  color: var(--textoPrincipal); 
+  margin-bottom: 40px; 
+  letter-spacing: 2px; 
+}
+
+.resaltado { 
+  color: var(--colorPrimario); 
+}
+
+.itemNavegacion { 
+  display: block; 
+  padding: 12px 15px; 
+  color: var(--textoSecundario); 
+  text-decoration: none; 
+  margin-bottom: 5px; 
+  border-radius: 8px; 
+  transition: all 0.3s; 
+}
+
+.itemNavegacion:hover { 
+  background-color: var(--fondoInput); 
+  color: var(--textoPrincipal); 
+}
+
+.itemNavegacion.activo { 
+  background-color: var(--colorPrimario); 
+  color: white;
+}
+
+.itemNavegacion.retorno { 
+  margin-top: auto; 
+  border: 1px solid var(--colorBorde); 
+}
+
+.contenidoAdmin { 
+  flex: 1; 
+  padding: 40px;
+
+  min-width: 0; 
+}

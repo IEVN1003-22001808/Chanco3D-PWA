@@ -1,189 +1,206 @@
-:host {
-  display: block;
-  min-height: 100vh;
-  background-color: var(--bg-color);
-  transition: background-color 0.3s;
-}
-
-.chat-container {
+.chat {
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 160px);
-  background-color: var(--bg-color); /* Fondo base dinámico */
-  padding: 20px;
-  transition: background-color 0.3s;
+  height: 40px;
+  margin-left: 105px;
 }
 
-.chat-card {
-  width: 100%;
-  max-width: 500px;
-  height: 600px; /* Altura fija para el chat */
-  background-color: var(--card-bg); /* Tarjeta dinámica */
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 10px 30px var(--shadow); /* Sombra adaptable */
-}
-
-/* HEADER */
-.chat-header {
-  background-color: var(--input-bg); /* Un tono ligeramente distinto a la tarjeta */
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.avatar-bot {
-  width: 45px; height: 45px;
-  background-color: var(--primary);
-  border-radius: 50%;
-  display: flex; justify-content: center; align-items: center;
-  font-size: 1.5rem;
-  margin-right: 15px;
-  position: relative;
-}
-
-.status-dot {
-  width: 10px; height: 10px;
-  background-color: #4ade80; /* Verde online siempre */
-  border-radius: 50%;
-  position: absolute;
-  bottom: 0; right: 0;
-  border: 2px solid var(--input-bg); /* Borde del color del header para recortarlo */
-}
-
-.header-info h2 { 
-  color: var(--text-main); 
-  font-size: 1.1rem; 
-  margin: 0; 
-}
-
-.header-info p { 
-  color: #4ade80; 
-  font-size: 0.8rem; 
-  margin: 2px 0 0 0; 
-}
-
-/* ÁREA DE MENSAJES */
-.messages-area {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-  background-color: var(--bg-color); /* Fondo de chat (oscuro en dark, gris en light) */
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.message-row { display: flex; width: 100%; }
-.user-row { justify-content: flex-end; }
-.bot-row { justify-content: flex-start; }
-
-.bubble {
-  max-width: 80%;
-  padding: 10px 15px;
-  border-radius: 12px;
-  font-size: 0.95rem;
-  position: relative;
-  line-height: 1.4;
-  box-shadow: 0 1px 2px var(--shadow);
-}
-
-.bot-bubble {
-  background-color: var(--card-bg); /* Burbuja del bot (blanca en light, gris en dark) */
-  color: var(--text-main);
-  border-bottom-left-radius: 2px;
-  border: 1px solid var(--border-color);
-}
-
-.user-bubble {
-  background-color: var(--primary);
-  color: white; /* Burbuja del usuario siempre violeta con texto blanco */
-  border-bottom-right-radius: 2px;
-}
-
-.time {
-  display: block;
-  font-size: 0.65rem;
-  text-align: right;
-  margin-top: 5px;
-  opacity: 0.7;
-}
-
-/* Animación de escribiendo */
-.typing span {
-  animation: blink 1.4s infinite both;
-  font-size: 1.5rem;
-  margin: 0 2px;
-}
-.typing span:nth-child(2) { animation-delay: 0.2s; }
-.typing span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
-
-/* OPCIONES RÁPIDAS */
-.quick-options {
-  padding: 10px 20px;
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  white-space: nowrap;
-  background-color: var(--input-bg);
-  border-top: 1px solid var(--border-color);
-}
-.quick-options::-webkit-scrollbar { height: 4px; }
-
-.quick-options button {
-  background-color: rgba(79, 70, 229, 0.1);
-  color: var(--primary);
-  border: 1px solid var(--primary);
-  padding: 5px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: all 0.2s;
-}
-.quick-options button:hover { 
-  background-color: var(--primary);
+.abrirchat {
+  position: fixed;
+  bottom: 30px;
+  right: 60px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--colorPrimario);
   color: white;
-}
-
-/* INPUT AREA */
-.input-area {
-  padding: 15px;
-  background-color: var(--input-bg);
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px var(--sombra);
+  z-index: 100; 
   display: flex;
-  gap: 10px;
-  border-top: 1px solid var(--border-color);
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, background-color 0.3s;
 }
 
-.input-area input {
-  flex: 1;
-  background-color: var(--bg-color); /* Input contrasta con el área */
-  border: 1px solid var(--border-color);
-  border-radius: 25px;
-  padding: 10px 20px;
-  color: var(--text-main);
-  margin: 0;
+.abrirchat:hover {
+  transform: scale(1.1);
+  background-color: var(--colorPrimarioHover);
+}
+
+.ventana {
+  position: fixed;
+  bottom: 105px;
+  right: 20px;
+  width: 350px; 
+  height: 550px;
+  max-height: 70vh; 
+  background-color: var(--fondoTarjeta);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px var(--sombra);
+  z-index: 99998; 
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none; 
+  visibility: hidden; 
+  transition: opacity 0.3s ease, transform 0.1s linear;
+}
+
+.ventana.open {
+  opacity: 1;
+  pointer-events: all; 
+  visibility: visible;
+}
+
+.chatbox {
+  width: 100%;
+  height: 100%;
+  background-color: var(--colorFondo);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 60px;
+  background: var(--fondoTarjeta);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  border-bottom: 1px solid var(--colorBorde);
+}
+
+.header-logos img {
+  height: 30px;
+  margin-left: 8px;
+}
+
+.contenedor-mensajes {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--colorFondo);
+}
+
+.mensaje {
+  max-width: 80%;
+  padding: 8px 12px;
+  border-radius: 15px;
+  font-size: 13px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.mensaje.usuario {
+  background-color: var(--fondoTarjeta);
+  color: var(--textoPrincipal);
+  align-self: flex-end;
+  border: 1px solid var(--colorBorde);
+}
+
+.mensaje.bot {
+  background-color: var(--fondoTarjeta);
+  color: var(--textoPrincipal);
+  align-self: flex-start;
+  border: 1px solid var(--colorBorde);
+}
+
+.caja-faq {
+  background-color: var(--fondoTarjeta);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 5px;
+  border: 1px solid var(--colorBorde);
+}
+
+.titulo-faq {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--textoPrincipal);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.botones button {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--colorBorde);
+  background-color: var(--colorPrimario);
+  color: aliceblue;
+  cursor: pointer;
+  font-size: 12px;
+  width: 100%;
+  margin-bottom: 5px;
+  text-align: left; 
+}
+
+.botones button:hover {
+  background-color: var(--colorPrimarioHover);
+}
+
+.contenedor-busqueda {
+  padding: 10px;
+  background: var(--fondoTarjeta);
+  border-top: 1px solid var(--colorBorde);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.busqueda { flex-grow: 1; }
+
+#barraBusqueda {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--colorBorde);
+  background-color: var(--fondoInput);
+  color: var(--textoPrincipal);
+  font-size: 13px;
   outline: none;
 }
-.input-area input:focus { border-color: var(--primary); }
 
-.btn-send {
-  width: 45px; height: 45px;
-  border-radius: 50%;
-  background-color: var(--primary);
+#botonEnviar {
+  background-color: var(--colorPrimario);
   color: white;
   border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  display: flex; justify-content: center; align-items: center;
-  font-size: 1.2rem;
-  transition: background-color 0.3s;
 }
-.btn-send:disabled { 
-  background-color: var(--border-color); 
-  cursor: not-allowed; 
+
+.mensaje-bienvenida {
+  text-align: center;
+  padding: 10px;
+  background-color: var(--fondoInput);
+  color: var(--textoPrincipal);
+  border-radius: 8px;
+  font-size: 13px;
+  border-left: 4px solid var(--colorPrimario);
 }
+
+.indicador-escritura {
+  font-size: 11px;
+  color: var(--colorPrimario);
+  padding: 5px 15px;
+}
+
+.cursor-escritura {
+  border-right: 2px solid var(--colorPrimario);
+  animation: blink 1s infinite;
+  display: inline-block;
+  height: 12px;
+  vertical-align: middle;
+}
+
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }

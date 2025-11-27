@@ -1,67 +1,64 @@
 :host {
   display: block;
   min-height: 100vh;
-  background-color: var(--bg-color);
+  background-color: var(--colorFondo);
   transition: background-color 0.3s;
 }
 
-/* Estilos Base Compartidos adaptados */
-.quote-container, .gallery-container { 
-  max-width: 1200px; 
-  margin: 0 auto; 
-  padding: 40px 20px; 
+.contenedorCotizacion, .contenedorGaleria {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-.quote-header, .gallery-header { 
-  text-align: center; 
-  margin-bottom: 40px; 
-  color: var(--text-main);
+.encabezadoCotizacion, .encabezadoGaleria {
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--textoPrincipal);
 }
 
-.highlight { 
-  color: var(--primary); 
+.resaltado {
+  color: var(--colorPrimario);
 }
 
-/* Inputs y Botones (Formulario de subir foto) */
-input, select { 
-  width: 100%; 
-  padding: 10px; 
-  background-color: var(--input-bg);
-  border: 1px solid var(--border-color); 
-  color: var(--text-main); 
-  border-radius: 6px; 
-  margin-bottom: 15px; 
+input, select {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--fondoInput);
+  border: 1px solid var(--colorBorde);
+  color: var(--textoPrincipal);
+  border-radius: 6px;
+  margin-bottom: 15px;
   outline: none;
   transition: border-color 0.3s;
 }
 
 input:focus {
-  border-color: var(--primary);
+  border-color: var(--colorPrimario);
 }
 
-.btn-primary, .btn-share { 
-  background-color: var(--primary); 
+.btnPrimario, .btnCompartir {
+  background-color: var(--colorPrimario);
   color: white;
-  padding: 12px 20px; 
-  border: none; 
-  border-radius: 8px; 
-  cursor: pointer; 
-  font-weight: bold; 
-  width: 100%; 
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
   transition: background-color 0.3s;
 }
 
-.btn-primary:hover, .btn-share:hover {
-  background-color: var(--primary-hover);
+.btnPrimario:hover, .btnCompartir:hover {
+  background-color: var(--colorPrimarioHover);
 }
 
-.btn-share { 
-  width: auto; 
-  margin-top: 20px; 
+.btnCompartir {
+  width: auto;
+  margin-top: 20px;
 }
 
-/* Estilos del Formulario Desplegable */
-.post-form-container {
+.contenedorFormularioPost {
   max-width: 600px;
   margin: 0 auto 40px;
   animation: slideDown 0.3s ease-out;
@@ -72,73 +69,72 @@ input:focus {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.post-form {
-  background-color: var(--card-bg);
+.formularioPost {
+  background-color: var(--fondoTarjeta);
   padding: 30px;
   border-radius: 12px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 15px var(--shadow);
+  border: 1px solid var(--colorBorde);
+  box-shadow: 0 4px 15px var(--sombra);
 }
 
-.post-form h3 {
-  color: var(--text-main);
+.formularioPost h3 {
+  color: var(--textoPrincipal);
   margin-bottom: 15px;
   text-align: center;
 }
 
-/* Específico Galería */
-.gallery-grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-  gap: 20px; 
+.Galeria {
+  display: grid;
+  /* Aquí hice cambio para que sean más anchas (SoyKmach) */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
 }
 
-.gallery-item { 
-  position: relative; 
-  border-radius: 12px; 
-  overflow: hidden; 
-  height: 300px; 
-  background-color: var(--border-color);
-  box-shadow: 0 4px 10px var(--shadow);
+.itemGaleria {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 4px 10px var(--sombra);
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
 }
 
-.gallery-item img { 
-  width: 100%; 
-  height: 100%; 
-  object-fit: cover; 
-  transition: transform 0.5s; 
+.itemGaleria img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
 }
 
-.gallery-item:hover img { 
-  transform: scale(1.1); 
+.itemGaleria:hover img {
+  transform: scale(1.1);
 }
 
-/* EL OVERLAY SE MANTIENE OSCURO SIEMPRE */
-/* Esto es importante: como está sobre una foto, necesitamos contraste fijo */
-.overlay { 
-  position: absolute; 
-  bottom: 0; 
-  left: 0; 
-  right: 0; 
-  background: linear-gradient(transparent, rgba(0,0,0,0.9)); /* Gradiente negro fijo */
-  padding: 20px; 
-  color: white; /* Texto blanco fijo */
-  pointer-events: none; /* Permite hacer clic a través si fuera necesario */
+.capa {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+  padding: 20px;
+  color: white;
+  pointer-events: none;
 }
 
-.overlay h3 {
+.capa h3 {
   margin: 0 0 5px 0;
   font-size: 1.1rem;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-.overlay p {
+.capa p {
   margin: 0;
   font-size: 0.85rem;
   opacity: 0.9;
 }
 
-.likes {
+.meGusta {
   position: absolute;
   bottom: 20px;
   right: 20px;
@@ -147,9 +143,47 @@ input:focus {
   color: #ef4444;
 }
 
-/* Responsive */
-@media(max-width: 768px) { 
-  .gallery-grid { 
-    grid-template-columns: 1fr; 
-  } 
+@media(max-width: 768px) {
+  .grillaGaleria {
+    grid-template-columns: 1fr;
+  }
+}
+
+.no-results {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  padding: 50px;
+  grid-column: 1 / -1;
+}
+
+.instagram-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.info-extra {
+  padding: 15px;
+  background-color: var(--fondoTarjeta);
+  border-top: 1px solid var(--colorBorde);
+  text-align: center;
+}
+
+.info-extra h4 {
+  margin: 0;
+  color: var(--textoPrincipal);
+  font-size: 1.1rem;
+}
+
+.info-extra small {
+  color: var(--textoSecundario);
+}
+
+.nota-ayuda {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: -10px;
+  margin-bottom: 15px;
 }

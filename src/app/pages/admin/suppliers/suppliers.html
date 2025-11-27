@@ -1,91 +1,63 @@
-<div class="admin-layout">
-  <aside class="admin-sidebar">
-    <div class="sidebar-header"><h3>CHANCO<span class="highlight">ADMIN</span></h3></div>
-    <nav class="sidebar-nav">
-      <a routerLink="/admin" 
-         class="nav-item" 
-         routerLinkActive="active" 
-         [routerLinkActiveOptions]="{exact: true}">
-         Dashboard General
-      </a>
-      <a routerLink="/admin/inventory" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Inventario
-      </a>
-      <a routerLink="/admin/metrics" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Métricas
-      </a>
-      <a routerLink="/admin/suppliers" 
-         class="nav-item" 
-         routerLinkActive="active">
-         Proveedores
-      </a>
-      <a routerLink="/home" class="nav-item return">
-         Volver a la Tienda
-      </a>
-    </nav>
-  </aside>
-
-  <main class="admin-content">
-    <header class="content-header-row">
+<div class="disenoAdmin">
+ 
+  <main class="contenidoAdmin">
+    <header class="filaEncabezadoContenido">
       <div>
         <h1>Gestión de Proveedores</h1>
-        <p class="subtitle">Cartera de socios y cadena de suministro.</p>
+        <p class="subtitulo">Cartera de socios y cadena de suministro.</p>
       </div>
-      <button class="btn-primary" (click)="showForm = !showForm">
+      <button class="btnPrimario" (click)="showForm = !showForm">
         {{ showForm ? 'Cancelar' : '+ Registrar Proveedor' }}
       </button>
     </header>
 
-    <section class="form-section" *ngIf="showForm">
-      <div class="form-card">
+    <section class="seccionFormulario" *ngIf="showForm">
+      <div class="tarjetaFormulario">
         <h3>Nuevo Socio Comercial</h3>
-        <div class="form-grid">
+        <div class="Formulario">
           <input type="text" placeholder="Nombre de la Empresa" [(ngModel)]="newSupplier.company">
           <input type="text" placeholder="Nombre del Contacto" [(ngModel)]="newSupplier.contact">
           <input type="email" placeholder="Correo Electrónico" [(ngModel)]="newSupplier.email">
           <input type="text" placeholder="Teléfono" [(ngModel)]="newSupplier.phone">
           <input type="text" placeholder="Insumos que vende (separados por coma)" [(ngModel)]="newSupplier.supplies">
         </div>
-        <button class="btn-save" (click)="addSupplier()">Guardar Proveedor</button>
+        <button class="btnGuardar" (click)="saveSupplier()">Guardar Proveedor</button>
       </div>
     </section>
 
-    <div class="table-card">
+    <div class="tarjetaTabla">
       <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>Empresa</th>
             <th>Contacto Directo</th>
-            <th>Insumos Surtidos</th> <th>Acciones</th>
+            <th>Insumos Surtidos</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let s of suppliers">
             <td>#{{ s.id }}</td>
             <td>
-              <div class="company-info">
+              <div class="infoEmpresa">
                 <strong>{{ s.company }}</strong>
                 <small>{{ s.email }}</small>
               </div>
             </td>
             <td>
               {{ s.contact }}
-              <div class="phone-badge">📞 {{ s.phone }}</div>
+              <div class="etiquetaTelefono">{{ s.phone }}</div>
             </td>
             <td>
-              <div class="tags-container">
-                <span class="supply-tag" *ngFor="let supply of s.supplies">{{ supply }}</span>
+              <div class="contenedorTags">
+                <span class="tagInsumo" *ngFor="let supply of s.supplies">{{ supply }}</span>
               </div>
             </td>
             <td>
-              <div class="action-buttons">
-                <button class="btn-icon edit">✎</button>
-                <button class="btn-icon delete" (click)="deleteSupplier(s.id)">🗑</button>
+              <div class="acciones">
+                <button class="btnIcono editar" title="Editar" (click)="editSupplier(s)">✎</button>
+                <button class="btnIcono eliminar" title="Eliminar" (click)="deleteSupplier(s.id)">🗑</button>
               </div>
             </td>
           </tr>

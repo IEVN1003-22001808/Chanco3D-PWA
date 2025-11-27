@@ -1,24 +1,21 @@
-/* Contenedor principal que centra todo en la pantalla */
-.auth-container {
+.contenedorAutenticacion {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 160px);
-  background-color: var(--bg-color); 
+  background-color: var(--colorFondo); 
   padding: 20px;
   transition: background-color 0.3s;
 }
 
-/* La tarjeta del formulario */
-.auth-card {
-  background-color: var(--card-bg); 
+.tarjetaAutenticacion {
+  background-color: var(--fondoTarjeta); 
   width: 100%;
   max-width: 420px;
   padding: 40px;
   border-radius: 16px;
-  /* Sombra dinámica: suave en light, fuerte en dark */
-  box-shadow: 0 10px 40px var(--shadow);
-  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 40px var(--sombra);
+  border: 1px solid var(--colorBorde);
   animation: fadeIn 0.5s ease-out;
   transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
@@ -28,93 +25,87 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Encabezado */
-.auth-header {
+.encabezadoAutenticacion {
   text-align: center;
   margin-bottom: 30px;
 }
 
-.auth-header h2 {
-  color: var(--text-main);
+.encabezadoAutenticacion h2 {
+  color: var(--textoPrincipal);
   font-size: 2rem;
   margin-bottom: 10px;
 }
 
-.auth-header p {
-  color: var(--text-muted);
+.encabezadoAutenticacion p {
+  color: var(--textoSecundario);
   font-size: 0.95rem;
 }
 
-/* Grupos de formulario */
-.form-group {
+.grupoFormulario {
   margin-bottom: 20px;
 }
 
-.form-group label {
+.grupoFormulario label {
   display: block;
-  color: var(--text-main);
+  color: var(--textoPrincipal);
   margin-bottom: 8px;
   font-size: 0.9rem;
   font-weight: 500;
 }
 
-/* Inputs con iconos */
-.input-wrapper {
+.contenedorInput {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.input-icon {
+.iconoInput {
   position: absolute;
   left: 15px;
   font-size: 1.1rem;
   opacity: 0.7;
-  color: var(--text-muted);
+  color: var(--textoSecundario);
 }
 
 input {
   width: 100%;
   padding: 12px 15px 12px 45px;
-  background-color: var(--input-bg);
-  border: 1px solid var(--border-color);
+  background-color: var(--fondoInput);
+  border: 1px solid var(--colorBorde);
   border-radius: 8px;
-  color: var(--text-main);
+  color: var(--textoPrincipal);
   font-size: 1rem;
   transition: all 0.3s ease;
   outline: none;
 }
 
 input:focus {
-  border-color: var(--primary);
-  /* Al hacer foco, usamos el color de fondo base para dar contraste */
-  background-color: var(--bg-color); 
+  border-color: var(--colorPrimario);
+  background-color: var(--colorFondo); 
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
 }
 
-/* Olvidé contraseña */
-.forgot-pass {
+.olvidarContrasena {
   text-align: right;
   margin-top: 8px;
 }
 
-.forgot-pass a {
-  color: var(--text-muted);
+.olvidarContrasena a {
+  color: var(--textoSecundario);
   font-size: 0.85rem;
   text-decoration: none;
   transition: color 0.3s;
 }
 
-.forgot-pass a:hover {
-  color: var(--primary);
+.olvidarContrasena a:hover {
+  color: var(--colorPrimario);
   text-decoration: underline;
 }
 
-/* Botón Principal */
-.btn-submit {
+.btnIngresar {
   width: 100%;
   padding: 14px;
-  background-color: var(--primary);
+  background-color: var(--colorPrimario);
   color: white;
   border: none;
   border-radius: 8px;
@@ -125,25 +116,28 @@ input:focus {
   margin-top: 10px;
 }
 
-.btn-submit:hover {
-  background-color: var(--primary-hover);
+.btnIngresar:hover {
+  background-color: var(--colorPrimarioHover);
 }
 
-/* Footer del Auth (Link a Registro) */
-.auth-footer {
+.pieAutenticacion {
   text-align: center;
   margin-top: 25px;
-  color: var(--text-muted);
+  color: var(--textoSecundario);
   font-size: 0.9rem;
 }
 
-.auth-footer a {
-  color: var(--primary);
+.pieAutenticacion a {
+  color: var(--colorPrimario);
   text-decoration: none;
   font-weight: 600;
   margin-left: 5px;
 }
 
-.auth-footer a:hover {
+.pieAutenticacion a:hover {
   text-decoration: underline;
+}
+
+.c{
+  padding-top: 5px;
 }
