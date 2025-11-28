@@ -1,110 +1,87 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-suppliers',
   standalone: true,
+
   imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './suppliers.html',
   styleUrl: './suppliers.css'
 })
-export class SuppliersComponent {
+export class SuppliersComponent implements OnInit {
+
+  private api = inject(ApiService);
+
   showForm = false;
-  editingId: number | null = null;
-  
+  suppliers: any[] = []; // Inicia vacío para llenarse con la BD
+
+  // Objeto temporal para formulario
   newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' };
 
-  // Mock Data (Basado en PDF)
-  suppliers = [
-    { 
-      id: 1, 
-      company: 'Caballero 3D', 
-      contact: 'Juan Pérez', 
-      email: 'ventas@caballero3d.com', 
-      phone: '+52 477 756 9238', 
-      supplies: ['Resina Gris', 'Resina 8K'] 
-    },
-    { 
-      id: 2, 
-      company: '3D Factory MX', 
-      contact: 'Ana López', 
-      email: 'ana@factorymx.com', 
-      phone: '+52 477 833 5687', 
-      supplies: ['Alcohol Isopropílico', 'Filtros'] 
-    },
-    { 
-      id: 3, 
-      company: 'TecnoMAX', 
-      contact: 'Carlos Ruiz', 
-      email: 'carlos@tecnomax.com', 
-      phone: '+52 477 567 4575', 
-      supplies: ['Guantes Nitrilo', 'Espátulas'] 
-    }
-  ];
-
-  openForm() {
-    this.editingId = null;
-    this.newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' };
-    this.showForm = true;
+  // Al iniciar el componente, cargamos los datos
+  ngOnInit() {
+    this.cargarProveedores();
   }
 
-  editSupplier(supplier: any) {
-    this.editingId = supplier.id;
-    this.newSupplier = { 
-      ...supplier, 
-      supplies: supplier.supplies.join(', ') 
-    };
+  // Función para pedir datos a Flask
+  cargarProveedores() {
+    this.api.getProveedores().subscribe({
+      next: (data: any) => {
+        this.suppliers = data; // Guardamos los datos reales
+        console.log('Proveedores cargados:', data);
+      },
+      error: (err) => console.error('Error al conectar:', err)
+    });
+  }
+
+  // --- TUS FUNCIONES ORIGINALES (Adaptadas a BD) ---
+
+  openForm() {
+    this.newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' };
     this.showForm = true;
   }
 
   closeForm() {
     this.showForm = false;
-    this.editingId = null;
   }
 
-  // Guardar (Crear o Actualizar)
   saveSupplier() {
-    if (this.newSupplier.company) {
-      const suppliesArray = this.newSupplier.supplies.split(',').map(s => s.trim());
-      
-      if (this.editingId) {
-        // --- MODO EDICIÓN ---
-        const index = this.suppliers.findIndex(s => s.id === this.editingId);
-        if (index !== -1) {
-          this.suppliers[index] = {
-            id: this.editingId,
-            company: this.newSupplier.company,
-            contact: this.newSupplier.contact,
-            email: this.newSupplier.email,
-            phone: this.newSupplier.phone,
-            supplies: suppliesArray
-          };
-          alert('Proveedor actualizado correctamente.');
-        }
-      } else {
-        // --- MODO CREACIÓN ---
-        this.suppliers.push({
-          id: Date.now(),
-          company: this.newSupplier.company,
-          contact: this.newSupplier.contact,
-          email: this.newSupplier.email,
-          phone: this.newSupplier.phone,
-          supplies: suppliesArray
-        });
-        alert('Proveedor registrado correctamente.');
-      }
-      
-      this.closeForm();
-    } else {
-      alert('El nombre de la empresa es obligatorio.');
+    // Validamos que tenga nombre
+    if (!this.newSupplier.company) {
+        alert('El nombre de la empresa es obligatorio.');
+        return;
     }
+
+    // Enviamos a la API (Flask se encarga de guardar)
+    this.api.addProveedor(this.newSupplier).subscribe({
+      next: (res: any) => {
+        alert('Proveedor guardado exitosamente.');
+        this.cargarProveedores(); // Recargamos la tabla para ver el cambio
+        this.closeForm();
+      },
+      error: (e) => alert('Error al guardar en BD: ' + e.message)
+    });
   }
 
   deleteSupplier(id: number) {
-    if(confirm('¿Estás seguro de eliminar a este proveedor? Esta acción es irreversible.')) {
-      this.suppliers = this.suppliers.filter(s => s.id !== id);
+    if(confirm('¿Estás seguro de eliminar este proveedor de la Base de Datos?')) {
+      this.api.deleteProveedor(id).subscribe({
+        next: (res: any) => {
+          this.cargarProveedores(); // Recargamos la tabla
+        },
+        error: (e) => alert('Error al eliminar')
+      });
     }
+  }
+
+  // Función placeholder para editar (Por ahora solo visual o lógica simple)
+  editSupplier(supplier: any) {
+      alert("Para editar, implementaremos el PUT más adelante. Por ahora borra y crea de nuevo.");
   }
 }

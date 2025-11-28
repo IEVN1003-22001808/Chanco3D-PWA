@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core'; // <--- Importar inject
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../../services/api.service'; // <--- Importar tu servicio
 
 @Component({
   selector: 'app-custom-quote',
@@ -10,24 +11,23 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './custom-quote.css'
 })
 export class CustomQuoteComponent {
+  private api = inject(ApiService); // <--- Inyectar servicio
+
   isDragging = false;
   fileSelected = false;
   fileName = '';
   fileSize = '';
-  
-  // Datos del formulario
+
   selectedMaterial = 'standard';
   height: number | null = null;
-  infill = '20'; // Por defecto ligero
+  infill = '20';
   quantity = 1;
   totalPrice = 0;
 
-  // Historial de Cotizaciones (Mock Data inicial vacío)
-  quoteHistory: any[] = [];
-
-  // Eventos Drag & Drop
+  // Eventos Drag & Drop (igual que antes)
   onDragOver(e: Event) { e.preventDefault(); this.isDragging = true; }
   onDragLeave(e: Event) { e.preventDefault(); this.isDragging = false; }
+
   onDrop(e: any) {
     e.preventDefault();
     this.isDragging = false;
@@ -39,6 +39,7 @@ export class CustomQuoteComponent {
   }
 
   handleFile(file: File) {
+    // Validación simple
     if (!file.name.toLowerCase().endsWith('.stl') && !file.name.toLowerCase().endsWith('.obj')) {
       alert('Solo se permiten archivos .STL o .OBJ');
       return;
@@ -60,59 +61,48 @@ export class CustomQuoteComponent {
       alert('Sube un archivo e ingresa la altura.');
       return;
     }
-    
-    // --- FÓRMULA DE COTIZACIÓN ---
-    
-    // 1. Costo Base por cm de altura (aprox)
-    const baseCostPerCm = 15; 
 
-    // 2. Multiplicador de Material [cite: 43]
+    // --- FÓRMULA DE COTIZACIÓN ---
+    const baseCostPerCm = 15;
     let materialFactor = 1;
     switch(this.selectedMaterial) {
-      case 'standard': materialFactor = 1; break; // Resina Gris
-      case 'tough': materialFactor = 1.3; break; // Alta resistencia
-      case 'clear': materialFactor = 1.4; break; // Transparente
-      case '8k': materialFactor = 1.8; break; // Alta Definición (Más caro)
+      case 'standard': materialFactor = 1; break;
+      case 'tough': materialFactor = 1.3; break;
+      case 'clear': materialFactor = 1.4; break;
+      case '8k': materialFactor = 1.8; break;
     }
 
-    // 3. Multiplicador de Relleno (Más resina = más caro)
     let infillFactor = 1;
     switch(this.infill) {
       case '20': infillFactor = 1.0; break;
       case '50': infillFactor = 1.4; break;
-      case '100': infillFactor = 2.0; break; // Pieza sólida
+      case '100': infillFactor = 2.0; break;
     }
 
-    // Cálculo final
     const unitPrice = (this.height * baseCostPerCm * materialFactor * infillFactor);
     this.totalPrice = unitPrice * this.quantity;
 
-    // --- GUARDAR EN HISTORIAL ---
-    this.addToHistory();
+    // --- AQUÍ ESTÁ EL CAMBIO: GUARDAR EN BD ---
+    this.saveToDb();
   }
 
-  addToHistory() {
-    const newQuote = {
-      id: Date.now(), // ID temporal
+  saveToDb() {
+    const cotizacion = {
       file: this.fileName,
-      settings: `${this.getMaterialName(this.selectedMaterial)} - ${this.infill}%`,
+      material: this.selectedMaterial, // Enviar separado
+      infill: this.infill + '%',       // Enviar separado con el %
+      height: this.height,             // ¡Importante! Enviar la altura
       qty: this.quantity,
-      total: this.totalPrice,
-      date: new Date().toLocaleDateString()
+      total: this.totalPrice
     };
-    
-    // Agregamos al inicio de la lista
-    this.quoteHistory.unshift(newQuote);
-  }
 
-  // Helper para mostrar nombre bonito
-  getMaterialName(slug: string): string {
-    const names: {[key: string]: string} = {
-      'standard': 'Resina Estándar',
-      'tough': 'Resina Tough',
-      'clear': 'Resina Clear',
-      '8k': 'Resina 8K'
-    };
-    return names[slug] || slug;
+    // Llamamos a la API
+    this.api.guardarCotizacion(cotizacion).subscribe({
+      next: (res: any) => {
+        console.log('Cotización guardada en BD:', res);
+        alert('¡Cotización guardada en el historial!'); // Feedback visual
+      },
+      error: (err) => console.error('Error al guardar cotización', err)
+    });
   }
 }

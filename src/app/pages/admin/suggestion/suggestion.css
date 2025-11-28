@@ -133,3 +133,12 @@ th {
   color: var(--textoSecundario);
   font-style: italic;
 }
+
+.selectorEstadoTabla {
+  padding: 8px;
+  border-radius: 6px;
+  background-color: #1e293b; /* Color oscuro */
+  color: white;
+  border: 1px solid #475569;
+  cursor: pointer;
+}

@@ -4,12 +4,12 @@ import { Layout } from './layout/layout';
 export default [
   {
     path: '',
-    component: Layout, 
-    children: [ 
+    component: Layout,
+    children: [
       {
-        path: '', 
-        redirectTo: 'dashboard', 
-        pathMatch: 'full' 
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
       },
       {
         path: 'dashboard',
@@ -30,10 +30,6 @@ export default [
       {
         path: 'suggestion',
         loadComponent: () => import('./suggestion/suggestion').then(m => m.SuggestionComponent)
-      },
-      {
-        path: 'suggestions',
-        loadComponent: () => import('./suggestions/suggestions').then(m => m.SuggestionsComponent)
       },
       {
         path: 'products',

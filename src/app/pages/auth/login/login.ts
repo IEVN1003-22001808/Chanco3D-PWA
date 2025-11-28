@@ -1,19 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importante para formularios
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '../../../services/api.service'; // <--- Importar servicio
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule], // Agregamos ReactiveFormsModule
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrl: './login.css'
 })
 export class LoginComponent {
-
-  // Inyección de dependencias (Estilo moderno Angular)
   private fb = inject(FormBuilder);
-  private router = inject(Router);
+  private api = inject(ApiService);
 
   // Creamos el formulario
   formLogin: FormGroup = this.fb.group({
@@ -27,26 +26,29 @@ export class LoginComponent {
       return;
     }
 
-    const email = this.formLogin.value.email;
-    const password = this.formLogin.value.password;
+    // --- CONEXIÓN REAL A LA BD ---
+    this.api.login(this.formLogin.value).subscribe({
+      next: (res: any) => {
+        if (res.exito) {
+          // Guardamos sesión en el navegador
+          localStorage.setItem('userRole', res.usuario.role);
+          localStorage.setItem('userName', res.usuario.nombre);
+          localStorage.setItem('userId', res.usuario.id); // Útil para guardar pedidos
 
-    // 2. Validación "Trucada"
-    if (email === 'admin@chanco.com' && password === 'admin123') {
-
-      localStorage.setItem('userRole', 'admin');
-      localStorage.setItem('userName', 'Administrador');
-
-      // TRUCO: Usamos window.location.href en lugar de router.navigate
-      // para forzar que la página se recargue y el Navbar detecte el cambio.
-      window.location.href = '/admin';
-
-    } else {
-      // Cliente normal
-      localStorage.setItem('userRole', 'client');
-      localStorage.setItem('userName', 'Cliente Chanco');
-
-      // Forzamos recarga hacia la tienda
-      window.location.href = '/shop/catalog';
-    }
+          // Redirección según rol
+          if (res.usuario.role === 'admin') {
+            window.location.href = '/admin/dashboard';
+          } else {
+            window.location.href = '/home';
+          }
+        } else {
+          alert(res.mensaje); // Ej: "Correo o contraseña incorrectos"
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error al conectar con el servidor.');
+      }
+    });
   }
 }

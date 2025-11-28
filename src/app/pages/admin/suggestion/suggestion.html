@@ -12,54 +12,38 @@
         <th>Origen</th>
         <th>Detalles</th>
         <th>Usuario</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
+        <th>Estado / Acción</th> </tr>
     </thead>
     <tbody>
       <tr *ngFor="let s of sugerencias">
         <td>#{{ s.id }}</td>
+        <td><strong>{{ s.titulo }}</strong></td>
+        <td><span class="etiquetaOrigen">{{ s.origen }}</span></td>
+        <td class="celdaDetalles" title="{{ s.detalles }}">{{ s.detalles }}</td>
+        <td><small class="textoSecundario">{{ s.usuario }}</small></td>
+
         <td>
-          <strong>{{ s.titulo }}</strong>
-        </td>
-        <td>
-          <span class="etiquetaOrigen">{{ s.origen }}</span>
-        </td>
-        <td class="celdaDetalles" title="{{ s.detalles }}">
-          {{ s.detalles }}
-        </td>
-        <td>
-          <small class="textoSecundario">{{ s.usuario }}</small>
-        </td>
-        <td>
-          <span class="etiquetaEstado" 
-            [class.pendiente]="s.estado === 'Pendiente'"
-            [class.aprobada]="s.estado === 'Aprobada'"
-            [class.rechazada]="s.estado === 'Rechazada'">
-            {{ s.estado }}
-          </span>
-        </td>
-        <td>
-          <div class="acciones">
-            <button *ngIf="s.estado === 'Pendiente'" 
-                    class="btnIcono aprobar" 
-                    (click)="cambiarEstado(s.id, 'Aprobada')" 
-                    title="Aprobar">
-              ✓
-            </button>
-            <button *ngIf="s.estado === 'Pendiente'" 
-                    class="btnIcono rechazar" 
-                    (click)="cambiarEstado(s.id, 'Rechazada')" 
-                    title="Rechazar">
-              ✕
-            </button>
-            
-            <span *ngIf="s.estado !== 'Pendiente'" class="textoBloqueado">
-              Moderado
-            </span>
-          </div>
+          <select
+            class="selectorEstadoTabla"
+            [value]="s.estado"
+            (change)="cambiarEstado(s.id, $any($event.target).value)"
+            [ngClass]="{
+              'pendiente': s.estado === 'Pendiente',
+              'aprobada': s.estado === 'Aprobada',
+              'rechazada': s.estado === 'Rechazada',
+              'nueva': s.estado === 'Nueva'
+            }">
+            <option value="Pendiente">Pendiente</option>
+            <option value="Nueva">Nueva</option>
+            <option value="Aprobada">Aprobada</option>
+            <option value="Rechazada">Rechazada</option>
+          </select>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <div *ngIf="sugerencias.length === 0" style="padding: 20px; text-align: center; color: #aaa;">
+    No hay sugerencias por revisar.
+  </div>
 </div>
