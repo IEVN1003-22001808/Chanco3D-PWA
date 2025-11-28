@@ -14,9 +14,10 @@ export class ProductsComponent implements OnInit {
   private api = inject(ApiService);
 
   mostrarModal = false;
-  // Solo manejamos creación para simplificar (no edición)
-  nuevoProducto = { name: '', category: 'Figuras', price: 0, description: '', image: '' };
+  // Para edición
+  editingId: number | null = null;
 
+  nuevoProducto = { name: '', category: 'Figuras', price: 0, description: '', image: '' };
   products: any[] = [];
 
   ngOnInit() {
@@ -29,9 +30,21 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  guardarProducto() {
-    if (this.nuevoProducto.name && this.nuevoProducto.price > 0) {
+guardarProducto() {
+  if (this.nuevoProducto.name && this.nuevoProducto.price > 0) {
 
+    if (this.editingId) {
+      // Edición de producto existente
+      this.api.updateProducto(this.editingId, this.nuevoProducto).subscribe({
+        next: () => {
+          alert('Producto actualizado correctamente');
+          this.cargarProductos();
+          this.cerrarModal();
+        },
+        error: () => alert('Error al editar')
+      });
+    } else {
+      // Creación de nuevo producto
       this.api.addProducto(this.nuevoProducto).subscribe({
         next: () => {
           alert('Producto publicado en la Tienda');
@@ -40,37 +53,42 @@ export class ProductsComponent implements OnInit {
         },
         error: () => alert('Error al guardar')
       });
-
-    } else {
-      alert('Nombre y precio obligatorios');
     }
+
+  } else {
+    alert('Nombre y precio obligatorios');
   }
+}
 
   deleteProduct(id: number) {
     if(confirm('¿Borrar producto del catálogo?')) {
-      // Necesitamos agregar deleteProducto en api.service si no existe,
-      // o usar un truco simple:
-      // Como agregué la ruta DELETE en Flask arriba, aquí hacemos la llamada directa:
-      // (Ojo: Si tu api.service no tiene deleteProducto, agrégalo o usa http.delete aquí)
-      // Asumiré que lo agregas al servicio o lo hacemos genérico.
-
-      // *TRUCO RÁPIDO PARA NO TOCAR API.SERVICE OTRA VEZ:*
-      // Copia esto tal cual, funcionará si agregaste deleteInsumo como ejemplo
-      this.api['http'].delete(`http://127.0.0.1:5000/productos/${id}`).subscribe(() => {
+      // Llamamos al nuevo método deleteProducto
+      this.api.deleteProducto(id).subscribe(() => {
          this.cargarProductos();
       });
     }
   }
 
-  abrirModal() { this.mostrarModal = true; }
+  abrirModal() {
+    this.editingId = null; // Se resetea edición
+    this.mostrarModal = true;
+  }
 
   cerrarModal() {
     this.mostrarModal = false;
     this.nuevoProducto = { name: '', category: 'Figuras', price: 0, description: '', image: '' };
   }
 
-  // Función placeholder para editar
-  editarProducto(p: any) {
-    alert('Función simplificada: Por favor borra y crea de nuevo.');
-  }
+editarProducto(p: any) {
+  this.editingId = p.id; // Marcamos que estamos editando
+  // Copiamos los datos al formulario
+  this.nuevoProducto = {
+    name: p.name,
+    category: p.category,
+    price: p.price,
+    description: p.description,
+    image: p.image
+  };
+  this.mostrarModal = true; // Aqui abre el modal
+}
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../services/api.service'; // Conexión
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-inventory',
@@ -14,9 +14,11 @@ export class InventoryComponent implements OnInit {
   private api = inject(ApiService);
 
   mostrarModal = false;
-  nuevoltem = { name: '', type: 'Resina', stock: 0, unit: 'ml', expiryDate: '', batch: '' };
 
-  inventoryItems: any[] = []; // Se llena con BD
+  // CORRECCIÓN: Cambiado de 'nuevoltem' a 'nuevoItem' (con I mayúscula)
+  nuevoItem = { name: '', type: 'Resina', stock: 0, unit: 'ml', expiryDate: '', batch: '' };
+
+  inventoryItems: any[] = [];
 
   ngOnInit() {
     this.cargarInventario();
@@ -29,12 +31,12 @@ export class InventoryComponent implements OnInit {
   }
 
   agregarItem() {
-    // Validación rápida
-    if (this.nuevoltem.name && this.nuevoltem.stock >= 0) {
+    // Usamos nuevoItem aquí también
+    if (this.nuevoItem.name && this.nuevoItem.stock >= 0) {
 
-      this.api.addInsumo(this.nuevoltem).subscribe(() => {
+      this.api.addInsumo(this.nuevoItem).subscribe(() => {
         alert('Insumo registrado en BD');
-        this.cargarInventario(); // Recargar tabla
+        this.cargarInventario();
         this.cerrarModal();
       });
 
@@ -51,15 +53,14 @@ export class InventoryComponent implements OnInit {
     }
   }
 
-  // Funciones visuales (sin cambios de lógica compleja)
   abrirModal() { this.mostrarModal = true; }
 
   cerrarModal() {
     this.mostrarModal = false;
-    this.nuevoltem = { name: '', type: 'Resina', stock: 0, unit: 'ml', expiryDate: '', batch: '' };
+    // Resetear formulario
+    this.nuevoItem = { name: '', type: 'Resina', stock: 0, unit: 'ml', expiryDate: '', batch: '' };
   }
 
-  // Helpers de fecha (copiados de tu original, funcionan bien)
   isNearExpiry(dateStr: string): boolean {
     const diff = new Date(dateStr).getTime() - new Date().getTime();
     const days = diff / (1000*3600*24);
@@ -74,9 +75,22 @@ export class InventoryComponent implements OnInit {
     return 'Óptimo';
   }
 
-  // Nota: La función actualizarStock (+/-) requiere lógica PUT que omitimos para simplificar.
-  // Por ahora puedes decirle al profe que se maneja borrando y agregando el stock nuevo o lo dejamos visual.
-  actualizarStock(item: any, cantidad: number) {
-      alert('Para el prototipo, por favor elimina y crea el insumo con el nuevo stock.');
+actualizarStock(item: any, cantidad: number) {
+    const nuevoStock = Number(item.stock) + cantidad; // Aseguramos que sea número
+
+    if (nuevoStock < 0) {
+      alert('El stock no puede ser negativo.');
+      return;
+    }
+
+    // Llamada a la API
+    this.api.updateStockInsumo(item.id, nuevoStock).subscribe({
+      next: () => {
+        // Actualizamos visualmente para que se vea rápido
+        item.stock = nuevoStock;
+        console.log(`Stock actualizado a ${nuevoStock}`);
+      },
+      error: () => alert('Error al conectar con BD')
+    });
   }
 }

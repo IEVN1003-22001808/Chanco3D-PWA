@@ -57,7 +57,9 @@ export class ApiService {
   deleteInsumo(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/inventario/${id}`);
   }
-
+  updateStockInsumo(id: number, newStock: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/inventario/${id}`, { stock: newStock });
+  }
   // ==========================================
   // MÓDULO 5: CATÁLOGO DE PRODUCTOS
   // ==========================================
@@ -68,6 +70,13 @@ export class ApiService {
   // Opcional: Si el admin agrega productos desde Angular
   addProducto(producto: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/productos`, producto);
+  }
+  //Borrar producto del catálogo
+  deleteProducto(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/productos/${id}`);
+  }
+  updateProducto(id: number, producto: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/productos/${id}`, producto);
   }
 
   // ==========================================
