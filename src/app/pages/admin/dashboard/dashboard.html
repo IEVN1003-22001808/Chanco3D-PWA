@@ -68,7 +68,7 @@
               <td class="textoPrecio">{{ orden.total | currency:'MXN' }}</td>
               <td>
                 <select [ngModel]="orden.status" (ngModelChange)="actualizarEstado(orden, $event)"
-                        class="selectorEstadoTabla" [ngClass]="getClass(orden.status)">
+                  class="selectorEstadoTabla" [ngClass]="getClass(orden.status)">
                   <option value="Pendiente">Pendiente</option>
                   <option value="En Producción">En Producción</option>
                   <option value="Enviado">Enviado</option>
@@ -99,7 +99,8 @@
       <div class="infoPedido">
         <p><strong>Cliente:</strong> {{ ordenSeleccionada.client }}</p>
         <p><strong>Fecha:</strong> {{ ordenSeleccionada.date }}</p>
-        <p><strong>Estado:</strong> <span class="etiquetaEstado" [ngClass]="getClass(ordenSeleccionada.status)">{{ ordenSeleccionada.status }}</span></p>
+        <p><strong>Estado:</strong> <span class="etiquetaEstado" [ngClass]="getClass(ordenSeleccionada.status)">{{
+            ordenSeleccionada.status }}</span></p>
       </div>
 
       <div class="listaProductos">
