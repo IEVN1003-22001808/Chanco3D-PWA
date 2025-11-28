@@ -35,26 +35,33 @@
       <h3>Tablero de Sugerencias</h3>
 
       <div class="listaSugerencias">
-        <div class="tarjetaSugerencia" *ngFor="let item of sugerenciasPublicas">
-          <span class="etiquetaEstado" [ngClass]="obtenerClaseEstado(item.estado)">
-            <span class="punto">•</span> {{ item.estado }}
-          </span>
 
-          <div class="encabezadoTarjeta">
-            <h4>{{ item.titulo }}</h4>
-            <span class="etiquetaOrigen">{{ item.origen }}</span>
-          </div>
+    <ng-container *ngFor="let item of sugerenciasPublicas">
 
-          <div class="card-footer">
-            <p class="autor">Sugerido por: {{ item.usuario }}</p>
-            <small class="date">{{ item.fecha }}</small>
-          </div>
+      <div class="tarjetaSugerencia" *ngIf="item.estado === 'Nueva' || item.estado === 'Aprobada'">
+
+        <span class="etiquetaEstado" [ngClass]="obtenerClaseEstado(item.estado)">
+          <span class="punto">•</span> {{ item.estado }}
+        </span>
+
+        <div class="encabezadoTarjeta">
+          <h4>{{ item.titulo }}</h4>
+          <span class="etiquetaOrigen">{{ item.origen }}</span>
         </div>
 
-        <div *ngIf="sugerenciasPublicas.length === 0" class="no-results">
-          <p>Aún no hay sugerencias aprobadas. ¡Envía la tuya!</p>
+        <div class="card-footer">
+          <p class="autor">Sugerido por: {{ item.usuario }}</p>
+          <small class="date">{{ item.fecha }}</small>
         </div>
+
       </div>
+    </ng-container>
+
+    <div *ngIf="sugerenciasPublicas.length === 0" class="no-results">
+      <p>Aún no hay sugerencias. ¡Envía la tuya!</p>
+    </div>
+
+  </div>
     </section>
 
   </div>

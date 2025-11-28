@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ApiService } from '../../../services/api.service'; // <--- Servicio
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 declare var instgrm: any;
@@ -9,50 +9,49 @@ declare var instgrm: any;
 @Component({
   selector: 'app-community-gallery',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './community-gallery.html',
   styleUrl: './community-gallery.css'
 })
 export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
-  showForm = false;
+  private api = inject(ApiService);
+  private sanitizer = inject(DomSanitizer);
 
-  // Objeto para nuevo post
+  showForm = false;
   newPost = { title: '', description: '', image: '' };
 
-  // Ahora definimos la estructura con un campo extra opcional 'safeHtml'
-  posts: any[] = [
-    { title: 'Figura Anime', author: 'Maker1', image: 'https://www.instagram.com/p/DNCVgWDuCiw/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', status: 'Aprobada' },
-    { title: 'Setup 3D', author: 'Rogelio', image: 'https://www.instagram.com/p/DNOpgacP_EU/', status: 'Aprobada' },
-    { title: 'Error de impresión', author: 'Troll', image: 'https://www.instagram.com/p/DNCVgWDuCiw/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', status: 'Rechazada'},
-    { title: 'Modelo Custom', author: 'ClienteX', image: 'https://www.instagram.com/p/DNOpgacP_EU/', status: 'Aprobada' }
-  ];
+  posts: any[] = []; // Se llena desde BD
 
-  constructor(private sanitizer: DomSanitizer) {}
-
-  // 1. Calculamos el HTML seguro AL INICIAR, una sola vez.
   ngOnInit(): void {
-    this.posts.forEach(post => {
-      post.safeHtml = this.generateSafeHtml(post.image);
+    this.cargarGaleria();
+  }
+
+  cargarGaleria() {
+    this.api.getGaleria().subscribe({
+      next: (data: any[]) => {
+        // Al recibir los datos, calculamos el HTML seguro para cada uno
+        this.posts = data.map(post => ({
+          ...post,
+          safeHtml: this.generateSafeHtml(post.image)
+        }));
+      },
+      error: (e) => console.error(e)
     });
   }
 
-  // 2. Solo devolvemos los que ya están aprobados
+  // Solo mostramos las aprobadas
   get approvedPosts() {
     return this.posts.filter(post => post.status === 'Aprobada');
   }
 
-  // 3. Controlamos que Instagram procese los embeds sin volverse loco
   ngAfterViewChecked(): void {
     if (typeof instgrm !== 'undefined') {
-        // Usamos setTimeout para sacarlo del ciclo de detección de cambios de Angular
-        setTimeout(() => {
-            instgrm.Embeds.process();
-        }, 0);
+        setTimeout(() => instgrm.Embeds.process(), 0);
     }
   }
 
-  // Función auxiliar privada (ya no se llama desde el HTML)
   private generateSafeHtml(url: string): SafeHtml {
+    if (!url) return '';
     const cleanUrl = url.split('?')[0];
     const html = `
       <blockquote class="instagram-media"
@@ -68,22 +67,24 @@ export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
     const instagramRegex = /^https:\/\/(www\.)?instagram\.com\/p\/[a-zA-Z0-9_-]+\/?/;
 
     if(!instagramRegex.test(this.newPost.image)) {
-      alert('URL inválida');
+      alert('URL inválida. Debe ser un post de Instagram.');
       return;
     }
 
-    // Al crear uno nuevo, le generamos su HTML seguro al momento
     const nuevoPost = {
       title: this.newPost.title,
-      author: 'Tú (Maker)',
-      image: this.newPost.image,
-      status: 'Pendiente',
-      safeHtml: this.generateSafeHtml(this.newPost.image) // <--- Generamos aquí
+      author: localStorage.getItem('userName') || 'Anónimo', // Usamos el nombre real del usuario
+      image: this.newPost.image
     };
 
-    this.posts.unshift(nuevoPost);
-    this.showForm = false;
-    this.newPost = { title: '', description: '', image: '' };
-    alert('¡Enviado a moderación!');
+    this.api.postPublicacion(nuevoPost).subscribe({
+      next: () => {
+        alert('¡Enviado a moderación! Tu post aparecerá cuando el admin lo apruebe.');
+        this.showForm = false;
+        this.newPost = { title: '', description: '', image: '' };
+        this.cargarGaleria(); // Recargar para ver si cambió algo
+      },
+      error: () => alert('Error al publicar.')
+    });
   }
 }

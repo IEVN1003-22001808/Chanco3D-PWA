@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-suggestions-box',
@@ -9,37 +10,51 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './suggestions-box.html',
   styleUrl: './suggestions-box.css'
 })
-export class SuggestionsBoxComponent {
+export class SuggestionsBoxComponent implements OnInit {
+  private api = inject(ApiService);
 
   nuevaSugerencia = { titulo: '', origen: '', detalles: '' };
+  sugerencias: any[] = [];
 
-  sugerencias = [
-    { titulo: 'Casco de Spartan', origen: 'Halo', estado: 'Aprobado', usuario: '67', fecha: '2025-11-10' },
-    { titulo: 'Espada Maestra Realista', origen: 'Zelda', estado: 'Nuevo', usuario: 'PMpro', fecha: '2025-11-15' },
-    { titulo: 'Nave Espacial Low Poly', origen: 'Original', estado: 'Nuevo', usuario: 'DM_Pro', fecha: '2025-11-05' },
-    { titulo: 'Dragón Anciano', origen: 'Monster Hunter', estado: 'Aprobado', usuario: 'George', fecha: '2025-11-18' },
-    { titulo: 'Kurama (Zorro 9 Colas)', origen: 'Naruto', estado: 'Nuevo', usuario: 'Roch', fecha: '2025-11-19' },
-    { titulo: 'Buster Sword', origen: 'Final Fantasy', estado: 'Aprobado', usuario: 'Camacho', fecha: '2025-11-20' },
-    { titulo: 'Pokebola Funcional', origen: 'Pokemon', estado: 'Nuevo', usuario: 'hola', fecha: '2025-11-21' }
-  ];
+  ngOnInit() {
+    this.cargarSugerencias();
+  }
+
+  cargarSugerencias() {
+    this.api.getSugerencias().subscribe((data: any) => {
+      this.sugerencias = data;
+    });
+  }
 
   get sugerenciasPublicas() {
     return this.sugerencias;
   }
 
   enviarSugerencia() {
+    const usuarioActual = localStorage.getItem('userName');
+
+    if (!usuarioActual) {
+      alert('Debes iniciar sesión para sugerir.');
+      return;
+    }
+
     if (this.nuevaSugerencia.titulo && this.nuevaSugerencia.origen) {
-      this.sugerencias.unshift({
-        titulo: this.nuevaSugerencia.titulo,
-        origen: this.nuevaSugerencia.origen,
-        estado: 'Nuevo',
-        usuario: 'Tú (Maker)',
-        fecha: new Date().toISOString().split('T')[0]
+      const data = {
+        title: this.nuevaSugerencia.titulo,
+        origin: this.nuevaSugerencia.origen,
+        detalles: this.nuevaSugerencia.detalles,
+        usuario: usuarioActual
+      };
+
+      this.api.postSugerencia(data).subscribe({
+        next: () => {
+          alert('¡Gracias! Tu idea ha sido enviada al buzón.');
+          this.nuevaSugerencia = { titulo: '', origen: '', detalles: '' };
+          this.cargarSugerencias(); // Actualizar lista
+        },
+        error: () => alert('Error al enviar.')
       });
 
-
-      this.nuevaSugerencia = { titulo: '', origen: '', detalles: '' };
-      alert('¡Gracias! Tu idea ha sido enviada al buzón.');
     } else {
       alert('Por favor completa el título y el origen.');
     }
@@ -47,8 +62,10 @@ export class SuggestionsBoxComponent {
 
   obtenerClaseEstado(estado: string): string {
     switch (estado) {
-      case 'Aprobado': return 'estado-aprobado';
-      default: return 'estado-nuevo';
+      case 'Aprobada': return 'estado-aprobado';
+      case 'Nueva': return 'estado-nuevo'; // CSS verde o azul
+      case 'Pendiente': return 'estado-pendiente'; // CSS amarillo
+      default: return '';
     }
   }
 }
