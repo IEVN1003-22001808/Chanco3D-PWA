@@ -54,7 +54,7 @@
     <div class="contenedorEmbedFull" (click)="$event.stopPropagation()">
       <h3>Vista Previa de Publicación</h3>
 
-      <div [innerHTML]="getInstagramEmbed(postSeleccionado.image)"></div>
+      <div class="instagram-container" [innerHTML]="postSeleccionado.safeHtml"></div>
 
       <div class="modal-actions">
         <button class="btnPrimario" (click)="aprobarPost(postSeleccionado.id); cerrarModal(null)">Aprobar</button>
