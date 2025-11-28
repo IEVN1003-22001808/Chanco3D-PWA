@@ -9,21 +9,21 @@
       <div class="tarjetaFormulario">
         <h3>Envía tu Idea</h3>
 
-        
-        <form (submit)="submitSuggestion()">
+        <form (submit)="enviarSugerencia()">
           <div class="grupoFormulario">
             <label>Título de la Figura / Personaje</label>
-            <input type="text" [(ngModel)]="newSuggestion.title" name="title" placeholder="Ej. Guerrero" required>
+            <input type="text" [(ngModel)]="nuevaSugerencia.titulo" name="titulo" placeholder="Ej. Guerrero" required>
           </div>
 
           <div class="grupoFormulario">
             <label>Origen (Videojuego, Anime, Original)</label>
-            <input type="text" [(ngModel)]="newSuggestion.origin" name="origin" placeholder="Ej. Dark Souls" required>
+            <input type="text" [(ngModel)]="nuevaSugerencia.origen" name="origen" placeholder="Ej. Dark Souls" required>
           </div>
 
           <div class="grupoFormulario">
             <label>Detalles Adicionales</label>
-            <textarea rows="4" [(ngModel)]="newSuggestion.details" name="details" placeholder="Me gustaría que tuviera una pose..."></textarea>
+            <textarea rows="4" [(ngModel)]="nuevaSugerencia.detalles" name="detalles"
+              placeholder="Me gustaría que tuviera una pose..."></textarea>
           </div>
 
           <button type="submit" class="btnEnviar">ENVIAR SUGERENCIA</button>
@@ -31,23 +31,27 @@
       </div>
     </section>
 
-    <section class="status-board">
-      <h3>Próximos Proyectos (Aprobados)</h3>
-      
-      <div class="suggestions-list">
-        <div class="suggestion-card" *ngFor="let item of publicSuggestions">
-          <div class="card-header">
-            <h4>{{ item.title }}</h4>
-            <span class="origin-tag">{{ item.origin }}</span>
+    <section class="tableroEstado">
+      <h3>Tablero de Sugerencias</h3>
+
+      <div class="listaSugerencias">
+        <div class="tarjetaSugerencia" *ngFor="let item of sugerenciasPublicas">
+          <span class="etiquetaEstado" [ngClass]="obtenerClaseEstado(item.estado)">
+            <span class="punto">•</span> {{ item.estado }}
+          </span>
+
+          <div class="encabezadoTarjeta">
+            <h4>{{ item.titulo }}</h4>
+            <span class="etiquetaOrigen">{{ item.origen }}</span>
           </div>
-          
+
           <div class="card-footer">
-            <p class="author">Sugerido por: {{ item.user }}</p>
-            <small class="date">{{ item.date }}</small>
+            <p class="autor">Sugerido por: {{ item.usuario }}</p>
+            <small class="date">{{ item.fecha }}</small>
           </div>
         </div>
-        
-        <div *ngIf="publicSuggestions.length === 0" class="no-results">
+
+        <div *ngIf="sugerenciasPublicas.length === 0" class="no-results">
           <p>Aún no hay sugerencias aprobadas. ¡Envía la tuya!</p>
         </div>
       </div>
