@@ -1,57 +1,38 @@
 <div class="disenoAdmin">
-  <aside class="barraLateralAdmin">
-    <div class="encabezadoLateral">
-      <h3>CHANCO<span class="resaltado">ADMIN</span></h3>
-    </div>
-    
-    <nav class="navegacionLateral">
-      <a routerLink="/admin/dashboard" 
-         class="itemNavegacion" 
-         routerLinkActive="activo">
-         Dashboard General
-      </a>
-      <a routerLink="/admin/inventory" 
-         class="itemNavegacion" 
-         routerLinkActive="activo">
-         Inventario
-      </a>
-      <a routerLink="/admin/products"
-      class="itemNavegacion"
-      routerLinkActive="activo">
-         Productos
-      </a>
-      <a routerLink="/admin/gallery" 
-         class="itemNavegacion" 
-         routerLinkActive="activo">
-         Galería de la comunidad
-      </a>
-      <a routerLink="/admin/metrics" 
-         class="itemNavegacion" 
-         routerLinkActive="activo">
-         Métricas
-      </a>
-      <a routerLink="/admin/suppliers" 
-         class="itemNavegacion" 
-         routerLinkActive="activo">
-         Proveedores
-      </a>
-      <a routerLink="/admin/suggestion" 
-         class="itemNavegacion" 
-         routerLinkActive="activo">
-         Sugerencias
-      </a>
-      <a routerLink="/admin/suggestions" 
-         class="itemNavegacion" 
-         routerLinkActive="activo">
-         Sugerencias ADMIN
-      </a>
-      <a routerLink="/home" class="itemNavegacion retorno">
-         Volver a la Tienda
-      </a>
-    </nav>
-  </aside>
+   <aside class="barraLateralAdmin">
+      <div class="encabezadoLateral">
+         <h3>CHANCO<span class="resaltado">ADMIN</span></h3>
+      </div>
 
-  <main class="contenidoAdmin">
-    <router-outlet></router-outlet>
-  </main>
+      <nav class="navegacionLateral">
+         <a routerLink="/admin/dashboard" class="itemNavegacion" routerLinkActive="activo">
+            Dashboard General
+         </a>
+         <a routerLink="/admin/inventory" class="itemNavegacion" routerLinkActive="activo">
+            Inventario
+         </a>
+         <a routerLink="/admin/products" class="itemNavegacion" routerLinkActive="activo">
+            Productos
+         </a>
+         <a routerLink="/admin/gallery" class="itemNavegacion" routerLinkActive="activo">
+            Galería de la comunidad
+         </a>
+         <a routerLink="/admin/metrics" class="itemNavegacion" routerLinkActive="activo">
+            Métricas
+         </a>
+         <a routerLink="/admin/suppliers" class="itemNavegacion" routerLinkActive="activo">
+            Proveedores
+         </a>
+         <a routerLink="/admin/suggestion" class="itemNavegacion" routerLinkActive="activo">
+            Sugerencias
+         </a>
+         <a routerLink="/home" class="itemNavegacion retorno">
+            Volver a la Tienda
+         </a>
+      </nav>
+   </aside>
+
+   <main class="contenidoAdmin">
+      <router-outlet></router-outlet>
+   </main>
 </div>

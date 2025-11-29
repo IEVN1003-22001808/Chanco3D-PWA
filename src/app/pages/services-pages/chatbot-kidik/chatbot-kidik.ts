@@ -3,26 +3,26 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-chatbot', 
+  selector: 'app-chatbot',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './chatbot-kidik.html',
   styleUrl: './chatbot-kidik.css',
-  encapsulation: ViewEncapsulation.None 
+  encapsulation: ViewEncapsulation.None
 })
 export class ChatbotComponent {
 
 
-  abrirVen: boolean = false; 
+  abrirVen: boolean = false;
   escribiendo: boolean = false;
   Arrastre = false;
-  
+
   // posicion mouse
   posX = 0;
   posY = 0;
 
   //posicion rt
-  posicion = { x: 0, y: 0 }; 
+  posicion = { x: 0, y: 0 };
   FinalPos = { x: 0, y: 0 };
 
 
@@ -35,13 +35,13 @@ export class ChatbotComponent {
     this.Arrastre = true;
     this.posX = evento.clientX;
     this.posY = evento.clientY;
-    evento.preventDefault(); 
+    evento.preventDefault();
   }
 
   // Escucha el movimiento del mouse en todo el documento.
   @HostListener('document:mousemove', ['$event'])
   alMoverMouse(evento: MouseEvent): void {
-    if (!this.Arrastre) return; 
+    if (!this.Arrastre) return;
 
     // Calcula cuánto se ha movido el mouse desde el click inicial.
     const deltaX = evento.clientX - this.posX;
@@ -83,14 +83,14 @@ export class ChatbotComponent {
   async enviarMensaje(mensaje: string): Promise<void> {
     this.agregarMensaje(mensaje, "usuario", false);
     //efecto
-    this.escribiendo = true; 
+    this.escribiendo = true;
 
     const contenedorMensajes = document.getElementById("contenedorMensajes");
     if (!contenedorMensajes) { this.escribiendo = false; return; }
 
     try {
       // api en render api (se va a borrar )
-      const respuesta = await fetch('https://kidik2-0.onrender.com/chat', {
+      const respuesta = await fetch('http://localhost:5000/chatbot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: mensaje })
@@ -98,15 +98,14 @@ export class ChatbotComponent {
 
       const datos = await respuesta.json();
       const mensajeRespuesta: string = datos.reply;
-      
-      
+
       const esHTML = mensajeRespuesta.includes('<a ') || mensajeRespuesta.includes('<br');
 
       this.agregarMensaje('', 'bot', esHTML);
       const contenedorMensajeBot = contenedorMensajes.lastChild as HTMLElement;
 
-      // mensaje con link 
-      if (mensaje.trim().toLowerCase() === 'tengo un problema con mi producto') {
+      // mensaje con link o HTML (mostrar al instante)
+      if (mensaje.trim().toLowerCase() === 'tengo un problema con mi producto' || esHTML) {
         if (contenedorMensajeBot) contenedorMensajeBot.innerHTML = mensajeRespuesta;
         this.escribiendo = false;
         return;
@@ -118,38 +117,36 @@ export class ChatbotComponent {
         // efecto
         const cursorEscritura = document.createElement('span');
         cursorEscritura.classList.add('cursor-escritura');
-        
+
         if (contenedorMensajeBot) contenedorMensajeBot.appendChild(cursorEscritura);
 
         // eefcto
         const escribirLetra = () => {
           if (i < mensajeRespuesta.length && contenedorMensajeBot) {
             const caracter = mensajeRespuesta.charAt(i);
-            
+
             // efecto
             contenedorMensajeBot.innerHTML = contenedorMensajeBot.innerHTML.replace(/<span class="cursor-escritura"><\/span>/g, '') + caracter;
             if (contenedorMensajeBot.lastChild !== cursorEscritura) contenedorMensajeBot.appendChild(cursorEscritura);
             i++;
-            
+
             // scroll 
             const contenedorLocal = document.getElementById("contenedorMensajes");
             if (contenedorLocal) contenedorLocal.scrollTop = contenedorLocal.scrollHeight;
-            
+
             //efecto
             let retraso = Math.floor(Math.random() * 20) + 5;
-            if (caracter === '.' || caracter === ',') retraso += 100; 
-            
+            if (caracter === '.' || caracter === ',') retraso += 100;
+
             setTimeout(escribirLetra, retraso);
           } else if (contenedorMensajeBot) {
             cursorEscritura.remove();
             this.escribiendo = false;
           }
         }
-        escribirLetra(); 
-      }, 1500); 
+        escribirLetra();
+      }, 1500);
 
-
-      
     } catch (error) {
       console.error('API Error:', error);
       this.agregarMensaje("Error de conexión.", "bot");
@@ -158,8 +155,8 @@ export class ChatbotComponent {
   }
 
 
-enviarMsg(mensaje: string) {
-  this.enviarMensaje(mensaje.trim());
-  (document.getElementById('barraBusqueda') as HTMLInputElement).value = '';
-}
+  enviarMsg(mensaje: string) {
+    this.enviarMensaje(mensaje.trim());
+    (document.getElementById('barraBusqueda') as HTMLInputElement).value = '';
+  }
 }
