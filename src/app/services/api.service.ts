@@ -26,6 +26,36 @@ export class ApiService {
   }
 
   // ==========================================
+  // MÓDULO 2: CARRITO DE COMPRAS (Real)
+  // ==========================================
+  
+  // 1. Agregar
+  addAlCarrito(userId: any, productId: any): Observable<any> {
+    const data = { usuario_id: userId, producto_id: productId, cantidad: 1 };
+    return this.http.post(`${this.apiUrl}/carrito`, data);
+  }
+
+  // Ver lista
+  getCarrito(userId: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/carrito/${userId}`);
+  }
+
+  // Borrar item
+  deleteItemCarrito(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/carrito/${id}`);
+  }
+
+  // Actualizar cantidad
+  updateCantidadCarrito(cartId: number, cantidad: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/carrito/${cartId}`, { cantidad });
+  }
+
+  // Pagar
+  realizarCheckout(userId: any, nombreCliente: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/checkout/${userId}`, { cliente_nombre: nombreCliente });
+  }
+  
+  // ==========================================
   // MÓDULO 2 y 12: CARRITO Y PEDIDOS
   // ==========================================
   // Crear un pedido nuevo (Checkout del carrito)
@@ -41,6 +71,10 @@ export class ApiService {
   // Actualizar estado de envío (Admin)
   updateEstadoPedido(id: number, status: string): Observable<any> {
     return this.http.put(`${this.apiUrl}/pedidos/estado/${id}`, { status });
+  }
+
+  getAdminKPIs(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/admin/kpis`);
   }
 
   // ==========================================
@@ -110,9 +144,12 @@ export class ApiService {
   // ==========================================
   // MÓDULO 8: COTIZADOR
   // ==========================================
-  // Guardar historial de cotización (Opcional, si quieres registro en BD)
+  
   guardarCotizacion(cotizacion: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/cotizaciones`, cotizacion);
+  }
+  getHistorialCotizaciones(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/cotizaciones`);
   }
 
   // ==========================================
@@ -128,6 +165,10 @@ export class ApiService {
 
   deleteProveedor(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/proveedores/${id}`);
+  }
+
+  updateProveedor(id: number, proveedor: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/proveedores/${id}`, proveedor);
   }
 
   // ==========================================

@@ -29,6 +29,9 @@ export class SuggestionsBoxComponent implements OnInit {
   get sugerenciasPublicas() {
     return this.sugerencias;
   }
+  get isLoggedIn(): boolean {
+    return !!localStorage.getItem('userId');
+  }
 
   enviarSugerencia() {
     const usuarioActual = localStorage.getItem('userName');

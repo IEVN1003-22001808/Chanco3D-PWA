@@ -40,7 +40,7 @@
             <td>
               <button class="btnIcono" title="Entrada" (click)="actualizarStock(item, 1)">+</button>
               <button class="btnIcono" title="Salida" (click)="actualizarStock(item, -1)">-</button>
-              <button class="btnIcono eliminar" (click)="eliminarItem(item.id)">🗑</button>
+              <button class="btnIcono eliminar" (click)="eliminarItem(item.id)"><i class="bi bi-trash"></i></button>
             </td>
           </tr>
         </tbody>
@@ -52,7 +52,7 @@
     <div class="tarjetaModal">
       <div class="encabezadoModal">
         <h3>Nuevo Material</h3>
-        <button class="btnCerrar" (click)="cerrarModal()">✖</button>
+        <button class="btnCerrar" (click)="cerrarModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
       
       <form (submit)="agregarItem()">

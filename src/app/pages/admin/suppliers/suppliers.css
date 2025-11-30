@@ -207,3 +207,42 @@ th {
   background: #ef4444;
   color: white;
 }
+
+
+.superposicionModal {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+}
+
+.tarjetaModal {
+  background: #1e293b;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%; max-width: 500px;
+  border: 1px solid #334155;
+  color: white;
+}
+
+.formularioModal {
+  display: flex; flex-direction: column; gap: 15px;
+}
+
+.grupoInput input {
+  width: 100%;
+  padding: 10px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: white;
+  margin-top: 5px;
+}
+
+.filaDoble {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+}
+
+.anchoTotal { width: 100%; margin-top: 10px; }
+.etiquetaTelefono { font-size: 0.8rem; color: #94a3b8; }

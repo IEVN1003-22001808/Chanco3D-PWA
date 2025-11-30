@@ -39,6 +39,10 @@ export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  get isLoggedIn(): boolean {
+    return !!localStorage.getItem('userId');
+  }
+
   // Solo mostramos las aprobadas
   get approvedPosts() {
     return this.posts.filter(post => post.status === 'Aprobada');

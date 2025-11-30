@@ -39,8 +39,8 @@
             </td>
             <td>
               <div class="acciones" *ngIf="post.status === 'Pendiente'">
-                <button class="btnIcono aprobar" title="Aprobar" (click)="aprobarPost(post.id)">✔</button>
-                <button class="btnIcono rechazar" title="Rechazar" (click)="rechazarPost(post.id)">✖</button>
+                <button class="btnIcono aprobar" title="Aprobar" (click)="aprobarPost(post.id)"><i class="bi bi-check-circle"></i></button>
+                <button class="btnIcono rechazar" title="Rechazar" (click)="rechazarPost(post.id)"><i class="bi bi-x-circle"></i></button>
               </div>
               <span *ngIf="post.status !== 'Pendiente'" class="texto-moderado">Moderado</span>
             </td>

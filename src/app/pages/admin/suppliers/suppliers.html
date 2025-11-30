@@ -1,29 +1,14 @@
 <div class="disenoAdmin">
-
   <main class="contenidoAdmin">
     <header class="filaEncabezadoContenido">
       <div>
         <h1>Gestión de Proveedores</h1>
         <p class="subtitulo">Cartera de socios y cadena de suministro.</p>
       </div>
-      <button class="btnPrimario" (click)="showForm = !showForm">
-        {{ showForm ? 'Cancelar' : '+ Registrar Proveedor' }}
+      <button class="btnPrimario" (click)="abrirModal()">
+        + Registrar Proveedor
       </button>
     </header>
-
-    <section class="seccionFormulario" *ngIf="showForm">
-      <div class="tarjetaFormulario">
-        <h3>Nuevo Socio Comercial</h3>
-        <div class="Formulario">
-          <input type="text" placeholder="Nombre de la Empresa" [(ngModel)]="newSupplier.company">
-          <input type="text" placeholder="Nombre del Contacto" [(ngModel)]="newSupplier.contact">
-          <input type="email" placeholder="Correo Electrónico" [(ngModel)]="newSupplier.email">
-          <input type="text" placeholder="Teléfono" [(ngModel)]="newSupplier.phone">
-          <input type="text" placeholder="Insumos que vende (separados por coma)" [(ngModel)]="newSupplier.supplies">
-        </div>
-        <button class="btnGuardar" (click)="saveSupplier()">Guardar Proveedor</button>
-      </div>
-    </section>
 
     <div class="tarjetaTabla">
       <table>
@@ -42,6 +27,7 @@
             <td>
               <div class="infoEmpresa">
                 <strong>{{ s.company }}</strong>
+                <br>
                 <small>{{ s.email }}</small>
               </div>
             </td>
@@ -51,13 +37,19 @@
             </td>
             <td>
               <div class="contenedorTags">
-                <span class="tagInsumo" *ngFor="let supply of s.supplies">{{ supply }}, </span>
+                <span class="tagInsumo" *ngFor="let supply of s.supplies">
+                  {{ supply }}
+                </span>
               </div>
             </td>
             <td>
               <div class="acciones">
-                <button class="btnIcono editar" title="Editar" (click)="editSupplier(s)">✎</button>
-                <button class="btnIcono eliminar" title="Eliminar" (click)="deleteSupplier(s.id)">🗑</button>
+                <button class="btnIcono" title="Editar" (click)="editarProveedor(s)">
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
+                <button class="btnIcono" title="Eliminar" (click)="deleteSupplier(s.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
               </div>
             </td>
           </tr>
@@ -65,4 +57,47 @@
       </table>
     </div>
   </main>
+
+  <div class="superposicionModal" *ngIf="mostrarModal">
+    <div class="tarjetaModal">
+      <div class="encabezadoModal">
+        <h3>{{ editingId ? 'Editar Proveedor' : 'Nuevo Socio Comercial' }}</h3>
+        <button class="btnCerrar" (click)="cerrarModal()">
+          <i class="bi bi-x-circle"></i>
+        </button>
+      </div>
+
+      <div class="formularioModal">
+        <div class="grupoInput">
+          <label>Empresa</label>
+          <input type="text" placeholder="Nombre de la Empresa" [(ngModel)]="newSupplier.company">
+        </div>
+        
+        <div class="filaDoble">
+          <div class="grupoInput">
+            <label>Contacto</label>
+            <input type="text" placeholder="Nombre persona" [(ngModel)]="newSupplier.contact">
+          </div>
+          <div class="grupoInput">
+            <label>Teléfono</label>
+            <input type="text" placeholder="+52..." [(ngModel)]="newSupplier.phone">
+          </div>
+        </div>
+
+        <div class="grupoInput">
+          <label>Email</label>
+          <input type="email" placeholder="correo@empresa.com" [(ngModel)]="newSupplier.email">
+        </div>
+
+        <div class="grupoInput">
+          <label>Insumos (Separados por coma)</label>
+          <input type="text" placeholder="Resina, Alcohol, Guantes" [(ngModel)]="newSupplier.supplies">
+        </div>
+
+        <button class="btnPrimario anchoTotal" (click)="guardarProveedor()">
+          {{ editingId ? 'Guardar Cambios' : 'Registrar Proveedor' }}
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

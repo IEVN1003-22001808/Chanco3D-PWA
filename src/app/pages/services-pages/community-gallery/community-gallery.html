@@ -2,9 +2,14 @@
   <header class="encabezadoGaleria">
     <h1>Galería de la <span class="resaltado">Comunidad</span></h1>
     <p>Inspiración y talento. ¡Comparte tu creación!</p>
-    <button class="btnCompartir" (click)="showForm = !showForm">
+    
+    <button *ngIf="isLoggedIn" class="btnCompartir" (click)="showForm = !showForm">
       {{ showForm ? 'Cancelar' : '+ Compartir mi Creación' }}
     </button>
+    
+    <p *ngIf="!isLoggedIn" style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+      Inicia sesión para compartir tu arte.
+    </p>
   </header>
 
   <div class="contenedorFormularioPost" *ngIf="showForm">

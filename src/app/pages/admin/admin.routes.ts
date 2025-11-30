@@ -39,6 +39,10 @@ export default [
         path: 'gallery',
         loadComponent: () => import('./gallery/gallery').then(m => m.GalleryComponent)
       },
+      {
+        path: 'quotes',
+        loadComponent: () => import('./quotes-history/quotes-history').then(m => m.QuotesHistoryComponent)
+      },
     ]
   }
 ] as Routes;

@@ -20,7 +20,8 @@
             <span>{{ item.quantity }}</span>
             <button (click)="increaseQty(item)">+</button>
           </div>
-          <button class="btnEliminar" (click)="removeItem(i)">Eliminar 🗑</button>
+          
+          <button class="btnEliminar" (click)="removeItem(item)">Eliminar 🗑</button>
         </div>
 
         <div class="totalItem">
@@ -46,7 +47,7 @@
           <span>{{ getTotal() | currency:'MXN':'symbol-narrow' }}</span>
         </div>
 
-        <button class="btnPago">PROCEDER AL PAGO</button>
+        <button class="btnPago" (click)="procederAlPago()">PROCEDER AL PAGO</button>
       </div>
     </div>
   </div>
@@ -55,7 +56,7 @@
     <div class="estadoVacio">
       <h2>Tu carrito está vacío</h2>
       <p>¡Parece que aún no has materializado ninguna idea!</p>
-      <a routerLink="/catalog" class="btnTienda">Ir a la Tienda</a>
+      <a [routerLink]="['/shop/catalog']" class="btnTienda">Ir a la Tienda</a>
     </div>
   </ng-template>
 </div>

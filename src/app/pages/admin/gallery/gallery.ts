@@ -1,6 +1,7 @@
-import { Component, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ApiService } from '../../../services/api.service'; // <--- Importamos servicio
 
 declare var instgrm: any;
 
@@ -11,54 +12,87 @@ declare var instgrm: any;
   templateUrl: './gallery.html',
   styleUrl: './gallery.css'
 })
-export class GalleryComponent implements AfterViewChecked {
+export class GalleryComponent implements OnInit, AfterViewChecked {
+  private api = inject(ApiService);
+  private sanitizer = inject(DomSanitizer);
 
   postSeleccionado: any = null;
+  posts: any[] = []; // Se llena desde BD
 
-  posts = [
-    { id: 1, title: 'EVA-01', author: 'Shinji', image: 'https://www.instagram.com/p/DNCVgWDuCiw/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==', date: '2025-11-18', status: 'Pendiente' },
-    { id: 2, title: 'Test Post', author: 'Admin', image: 'https://www.instagram.com/reel/DPesGocjpcf/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==', date: '2025-11-27', status: 'Pendiente' },
-  ];
+  ngOnInit() {
+    this.cargarGaleria();
+  }
 
-  constructor(private sanitizer: DomSanitizer) { }
+  cargarGaleria() {
+    this.api.getGaleria().subscribe({
+      next: (data: any) => {
+        this.posts = data;
+        // Reiniciamos Instagram por si acaso
+        setTimeout(() => {
+          if (typeof instgrm !== 'undefined') instgrm.Embeds.process();
+        }, 1000);
+      },
+      error: (e) => console.error(e)
+    });
+  }
 
-  // Cuando se abre el modal, Angular pinta el HTML, luego llamamos a Instagram
-  ngAfterViewChecked(): void {
-    if (this.postSeleccionado && typeof instgrm !== 'undefined') {
-      setTimeout(() => {
-        instgrm.Embeds.process();
-      }, 0);
+  // Lógica para Aprobar
+  aprobarPost(id: number) {
+    this.api.updateEstadoGaleria(id, 'Aprobada').subscribe({
+      next: () => {
+        alert('Publicación Aprobada');
+        this.cargarGaleria(); // Recargar lista
+      },
+      error: () => alert('Error al actualizar')
+    });
+  }
+
+  // Lógica para Rechazar
+  rechazarPost(id: number) {
+    if(confirm('¿Rechazar esta publicación?')) {
+      this.api.updateEstadoGaleria(id, 'Rechazada').subscribe({
+        next: () => {
+          this.cargarGaleria();
+        },
+        error: () => alert('Error al actualizar')
+      });
     }
   }
 
+  // --- Lógica Visual (Modal y Embeds) ---
+
+  verPost(post: any) {
+    // Generamos el HTML seguro solo al abrir el modal
+    this.postSeleccionado = {
+      ...post,
+      safeHtml: this.getInstagramEmbed(post.image)
+    };
+
+    // Forzamos un pequeño delay para que Angular pinte el modal antes de que Instagram procese
+    setTimeout(() => {
+      if (typeof instgrm !== 'undefined') instgrm.Embeds.process();
+    }, 100);
+  }
+
+  cerrarModal(event: any) {
+    // Si el clic fue en el fondo (overlay) o botón cerrar
+    this.postSeleccionado = null;
+  }
+
   getInstagramEmbed(url: string): SafeHtml {
+    if (!url) return '';
     const cleanUrl = url.split('?')[0];
     const html = `
-      <blockquote class="instagram-media"
-        data-instgrm-permalink="${cleanUrl}"
-        data-instgrm-version="14"
+      <blockquote class="instagram-media" 
+        data-instgrm-permalink="${cleanUrl}" 
+        data-instgrm-version="14" 
         style="background:#FFF; border:0; margin: 1px; max-width:540px; min-width:326px; width:calc(100% - 2px);">
       </blockquote>
     `;
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  verPost(post: any) {
-    this.postSeleccionado = {
-      ...post,
-      safeHtml: this.getInstagramEmbed(post.image)
-    };
-
-    // Forzamos un pequeño delay o proceso para asegurar que el modal abra antes de procesar
-    setTimeout(() => {
-      if (typeof instgrm !== 'undefined') instgrm.Embeds.process();
-    }, 0);
+  ngAfterViewChecked(): void {
+    // No procesamos aquí constantemente para no alentar la página
   }
-
-  cerrarModal(event: any) {
-    this.postSeleccionado = null;
-  }
-
-  aprobarPost(id: number) { /* ... tu lógica existente ... */ }
-  rechazarPost(id: number) { /* ... tu lógica existente ... */ }
 }

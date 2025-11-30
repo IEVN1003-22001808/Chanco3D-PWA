@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-cart',
@@ -9,49 +10,91 @@ import { RouterLink } from '@angular/router';
   templateUrl: './cart.html',
   styleUrl: './cart.css'
 })
-export class CartComponent {
-  // Simulación de productos en el carrito (Mock Data)
-  cartItems = [
-    {
-      id: 1,
-      name: 'Figura Caballero Hueco (Hollow Knight)',
-      type: 'Resina Estándar - Gris',
-      price: 450.00,
-      quantity: 1,
-      image: '/HK.png'
-    },
-    {
-      id: 2,
-      name: 'Pack Miniaturas D&D (5 pzas)',
-      type: 'Resina Alta Definición 8k (no incluye pintura)',
-      price: 890.50,
-      quantity: 2,
-      image: '/D&D.png'
-    }
-  ];
+export class CartComponent implements OnInit {
+  private api = inject(ApiService);
+  private router = inject(Router);
 
+  cartItems: any[] = [];
   shippingCost = 150.00;
+  userId: any = null;
 
-  // Calcular Subtotal
+  ngOnInit() {
+    this.userId = localStorage.getItem('userId');
+    if (this.userId) {
+      this.cargarCarrito();
+    }
+  }
+
+  cargarCarrito() {
+    this.api.getCarrito(this.userId).subscribe({
+      next: (data: any) => {
+        this.cartItems = data;
+      },
+      error: (e) => console.error(e)
+    });
+  }
+
+  // CORRECCIÓN ELIMINAR: Aseguramos que borre de la BD y recargue
+  removeItem(item: any) {
+    if(confirm('¿Quitar del carrito?')) {
+      this.api.deleteItemCarrito(item.cart_id).subscribe(() => {
+        this.cargarCarrito(); // Recargamos para ver que se fue
+      });
+    }
+  }
+
+  // CORRECCIÓN CANTIDAD: Límites + Persistencia
+  increaseQty(item: any) {
+    if (item.quantity < 10) { // Límite Máximo 10
+      const nuevaCant = item.quantity + 1;
+      this.actualizarBD(item, nuevaCant);
+    } else {
+      alert('Máximo 10 unidades por producto.');
+    }
+  }
+
+  decreaseQty(item: any) {
+    if (item.quantity > 1) { // Límite Mínimo 1
+      const nuevaCant = item.quantity - 1;
+      this.actualizarBD(item, nuevaCant);
+    }
+  }
+
+  // Función auxiliar para guardar en BD
+  actualizarBD(item: any, cantidad: number) {
+    // 1. Actualizamos visualmente inmediato (para que se sienta rápido)
+    item.quantity = cantidad; 
+    
+    // 2. Guardamos en BD (Persistencia)
+    this.api.updateCantidadCarrito(item.cart_id, cantidad).subscribe({
+      error: () => {
+        alert('Error al guardar cantidad');
+        // Si falla, revertimos (opcional, pero buena práctica)
+        this.cargarCarrito(); 
+      }
+    });
+  }
+
+  procederAlPago() {
+    if (this.cartItems.length === 0) return;
+    const nombre = localStorage.getItem('userName') || 'Cliente Web';
+
+    this.api.realizarCheckout(this.userId, nombre).subscribe({
+      next: (res: any) => {
+        if (res.exito) {
+          alert('¡Compra realizada! 🎉');
+          this.cargarCarrito();
+          this.router.navigate(['/home']);
+        }
+      }
+    });
+  }
+
   getSubtotal(): number {
     return this.cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   }
 
-  // Calcular Total
   getTotal(): number {
     return this.getSubtotal() + this.shippingCost;
-  }
-
-  // Lógica simple para botones + y -
-  increaseQty(item: any) {
-    if (item.quantity < 10) item.quantity++;
-  }
-
-  decreaseQty(item: any) {
-    if (item.quantity > 1) item.quantity--;
-  }
-
-  removeItem(index: number) {
-    this.cartItems.splice(index, 1);
   }
 }

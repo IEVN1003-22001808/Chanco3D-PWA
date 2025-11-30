@@ -35,7 +35,6 @@
       @if (!isAdmin) {
         <a [routerLink]="['/shop/cart']" class="btnIcono" title="Carrito">
           <i class="iconoCar bi bi-cart2"></i>
-          <span class="etiquetaConteo">0</span>
         </a>
       }
 
@@ -54,9 +53,7 @@
       <input type="checkbox" id="checkbox" (change)="toggleTheme()" [checked]="isDarkMode" />
       <div class="deslizador redondo">
         <i class="iconoSol bi bi-brightness-high-fill"></i>
-        <!-- ícono de https://emojicombos.com/sol  -->
         <i class="iconoLuna bi bi-moon-fill"></i>
-        <!-- ícono de https://emojicombos.com/luna -->
       </div>
     </label>
   </div>

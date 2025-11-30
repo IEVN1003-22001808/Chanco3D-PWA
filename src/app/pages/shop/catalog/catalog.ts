@@ -45,16 +45,20 @@ export class CatalogComponent implements OnInit {
   }
 
   addToCart(product: any) {
-    // AQUÍ LUEGO CONECTAREMOS EL CARRITO REAL
-    // Por ahora, solo simulación visual para cumplir la HDU 5 (Criterio 3 y 4)
-    const isLoggedIn = localStorage.getItem('userRole');
-
-    if (isLoggedIn) {
-      alert(`¡${product.name} agregado al carrito!`);
-      // TODO: Llamar a api.agregarAlCarrito() en el futuro
+    //criteruios 3 y 4
+    const userId = localStorage.getItem('userId');
+    
+    if (userId) {
+      
+      this.api.addAlCarrito(userId, product.id).subscribe({
+        next: () => {
+          alert(`¡${product.name} agregado al carrito!`);
+        },
+        error: (e) => alert('Error al agregar al carrito.')
+      });
     } else {
-      alert('Inicia sesión para comprar.');
-      // Opcional: Redirigir al login
+      // criterio 5 : Si NO tiene sesión, manda alerta modal
+      alert('Debes iniciar sesión para comprar.');
     }
   }
 }
