@@ -7,7 +7,7 @@ import { ApiService } from '../../../services/api.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './quotes-history.html',
-  styleUrl: './quotes-history.css' // Puedes reusar inventory.css si quieres ahorrar tiempo
+  styleUrl: './quotes-history.css' 
 })
 export class QuotesHistoryComponent implements OnInit {
   private api = inject(ApiService);

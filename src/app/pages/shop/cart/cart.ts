@@ -34,18 +34,17 @@ export class CartComponent implements OnInit {
     });
   }
 
-  // CORRECCIÓN ELIMINAR: Aseguramos que borre de la BD y recargue
+
   removeItem(item: any) {
     if(confirm('¿Quitar del carrito?')) {
       this.api.deleteItemCarrito(item.cart_id).subscribe(() => {
-        this.cargarCarrito(); // Recargamos para ver que se fue
+        this.cargarCarrito(); 
       });
     }
   }
 
-  // CORRECCIÓN CANTIDAD: Límites + Persistencia
   increaseQty(item: any) {
-    if (item.quantity < 10) { // Límite Máximo 10
+    if (item.quantity < 10) { 
       const nuevaCant = item.quantity + 1;
       this.actualizarBD(item, nuevaCant);
     } else {
@@ -54,22 +53,19 @@ export class CartComponent implements OnInit {
   }
 
   decreaseQty(item: any) {
-    if (item.quantity > 1) { // Límite Mínimo 1
+    if (item.quantity > 1) { 
       const nuevaCant = item.quantity - 1;
       this.actualizarBD(item, nuevaCant);
     }
   }
 
-  // Función auxiliar para guardar en BD
+
   actualizarBD(item: any, cantidad: number) {
-    // 1. Actualizamos visualmente inmediato (para que se sienta rápido)
     item.quantity = cantidad; 
     
-    // 2. Guardamos en BD (Persistencia)
     this.api.updateCantidadCarrito(item.cart_id, cantidad).subscribe({
       error: () => {
         alert('Error al guardar cantidad');
-        // Si falla, revertimos (opcional, pero buena práctica)
         this.cargarCarrito(); 
       }
     });
@@ -82,7 +78,7 @@ export class CartComponent implements OnInit {
     this.api.realizarCheckout(this.userId, nombre).subscribe({
       next: (res: any) => {
         if (res.exito) {
-          alert('¡Compra realizada! 🎉');
+          alert('¡Compra realizada!');
           this.cargarCarrito();
           this.router.navigate(['/home']);
         }

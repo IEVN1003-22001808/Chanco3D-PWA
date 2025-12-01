@@ -15,7 +15,6 @@ export class InventoryComponent implements OnInit {
 
   mostrarModal = false;
 
-  // CORRECCIÓN: Cambiado de 'nuevoltem' a 'nuevoItem' (con I mayúscula)
   nuevoItem = { name: '', type: 'Resina', stock: 0, unit: 'ml', expiryDate: '', batch: '' };
 
   inventoryItems: any[] = [];
@@ -31,7 +30,7 @@ export class InventoryComponent implements OnInit {
   }
 
   agregarItem() {
-    // Usamos nuevoItem aquí también
+
     if (this.nuevoItem.name && this.nuevoItem.stock >= 0) {
 
       this.api.addInsumo(this.nuevoItem).subscribe(() => {
@@ -57,7 +56,7 @@ export class InventoryComponent implements OnInit {
 
   cerrarModal() {
     this.mostrarModal = false;
-    // Resetear formulario
+
     this.nuevoItem = { name: '', type: 'Resina', stock: 0, unit: 'ml', expiryDate: '', batch: '' };
   }
 
@@ -76,17 +75,17 @@ export class InventoryComponent implements OnInit {
   }
 
 actualizarStock(item: any, cantidad: number) {
-    const nuevoStock = Number(item.stock) + cantidad; // Aseguramos que sea número
+    const nuevoStock = Number(item.stock) + cantidad;
 
     if (nuevoStock < 0) {
       alert('El stock no puede ser negativo.');
       return;
     }
 
-    // Llamada a la API
+
     this.api.updateStockInsumo(item.id, nuevoStock).subscribe({
       next: () => {
-        // Actualizamos visualmente para que se vea rápido
+
         item.stock = nuevoStock;
         console.log(`Stock actualizado a ${nuevoStock}`);
       },

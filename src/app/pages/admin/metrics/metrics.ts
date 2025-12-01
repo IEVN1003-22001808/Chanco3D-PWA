@@ -14,25 +14,23 @@ Chart.register(...registerables);
   styleUrl: './metrics.css'
 })
 export class MetricsComponent implements OnInit {
-  private api = inject(ApiService); // <--- Inyectamos
+  private api = inject(ApiService); 
 
   @ViewChild('barCanvas') barCanvas!: ElementRef;
   @ViewChild('pieCanvas') pieCanvas!: ElementRef;
 
   isDragging = false;
   fileName: string | null = null;
-  selectedFile: File | null = null; // Guardamos el archivo real aquí
+  selectedFile: File | null = null; 
   
   showCharts = false;
   barChart: any;
   pieChart: any;
 
   ngOnInit() {
-    // Intentamos cargar métricas existentes al entrar (si ya había datos en BD)
     this.cargarDatosGraficos();
   }
 
-  // Detectar archivo seleccionado
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
@@ -41,7 +39,6 @@ export class MetricsComponent implements OnInit {
     }
   }
 
-  // Enviar CSV al Backend
   processData() {
     if (!this.selectedFile) {
       alert('Por favor selecciona un archivo CSV válido.');
@@ -55,7 +52,7 @@ export class MetricsComponent implements OnInit {
       next: (res: any) => {
         if (res.exito) {
           alert('Datos procesados y actualizados en BD.');
-          this.cargarDatosGraficos(); // Redibujar gráficos con datos nuevos
+          this.cargarDatosGraficos();
         } else {
           alert('Error: ' + res.mensaje);
         }
@@ -67,10 +64,10 @@ export class MetricsComponent implements OnInit {
   cargarDatosGraficos() {
     this.api.getMetricas().subscribe({
       next: (res: any) => {
-        // El backend devuelve: { ventas: {labels:[], data:[]}, ciudades: {...} }
+       
         if (res.ventas && res.ciudades) {
           this.showCharts = true;
-          // Esperamos un poquito a que el HTML muestre los canvas
+          
           setTimeout(() => {
             this.renderBarChart(res.ventas.labels, res.ventas.data);
             this.renderPieChart(res.ciudades.labels, res.ciudades.data);
@@ -81,10 +78,10 @@ export class MetricsComponent implements OnInit {
     });
   }
 
-  // --- Lógica de Gráficos (Chart.js) ---
+  
   
   renderBarChart(labels: string[], data: number[]) {
-    if (this.barChart) this.barChart.destroy(); // Limpiar anterior
+    if (this.barChart) this.barChart.destroy(); 
 
     const ctx = this.barCanvas.nativeElement.getContext('2d');
     this.barChart = new Chart(ctx, {

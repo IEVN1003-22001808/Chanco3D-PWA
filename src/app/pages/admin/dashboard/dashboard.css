@@ -5,7 +5,6 @@
   transition: background-color 0.3s;
 }
 
-/* Estructura Admin */
 .disenoAdmin {
   display: flex;
   min-height: 100vh;
@@ -73,7 +72,6 @@ h1 {
   color: var(--textoPrincipal);
 }
 
-/* --- TARJETAS KPI --- */
 .rejillaStats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -115,7 +113,6 @@ h1 {
   color: #f87171;
 }
 
-/* KPI DOBLE (Clientes) */
 .infoDoble {
   display: flex;
   align-items: center;
@@ -144,7 +141,6 @@ small {
   font-size: 0.75rem;
 }
 
-/* --- TABLA Y FILTROS --- */
 .encabezadoTabla {
   display: flex;
   justify-content: space-between;
@@ -211,7 +207,6 @@ th {
   color: var(--textoPrincipal);
 }
 
-/* Selectores de Estado en Tabla */
 .selectorEstadoTabla {
   padding: 6px;
   border-radius: 20px;

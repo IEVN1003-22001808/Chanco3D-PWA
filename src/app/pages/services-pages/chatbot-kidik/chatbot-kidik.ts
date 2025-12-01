@@ -12,139 +12,97 @@ import { FormsModule } from '@angular/forms';
 })
 export class ChatbotComponent {
 
-
-  abrirVen: boolean = false;
-  escribiendo: boolean = false;
+  abrirVen = false;
+  escribiendo = false;
   Arrastre = false;
-
-  // posicion mouse
-  posX = 0;
-  posY = 0;
-
-  //posicion rt
   posicion = { x: 0, y: 0 };
-  FinalPos = { x: 0, y: 0 };
+  private inicio = { x: 0, y: 0 };
 
+  alternarChat() { this.abrirVen = !this.abrirVen; }
 
-  alternarChat(): void {
-    this.abrirVen = !this.abrirVen;
-  }
-
-  // funcion para arrastrar
-  iniciarArrastre(evento: MouseEvent): void {
+  iniciarArrastre(e: MouseEvent) {
     this.Arrastre = true;
-    this.posX = evento.clientX;
-    this.posY = evento.clientY;
-    evento.preventDefault();
+    this.inicio = { x: e.clientX, y: e.clientY };
+    e.preventDefault();
   }
 
-  // Escucha el movimiento del mouse en todo el documento.
   @HostListener('document:mousemove', ['$event'])
-  alMoverMouse(evento: MouseEvent): void {
+  mover(e: MouseEvent) {
     if (!this.Arrastre) return;
-
-    // Calcula cuánto se ha movido el mouse desde el click inicial.
-    const deltaX = evento.clientX - this.posX;
-    const deltaY = evento.clientY - this.posY;
-
-    // Actualiza la posición sumando el desplazamiento a la última posición guardada.
-    this.posicion.x = this.FinalPos.x + deltaX;
-    this.posicion.y = this.FinalPos.y + deltaY;
+    this.posicion.x += e.clientX - this.inicio.x;
+    this.posicion.y += e.clientY - this.inicio.y;
+    this.inicio = { x: e.clientX, y: e.clientY };
   }
 
-  // Escucha cuando se suelta el click en cualquier parte.
   @HostListener('document:mouseup')
-  alSoltarMouse(): void {
-    if (this.Arrastre) {
-      this.Arrastre = false; // Detiene el modo arrastre.
-      this.FinalPos = { ...this.posicion }; // Guarda la nueva posición final.
-    }
+  soltar() { this.Arrastre = false; }
+
+  agregarMensaje(mensaje: string, remitente: string, esHTML = false) {
+    let contenedor: HTMLElement | null, div: HTMLElement;
+    contenedor = document.getElementById("contenedorMensajes");
+    if (!contenedor) return;
+
+    div = document.createElement("div");
+    div.classList.add("mensaje", remitente);
+    esHTML ? (div.innerHTML = mensaje) : (div.textContent = mensaje);
+    contenedor.appendChild(div);
+    contenedor.scrollTop = contenedor.scrollHeight;
   }
 
+  async enviarMensaje(mensaje: string) {
+    let contenedor: HTMLElement | null, res: Response, data: any, reply: string, esHTML: boolean, botMsg: HTMLElement | null;
 
-
-  // contenedor
-  agregarMensaje(mensaje: string, remitente: string, esHTML: boolean = false): void {
-    const contenedorMensajes = document.getElementById("contenedorMensajes");
-    if (!contenedorMensajes) return;
-
-    const nuevoMensaje = document.createElement("div");
-    nuevoMensaje.classList.add("mensaje", remitente);
-    if (esHTML) nuevoMensaje.innerHTML = mensaje;
-    else nuevoMensaje.textContent = mensaje;
-
-    contenedorMensajes.appendChild(nuevoMensaje);
-
-    // scroll
-    contenedorMensajes.scrollTop = contenedorMensajes.scrollHeight;
-  }
-
-  // env mensaje
-  async enviarMensaje(mensaje: string): Promise<void> {
-    this.agregarMensaje(mensaje, "usuario", false);
-    //efecto
+    this.agregarMensaje(mensaje, "usuario");
     this.escribiendo = true;
 
-    const contenedorMensajes = document.getElementById("contenedorMensajes");
-    if (!contenedorMensajes) { this.escribiendo = false; return; }
+    contenedor = document.getElementById("contenedorMensajes");
+    if (!contenedor) { this.escribiendo = false; return; }
 
     try {
-      // api en render api (se va a borrar )
-      const respuesta = await fetch('http://localhost:5000/chatbot', {
+      res = await fetch('http://localhost:5000/chatbot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: mensaje })
       });
 
-      const datos = await respuesta.json();
-      const mensajeRespuesta: string = datos.reply;
-
-      const esHTML = mensajeRespuesta.includes('<a ') || mensajeRespuesta.includes('<br');
+      data = await res.json();
+      reply = data.reply;
+      esHTML = reply.includes('<a ') || reply.includes('<br');
 
       this.agregarMensaje('', 'bot', esHTML);
-      const contenedorMensajeBot = contenedorMensajes.lastChild as HTMLElement;
+      botMsg = contenedor.lastChild as HTMLElement;
 
-      // mensaje con link o HTML (mostrar al instante)
       if (mensaje.trim().toLowerCase() === 'tengo un problema con mi producto' || esHTML) {
-        if (contenedorMensajeBot) contenedorMensajeBot.innerHTML = mensajeRespuesta;
+        if (botMsg) botMsg.innerHTML = reply;
         this.escribiendo = false;
         return;
       }
 
-      // efecto
       setTimeout(() => {
-        let i = 0;
-        // efecto
-        const cursorEscritura = document.createElement('span');
-        cursorEscritura.classList.add('cursor-escritura');
+        let i = 0, cursor: HTMLElement, type: () => void;
 
-        if (contenedorMensajeBot) contenedorMensajeBot.appendChild(cursorEscritura);
+        cursor = document.createElement('span');
+        cursor.classList.add('cursor-escritura');
+        if (botMsg) botMsg.appendChild(cursor);
 
-        // eefcto
-        const escribirLetra = () => {
-          if (i < mensajeRespuesta.length && contenedorMensajeBot) {
-            const caracter = mensajeRespuesta.charAt(i);
-
-            // efecto
-            contenedorMensajeBot.innerHTML = contenedorMensajeBot.innerHTML.replace(/<span class="cursor-escritura"><\/span>/g, '') + caracter;
-            if (contenedorMensajeBot.lastChild !== cursorEscritura) contenedorMensajeBot.appendChild(cursorEscritura);
+        type = () => {
+          let cont: HTMLElement | null, delay: number;
+          if (i < reply.length && botMsg) {
+            botMsg.innerHTML = botMsg.innerHTML.replace(/<span class="cursor-escritura"><\/span>/g, '') + reply.charAt(i);
+            if (botMsg.lastChild !== cursor) botMsg.appendChild(cursor);
             i++;
+            cont = document.getElementById("contenedorMensajes");
+            if (cont) cont.scrollTop = cont.scrollHeight;
 
-            // scroll 
-            const contenedorLocal = document.getElementById("contenedorMensajes");
-            if (contenedorLocal) contenedorLocal.scrollTop = contenedorLocal.scrollHeight;
-
-            //efecto
-            let retraso = Math.floor(Math.random() * 20) + 5;
-            if (caracter === '.' || caracter === ',') retraso += 100;
-
-            setTimeout(escribirLetra, retraso);
-          } else if (contenedorMensajeBot) {
-            cursorEscritura.remove();
+            delay = Math.floor(Math.random() * 20) + 5;
+            if (['.', ','].includes(reply.charAt(i))) delay += 100;
+            setTimeout(type, delay);
+          } else {
+            cursor.remove();
             this.escribiendo = false;
           }
-        }
-        escribirLetra();
+        };
+        type();
       }, 1500);
 
     } catch (error) {
@@ -153,7 +111,6 @@ export class ChatbotComponent {
       this.escribiendo = false;
     }
   }
-
 
   enviarMsg(mensaje: string) {
     this.enviarMensaje(mensaje.trim());

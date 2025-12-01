@@ -14,7 +14,7 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private api = inject(ApiService);
 
-  // Creamos el formulario
+
   formLogin: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
@@ -26,23 +26,22 @@ export class LoginComponent {
       return;
     }
 
-    // --- CONEXIÓN REAL A LA BD ---
     this.api.login(this.formLogin.value).subscribe({
       next: (res: any) => {
         if (res.exito) {
-          // Guardamos sesión en el navegador
+
           localStorage.setItem('userRole', res.usuario.role);
           localStorage.setItem('userName', res.usuario.nombre);
-          localStorage.setItem('userId', res.usuario.id); // Útil para guardar pedidos
+          localStorage.setItem('userId', res.usuario.id);
 
-          // Redirección según rol
+
           if (res.usuario.role === 'admin') {
             window.location.href = '/admin/dashboard';
           } else {
             window.location.href = '/home';
           }
         } else {
-          alert(res.mensaje); // Ej: "Correo o contraseña incorrectos"
+          alert(res.mensaje); 
         }
       },
       error: (err) => {

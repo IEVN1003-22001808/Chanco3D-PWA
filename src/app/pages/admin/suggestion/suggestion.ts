@@ -22,7 +22,6 @@ interface Sugerencia {
 export class SuggestionComponent implements OnInit {
   private api = inject(ApiService);
 
-  // Usamos la interfaz corregida aquí
   sugerencias: Sugerencia[] = [];
 
   ngOnInit() {

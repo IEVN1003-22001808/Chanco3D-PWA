@@ -6,17 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  // Tu API en Flask
+
   private apiUrl = 'http://127.0.0.1:5000';
 
-  // Inyección moderna (como en el PDF del profesor auth.ts)
   private http = inject(HttpClient);
 
   constructor() { }
 
-  // ==========================================
-  // MÓDULOS 1 y 3: AUTENTICACIÓN Y REGISTRO
-  // ==========================================
+  //login y registro
+
   login(credenciales: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credenciales);
   }
@@ -25,27 +23,26 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/registro`, usuario);
   }
 
-  // ==========================================
-  // MÓDULO 2: CARRITO DE COMPRAS (Real)
-  // ==========================================
+
+  //Carrito
   
-  // 1. Agregar
+  // Agregar
   addAlCarrito(userId: any, productId: any): Observable<any> {
     const data = { usuario_id: userId, producto_id: productId, cantidad: 1 };
     return this.http.post(`${this.apiUrl}/carrito`, data);
   }
 
-  // Ver lista
+  //Ver lista
   getCarrito(userId: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/carrito/${userId}`);
   }
 
-  // Borrar item
+  //Borrar 
   deleteItemCarrito(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/carrito/${id}`);
   }
 
-  // Actualizar cantidad
+  //Actualizar cantidad
   updateCantidadCarrito(cartId: number, cantidad: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/carrito/${cartId}`, { cantidad });
   }
@@ -55,10 +52,8 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/checkout/${userId}`, { cliente_nombre: nombreCliente });
   }
   
-  // ==========================================
-  // MÓDULO 2 y 12: CARRITO Y PEDIDOS
-  // ==========================================
-  // Crear un pedido nuevo (Checkout del carrito)
+
+  // Crear un pedido nuevo 
   crearPedido(pedido: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/pedidos`, pedido);
   }
@@ -77,9 +72,8 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/admin/kpis`);
   }
 
-  // ==========================================
-  // MÓDULO 4: INVENTARIO (Admin)
-  // ==========================================
+
+  //inventario
   getInventario(): Observable<any> {
     return this.http.get(`${this.apiUrl}/inventario`);
   }
@@ -94,18 +88,17 @@ export class ApiService {
   updateStockInsumo(id: number, newStock: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/inventario/${id}`, { stock: newStock });
   }
-  // ==========================================
-  // MÓDULO 5: CATÁLOGO DE PRODUCTOS
-  // ==========================================
+  //productos
+
   getProductos(): Observable<any> {
     return this.http.get(`${this.apiUrl}/productos`);
   }
 
-  // Opcional: Si el admin agrega productos desde Angular
   addProducto(producto: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/productos`, producto);
   }
-  //Borrar producto del catálogo
+
+  //Borrar producto del catalogo
   deleteProducto(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/productos/${id}`);
   }
@@ -113,10 +106,7 @@ export class ApiService {
     return this.http.put(`${this.apiUrl}/productos/${id}`, producto);
   }
 
-  // ==========================================
-  // MÓDULO 6: MÉTRICAS (Admin)
-  // ==========================================
-  // Enviar el archivo CSV para procesar
+//metricas
   uploadCsv(formData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/metricas/upload`, formData);
   }
@@ -125,9 +115,8 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/metricas/datos`);
   }
 
-  // ==========================================
-  // MÓDULO 7: GALERÍA DE LA COMUNIDAD
-  // ==========================================
+
+  //galeria
   getGaleria(): Observable<any> {
     return this.http.get(`${this.apiUrl}/galeria`);
   }
@@ -136,15 +125,14 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/galeria`, post);
   }
 
-  // Aprobar/Rechazar (Admin)
+  // Aprobar/Rechazar 
   updateEstadoGaleria(id: number, status: string): Observable<any> {
     return this.http.put(`${this.apiUrl}/galeria/estado/${id}`, { status });
   }
 
-  // ==========================================
-  // MÓDULO 8: COTIZADOR
-  // ==========================================
-  
+
+
+  //cotizaciones
   guardarCotizacion(cotizacion: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/cotizaciones`, cotizacion);
   }
@@ -152,9 +140,7 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/cotizaciones`);
   }
 
-  // ==========================================
-  // MÓDULO 9: PROVEEDORES (Admin)
-  // ==========================================
+//proveedores
   getProveedores(): Observable<any> {
     return this.http.get(`${this.apiUrl}/proveedores`);
   }
@@ -171,17 +157,13 @@ export class ApiService {
     return this.http.put(`${this.apiUrl}/proveedores/${id}`, proveedor);
   }
 
-  // ==========================================
-  // MÓDULO 10: CHATBOT KIDIK
-  // ==========================================
-  // Enviar pregunta y recibir respuesta
+
+  //chatbot
   chatKidik(mensaje: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/chatbot`, { question: mensaje });
   }
 
-  // ==========================================
-  // MÓDULO 11: BUZÓN DE SUGERENCIAS
-  // ==========================================
+//buzon de sugerencias
   getSugerencias(): Observable<any> {
     return this.http.get(`${this.apiUrl}/sugerencias`);
   }

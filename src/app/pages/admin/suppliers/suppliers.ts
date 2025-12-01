@@ -14,12 +14,12 @@ import { ApiService } from '../../../services/api.service';
 export class SuppliersComponent implements OnInit {
   private api = inject(ApiService);
 
-  mostrarModal = false; // Controla el modal
+  mostrarModal = false; 
   editingId: number | null = null;
   
   suppliers: any[] = [];
   
-  // Modelo vacío base
+
   newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' };
 
   ngOnInit() {
@@ -32,32 +32,29 @@ export class SuppliersComponent implements OnInit {
     });
   }
 
-  // --- LÓGICA DEL MODAL ---
 
-  // 1. Abrir para CREAR (Limpia todo)
   abrirModal() {
-    this.editingId = null; // Importante: Decimos "No estamos editando"
+    this.editingId = null; 
     this.newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' }; // Limpiamos campos
     this.mostrarModal = true;
   }
 
-  // 2. Abrir para EDITAR (Carga datos)
+
   editarProveedor(s: any) {
-    this.editingId = s.id; // Guardamos a quién editamos
-    // Copiamos los datos para no editar la tabla en tiempo real
+    this.editingId = s.id; 
+
     this.newSupplier = {
       company: s.company,
       contact: s.contact,
       email: s.email,
       phone: s.phone,
-      supplies: s.supplies.join(', ') // Convertimos array a texto para el input
+      supplies: s.supplies.join(', ') 
     };
     this.mostrarModal = true;
   }
 
   cerrarModal() {
     this.mostrarModal = false;
-    // Limpieza de seguridad al cerrar
     this.editingId = null;
     this.newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' };
   }
@@ -69,7 +66,6 @@ export class SuppliersComponent implements OnInit {
     }
 
     if (this.editingId) {
-      // --- MODO EDICIÓN ---
       this.api.updateProveedor(this.editingId, this.newSupplier).subscribe({
         next: () => {
           alert('Proveedor actualizado correctamente');
@@ -79,7 +75,6 @@ export class SuppliersComponent implements OnInit {
         error: () => alert('Error al actualizar')
       });
     } else {
-      // --- MODO CREACIÓN ---
       this.api.addProveedor(this.newSupplier).subscribe({
         next: () => {
           alert('Proveedor registrado exitosamente');

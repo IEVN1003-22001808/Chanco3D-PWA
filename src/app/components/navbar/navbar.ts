@@ -1,20 +1,18 @@
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { DOCUMENT, CommonModule } from '@angular/common'; // Agregamos CommonModule para el *ngIf
+import { DOCUMENT, CommonModule } from '@angular/common'; 
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule], // Importante: CommonModule
+  imports: [RouterLink, RouterLinkActive, CommonModule], 
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
 export class NavbarComponent implements OnInit {
 
-  // Variables de Tema
-  isDarkMode = true;
 
-  // Variables de Auth
+  isDarkMode = true;
   isAdmin = false;
   isClient = false;
   isLoggedIn = false;
@@ -25,10 +23,7 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // 1. Checar Tema (Tu lógica original)
-    // const savedTheme = localStorage.getItem('theme'); ...
 
-    // 2. Checar Auth (NUEVA LÓGICA)
     const role = localStorage.getItem('userRole');
 
     if (role) {
@@ -55,7 +50,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    // Borrar datos y recargar para ir al login limpio
+   
     localStorage.clear();
     window.location.href = '/auth/login';
   }

@@ -25,7 +25,6 @@ export class CustomQuoteComponent {
   quantity = 1;
   totalPrice = 0;
 
-  // Eventos Drag & Drop
   onDragOver(e: Event) { e.preventDefault(); this.isDragging = true; }
   onDragLeave(e: Event) { e.preventDefault(); this.isDragging = false; }
   
@@ -46,10 +45,9 @@ export class CustomQuoteComponent {
     }
     this.fileSelected = true;
     this.fileName = file.name;
-    
-    // Guardamos el valor numérico en MB para el cálculo
+
     this.fileSizeVal = file.size / (1024 * 1024); 
-    this.fileSize = this.fileSizeVal.toFixed(2); // Texto para mostrar (Ej: "5.40")
+    this.fileSize = this.fileSizeVal.toFixed(2);
   }
  
   removeFile() {
@@ -66,10 +64,8 @@ export class CustomQuoteComponent {
       return;
     }
     
-    // 1. Costo Base
     const baseCostPerCm = 15;
     
-    // 2. Factor Material
     let materialFactor = 1;
     switch(this.selectedMaterial) {
       case 'standard': materialFactor = 1; break; 
@@ -78,7 +74,7 @@ export class CustomQuoteComponent {
       case '8k': materialFactor = 1.8; break;
     }
   
-    // 3. Factor Relleno
+
     let infillFactor = 1;
     switch(this.infill) {
       case '20': infillFactor = 1.0; break;
@@ -86,15 +82,12 @@ export class CustomQuoteComponent {
       case '100': infillFactor = 2.0; break; 
     }
 
-    // 4. FACTOR "MÁGICO" DE COMPLEJIDAD (Basado en peso)
-    // Lógica: Tomamos los decimales. Ej: 5.4MB -> .4 -> Factor 1.4
+
     let decimalPart = this.fileSizeVal - Math.floor(this.fileSizeVal);
-    // Si pesa 1.00MB exacto, le damos un mínimo de 1.1 para que no quede igual
     let complexityFactor = decimalPart < 0.1 ? 1.1 : (1 + decimalPart);
 
     console.log(`Peso: ${this.fileSize}MB | Factor Complejidad: ${complexityFactor.toFixed(2)}`);
 
-    // Cálculo Final
     const unitPrice = (this.height * baseCostPerCm * materialFactor * infillFactor) * complexityFactor;
     this.totalPrice = unitPrice * this.quantity;
   

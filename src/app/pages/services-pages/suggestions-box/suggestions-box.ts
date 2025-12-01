@@ -53,7 +53,7 @@ export class SuggestionsBoxComponent implements OnInit {
         next: () => {
           alert('¡Gracias! Tu idea ha sido enviada al buzón.');
           this.nuevaSugerencia = { titulo: '', origen: '', detalles: '' };
-          this.cargarSugerencias(); // Actualizar lista
+          this.cargarSugerencias(); 
         },
         error: () => alert('Error al enviar.')
       });
@@ -66,8 +66,8 @@ export class SuggestionsBoxComponent implements OnInit {
   obtenerClaseEstado(estado: string): string {
     switch (estado) {
       case 'Aprobada': return 'estado-aprobado';
-      case 'Nueva': return 'estado-nuevo'; // CSS verde o azul
-      case 'Pendiente': return 'estado-pendiente'; // CSS amarillo
+      case 'Nueva': return 'estado-nuevo'; 
+      case 'Pendiente': return 'estado-pendiente'; 
       default: return '';
     }
   }

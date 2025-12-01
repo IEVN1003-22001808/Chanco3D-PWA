@@ -20,10 +20,9 @@ export class ForgotPassword {
 
     this.isLoading = true;
 
-    // Simulamos una petición al servidor (Backend)
     setTimeout(() => {
       this.isLoading = false;
-      this.emailSent = true; // Cambiamos la vista al mensaje de éxito
+      this.emailSent = true;
     }, 1500);
   }
 }

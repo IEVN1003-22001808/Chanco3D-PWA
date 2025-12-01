@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewChecked, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../services/api.service'; // <--- Servicio
+import { ApiService } from '../../../services/api.service'; 
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 declare var instgrm: any;
@@ -20,7 +20,7 @@ export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
   showForm = false;
   newPost = { title: '', description: '', image: '' };
 
-  posts: any[] = []; // Se llena desde BD
+  posts: any[] = [];
 
   ngOnInit(): void {
     this.cargarGaleria();
@@ -29,7 +29,6 @@ export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
   cargarGaleria() {
     this.api.getGaleria().subscribe({
       next: (data: any[]) => {
-        // Al recibir los datos, calculamos el HTML seguro para cada uno
         this.posts = data.map(post => ({
           ...post,
           safeHtml: this.generateSafeHtml(post.image)
@@ -43,7 +42,7 @@ export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
     return !!localStorage.getItem('userId');
   }
 
-  // Solo mostramos las aprobadas
+  //solo se muestran las aprobadas
   get approvedPosts() {
     return this.posts.filter(post => post.status === 'Aprobada');
   }
@@ -77,7 +76,7 @@ export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
 
     const nuevoPost = {
       title: this.newPost.title,
-      author: localStorage.getItem('userName') || 'Anónimo', // Usamos el nombre real del usuario
+      author: localStorage.getItem('userName') || 'Anónimo', 
       image: this.newPost.image
     };
 
@@ -86,7 +85,7 @@ export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
         alert('¡Enviado a moderación! Tu post aparecerá cuando el admin lo apruebe.');
         this.showForm = false;
         this.newPost = { title: '', description: '', image: '' };
-        this.cargarGaleria(); // Recargar para ver si cambió algo
+        this.cargarGaleria();
       },
       error: () => alert('Error al publicar.')
     });
