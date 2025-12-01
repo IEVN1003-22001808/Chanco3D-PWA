@@ -19,16 +19,19 @@ export class InventoryComponent implements OnInit {
 
   inventoryItems: any[] = [];
 
+  // al iniciar cargamos la lista de insumos
   ngOnInit() {
     this.cargarInventario();
   }
 
+  // obtenemos el inventario desde la api
   cargarInventario() {
     this.api.getInventario().subscribe((data: any) => {
       this.inventoryItems = data;
     });
   }
 
+  // agregamos un nuevo insumo a la base de datos
   agregarItem() {
 
     if (this.nuevoItem.name && this.nuevoItem.stock >= 0) {
@@ -44,8 +47,9 @@ export class InventoryComponent implements OnInit {
     }
   }
 
+  // eliminamos un insumo del inventario
   eliminarItem(id: number) {
-    if(confirm('¿Eliminar del inventario real?')) {
+    if (confirm('¿Eliminar del inventario real?')) {
       this.api.deleteInsumo(id).subscribe(() => {
         this.cargarInventario();
       });
@@ -60,9 +64,10 @@ export class InventoryComponent implements OnInit {
     this.nuevoItem = { name: '', type: 'Resina', stock: 0, unit: 'ml', expiryDate: '', batch: '' };
   }
 
+  // verificamos si un insumo esta por caducar
   isNearExpiry(dateStr: string): boolean {
     const diff = new Date(dateStr).getTime() - new Date().getTime();
-    const days = diff / (1000*3600*24);
+    const days = diff / (1000 * 3600 * 24);
     return days < 30 && days > 0;
   }
   isExpired(dateStr: string): boolean {
@@ -74,7 +79,8 @@ export class InventoryComponent implements OnInit {
     return 'Óptimo';
   }
 
-actualizarStock(item: any, cantidad: number) {
+  // actualiza la cantidad de stock de un insumo
+  actualizarStock(item: any, cantidad: number) {
     const nuevoStock = Number(item.stock) + cantidad;
 
     if (nuevoStock < 0) {

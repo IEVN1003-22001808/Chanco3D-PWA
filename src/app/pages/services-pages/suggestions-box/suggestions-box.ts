@@ -16,23 +16,29 @@ export class SuggestionsBoxComponent implements OnInit {
   nuevaSugerencia = { titulo: '', origen: '', detalles: '' };
   sugerencias: any[] = [];
 
+  // al iniciar cargamos las sugerencias
   ngOnInit() {
     this.cargarSugerencias();
   }
 
+  // obtiene las sugerencias desde la api
   cargarSugerencias() {
     this.api.getSugerencias().subscribe((data: any) => {
       this.sugerencias = data;
     });
   }
 
+  // obtiene las sugerencias publicas
   get sugerenciasPublicas() {
     return this.sugerencias;
   }
+
+  // verifica si el usuario esta logueado
   get isLoggedIn(): boolean {
     return !!localStorage.getItem('userId');
   }
 
+  // enviam una nueva sugerencia
   enviarSugerencia() {
     const usuarioActual = localStorage.getItem('userName');
 
@@ -53,7 +59,7 @@ export class SuggestionsBoxComponent implements OnInit {
         next: () => {
           alert('¡Gracias! Tu idea ha sido enviada al buzón.');
           this.nuevaSugerencia = { titulo: '', origen: '', detalles: '' };
-          this.cargarSugerencias(); 
+          this.cargarSugerencias();
         },
         error: () => alert('Error al enviar.')
       });
@@ -63,11 +69,12 @@ export class SuggestionsBoxComponent implements OnInit {
     }
   }
 
+  // obtiene la clase css segun el estado de la sugerencia
   obtenerClaseEstado(estado: string): string {
     switch (estado) {
       case 'Aprobada': return 'estado-aprobado';
-      case 'Nueva': return 'estado-nuevo'; 
-      case 'Pendiente': return 'estado-pendiente'; 
+      case 'Nueva': return 'estado-nuevo';
+      case 'Pendiente': return 'estado-pendiente';
       default: return '';
     }
   }

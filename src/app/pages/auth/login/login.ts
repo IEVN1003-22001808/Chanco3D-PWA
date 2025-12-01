@@ -20,6 +20,7 @@ export class LoginComponent {
     password: ['', Validators.required]
   });
 
+  // iniciar sesion con los datos del formulario
   login() {
     if (this.formLogin.invalid) {
       alert('Por favor llena los campos correctamente');
@@ -41,7 +42,7 @@ export class LoginComponent {
             window.location.href = '/home';
           }
         } else {
-          alert(res.mensaje); 
+          alert(res.mensaje);
         }
       },
       error: (err) => {

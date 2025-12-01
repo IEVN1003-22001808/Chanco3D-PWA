@@ -13,13 +13,13 @@ import { ApiService } from '../../../services/api.service';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
-export class DashboardComponent implements OnInit { 
+export class DashboardComponent implements OnInit {
   private api = inject(ApiService);
 
   filtroEstado: string = 'Todos';
   mostrarModal: boolean = false;
   ordenSeleccionada: any = null;
-  chart: any; 
+  chart: any;
 
   kpiData = {
     ventasTotales: 0,
@@ -30,17 +30,19 @@ export class DashboardComponent implements OnInit {
 
   allOrders: any[] = [];
 
+  // esta funcion se ejecuta al iniciar el componente
   ngOnInit() {
     this.cargarDatosDashboard();
   }
 
+  // aqui cargamos los datos del dashboard desde la api
   cargarDatosDashboard() {
 
     this.api.getPedidos().subscribe((data: any) => {
       this.allOrders = data;
       this.calcularKPIsPedidos();
 
-      setTimeout(() => this.renderChart3Meses(), 100); 
+      setTimeout(() => this.renderChart3Meses(), 100);
     });
 
 
@@ -52,6 +54,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  // calcula los totales de ventas y pedidos pendientes
   calcularKPIsPedidos() {
 
     const ventas = this.allOrders
@@ -65,18 +68,19 @@ export class DashboardComponent implements OnInit {
   }
 
 
+  // genera la grafica de ventas de los ultimos 3 meses
   renderChart3Meses() {
     const ctx = document.getElementById('ventasChart') as HTMLCanvasElement;
     if (!ctx) return;
-    if (this.chart) this.chart.destroy(); 
+    if (this.chart) this.chart.destroy();
 
 
     const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     const hoy = new Date();
-    
+
 
     const labels = [];
-    const dataVentas = [0, 0, 0]; 
+    const dataVentas = [0, 0, 0];
 
     for (let i = 2; i >= 0; i--) {
       const d = new Date();
@@ -86,7 +90,7 @@ export class DashboardComponent implements OnInit {
 
 
     this.allOrders.forEach(orden => {
-      const fechaOrden = new Date(orden.date); 
+      const fechaOrden = new Date(orden.date);
       const mesOrden = fechaOrden.getMonth();
       const mesActual = hoy.getMonth();
 
@@ -100,13 +104,13 @@ export class DashboardComponent implements OnInit {
 
 
     this.chart = new Chart(ctx, {
-      type: 'bar', 
+      type: 'bar',
       data: {
         labels: labels,
         datasets: [{
           label: 'Ventas ($)',
           data: dataVentas,
-          backgroundColor: ['#4ade80', '#3b82f6', '#a78bfa'], 
+          backgroundColor: ['#4ade80', '#3b82f6', '#a78bfa'],
           borderRadius: 5
         }]
       },
@@ -125,28 +129,32 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  
+
+  // filtra los pedidos segun el estado seleccionado
   get filteredOrders() {
     let orders = this.allOrders;
     if (this.filtroEstado !== 'Todos') {
       orders = orders.filter(o => o.status === this.filtroEstado);
     }
-    return orders.sort((a, b) => b.id - a.id); 
+    return orders.sort((a, b) => b.id - a.id);
   }
 
+  // actualiza el estado de un pedido en la base de datos
   actualizarEstado(orden: any, nuevoEstado: string) {
     orden.status = nuevoEstado;
     this.api.updateEstadoPedido(orden.id, nuevoEstado).subscribe({
       next: () => {
-        this.calcularKPIsPedidos(); 
+        this.calcularKPIsPedidos();
         console.log('Estado actualizado');
       }
     });
   }
 
+  // muestra los detalles de un pedido especifico
   verDetalles(orden: any) { this.ordenSeleccionada = orden; this.mostrarModal = true; }
   cerrarModal() { this.mostrarModal = false; this.ordenSeleccionada = null; }
 
+  // obtiene la clase css segun el estado del pedido
   getClass(status: string): string {
     switch (status) {
       case 'Entregado': return 'exito';

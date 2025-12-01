@@ -4,7 +4,7 @@
 }
 
 .finalDePagina {
-  background-color: var(--fondoTarjeta); 
+  background-color: var(--fondoTarjeta);
   color: var(--textoSecundario);
   padding: 60px 0 20px;
   border-top: 1px solid var(--colorBorde);
@@ -28,7 +28,7 @@
 }
 
 .columnaMarca {
-  flex: 1.5; 
+  flex: 1.5;
 }
 
 .logoFinal {
@@ -85,7 +85,7 @@ h3 {
 
 .enlacesFinal a:hover {
   color: var(--colorPrimario);
-  padding-left: 5px; 
+  padding-left: 5px;
 }
 
 .enlacesSociales {
@@ -99,8 +99,9 @@ h3 {
 }
 
 .iconoRed {
-  width: 30px;
-  height: 30px;
+  width: 80px;
+  height: 80px;
+  color: var(--textoPrincipal);
   transition: transform 0.3s;
 }
 
@@ -126,14 +127,22 @@ h3 {
 }
 
 @keyframes latido {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 @media (max-width: 768px) {
   .contenedorFinal {
     flex-direction: column;
   }
+
   .finalInferior {
     font-size: 0.8rem;
   }

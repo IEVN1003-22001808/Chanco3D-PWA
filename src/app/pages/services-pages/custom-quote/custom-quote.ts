@@ -18,26 +18,32 @@ export class CustomQuoteComponent {
   fileName = '';
   fileSize = '';
   fileSizeVal: number = 0;
-  
+
   selectedMaterial = 'standard';
   height: number | null = null;
-  infill = '20'; 
+  infill = '20';
   quantity = 1;
   totalPrice = 0;
 
+  // el evento de arrastrar un archivo sobre la zona
   onDragOver(e: Event) { e.preventDefault(); this.isDragging = true; }
+
+  //el evento de salir de la zona de arrastre
   onDragLeave(e: Event) { e.preventDefault(); this.isDragging = false; }
-  
+
+  // maneja el evento de soltar un archivo
   onDrop(e: any) {
     e.preventDefault();
     this.isDragging = false;
     if (e.dataTransfer.files.length > 0) this.handleFile(e.dataTransfer.files[0]);
   }
- 
+
+  // maneja la seleccion de un archivo desde el input
   onFileSelected(e: any) {
     if (e.target.files.length > 0) this.handleFile(e.target.files[0]);
   }
- 
+
+  // procesa el archivo seleccionado
   handleFile(file: File) {
     if (!file.name.toLowerCase().endsWith('.stl')) {
       alert('Solo se permiten archivos .STL');
@@ -46,10 +52,11 @@ export class CustomQuoteComponent {
     this.fileSelected = true;
     this.fileName = file.name;
 
-    this.fileSizeVal = file.size / (1024 * 1024); 
+    this.fileSizeVal = file.size / (1024 * 1024);
     this.fileSize = this.fileSizeVal.toFixed(2);
   }
- 
+
+  // elimina el archivo seleccionado
   removeFile() {
     this.fileSelected = false;
     this.fileName = '';
@@ -57,29 +64,30 @@ export class CustomQuoteComponent {
     this.fileSizeVal = 0;
   }
 
+  // calcula el precio de la cotizacion
   calculatePrice(e: Event) {
     e.preventDefault();
     if (!this.height || !this.fileSelected) {
       alert('Sube un archivo e ingresa la altura.');
       return;
     }
-    
+
     const baseCostPerCm = 15;
-    
+
     let materialFactor = 1;
-    switch(this.selectedMaterial) {
-      case 'standard': materialFactor = 1; break; 
-      case 'tough': materialFactor = 1.3; break; 
-      case 'clear': materialFactor = 1.4; break; 
+    switch (this.selectedMaterial) {
+      case 'standard': materialFactor = 1; break;
+      case 'tough': materialFactor = 1.3; break;
+      case 'clear': materialFactor = 1.4; break;
       case '8k': materialFactor = 1.8; break;
     }
-  
+
 
     let infillFactor = 1;
-    switch(this.infill) {
+    switch (this.infill) {
       case '20': infillFactor = 1.0; break;
       case '50': infillFactor = 1.4; break;
-      case '100': infillFactor = 2.0; break; 
+      case '100': infillFactor = 2.0; break;
     }
 
 
@@ -90,10 +98,11 @@ export class CustomQuoteComponent {
 
     const unitPrice = (this.height * baseCostPerCm * materialFactor * infillFactor) * complexityFactor;
     this.totalPrice = unitPrice * this.quantity;
-  
+
     this.saveToDb();
   }
- 
+
+  // guarda la cotizacion en la base de datos
   saveToDb() {
     const cotizacion = {
       file: this.fileName,

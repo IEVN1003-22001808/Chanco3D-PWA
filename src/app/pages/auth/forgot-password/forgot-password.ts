@@ -15,6 +15,7 @@ export class ForgotPassword {
   isLoading: boolean = false;
   emailSent: boolean = false;
 
+  // simula el envio del correo de recuperacion
   onSubmit() {
     if (!this.email) return;
 

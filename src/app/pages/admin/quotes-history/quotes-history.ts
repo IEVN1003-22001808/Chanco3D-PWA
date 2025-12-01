@@ -7,12 +7,13 @@ import { ApiService } from '../../../services/api.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './quotes-history.html',
-  styleUrl: './quotes-history.css' 
+  styleUrl: './quotes-history.css'
 })
 export class QuotesHistoryComponent implements OnInit {
   private api = inject(ApiService);
   cotizaciones: any[] = [];
 
+  // al iniciar tiene el historial de cotizaciones
   ngOnInit() {
     this.api.getHistorialCotizaciones().subscribe((data: any) => {
       this.cotizaciones = data;

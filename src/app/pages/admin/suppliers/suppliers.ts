@@ -14,18 +14,18 @@ import { ApiService } from '../../../services/api.service';
 export class SuppliersComponent implements OnInit {
   private api = inject(ApiService);
 
-  mostrarModal = false; 
+  mostrarModal = false;
   editingId: number | null = null;
-  
-  suppliers: any[] = [];
-  
 
+  suppliers: any[] = [];
   newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' };
 
+  // al iniciar carga la lista de proveedores
   ngOnInit() {
     this.cargarProveedores();
   }
 
+  // obtiene los proveedores desde la api
   cargarProveedores() {
     this.api.getProveedores().subscribe((data: any) => {
       this.suppliers = data;
@@ -34,21 +34,22 @@ export class SuppliersComponent implements OnInit {
 
 
   abrirModal() {
-    this.editingId = null; 
-    this.newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' }; // Limpiamos campos
+    this.editingId = null;
+    this.newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' }; 
     this.mostrarModal = true;
   }
 
 
+  // preparamos el formulario para editar un proveedor
   editarProveedor(s: any) {
-    this.editingId = s.id; 
+    this.editingId = s.id;
 
     this.newSupplier = {
       company: s.company,
       contact: s.contact,
       email: s.email,
       phone: s.phone,
-      supplies: s.supplies.join(', ') 
+      supplies: s.supplies.join(', ')
     };
     this.mostrarModal = true;
   }
@@ -59,6 +60,7 @@ export class SuppliersComponent implements OnInit {
     this.newSupplier = { company: '', contact: '', email: '', phone: '', supplies: '' };
   }
 
+  // guarda un nuevo proveedor o actualiza uno existente
   guardarProveedor() {
     if (!this.newSupplier.company) {
       alert('El nombre de la empresa es obligatorio.');
@@ -86,8 +88,9 @@ export class SuppliersComponent implements OnInit {
     }
   }
 
+  // elimina un proveedor de la base de datos
   deleteSupplier(id: number) {
-    if(confirm('¿Estás seguro de eliminar este proveedor?')) {
+    if (confirm('¿Estás seguro de eliminar este proveedor?')) {
       this.api.deleteProveedor(id).subscribe(() => {
         this.cargarProveedores();
       });

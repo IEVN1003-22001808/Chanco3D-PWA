@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '../../../services/api.service'; 
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-register',
@@ -20,9 +20,10 @@ export class RegisterComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
 
-    terms: [false, Validators.requiredTrue] 
+    terms: [false, Validators.requiredTrue]
   });
 
+  // envia el formulario de registro a la api
   onSubmit() {
     if (this.formRegister.valid) {
       this.api.registro(this.formRegister.value).subscribe({
@@ -31,7 +32,7 @@ export class RegisterComponent {
             alert('¡Cuenta creada con éxito! Ahora inicia sesión.');
             this.router.navigate(['/auth/login']);
           } else {
-            alert('Error: ' + res.mensaje); 
+            alert('Error: ' + res.mensaje);
           }
         },
         error: (err) => alert('Error de conexión con la API')

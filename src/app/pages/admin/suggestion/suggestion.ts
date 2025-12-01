@@ -8,7 +8,7 @@ interface Sugerencia {
   origen: string;
   detalles: string;
   usuario: string;
-  
+
   estado: 'Pendiente' | 'Nueva' | 'Aprobada' | 'Rechazada';
 }
 
@@ -24,16 +24,19 @@ export class SuggestionComponent implements OnInit {
 
   sugerencias: Sugerencia[] = [];
 
+  // al iniciar carga las sugerencias
   ngOnInit() {
     this.cargarSugerencias();
   }
 
+  // obtiene las sugerencias desde la api
   cargarSugerencias() {
     this.api.getSugerencias().subscribe((data: any) => {
       this.sugerencias = data;
     });
   }
 
+  // cambia el estado de una sugerencia
   cambiarEstado(id: number, nuevoEstado: string) {
     this.api.updateEstadoSugerencia(id, nuevoEstado).subscribe(() => {
       alert(`Sugerencia marcada como ${nuevoEstado}`);

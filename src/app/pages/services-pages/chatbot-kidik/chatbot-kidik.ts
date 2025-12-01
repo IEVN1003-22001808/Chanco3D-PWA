@@ -18,14 +18,17 @@ export class ChatbotComponent {
   posicion = { x: 0, y: 0 };
   private inicio = { x: 0, y: 0 };
 
+  // cambia la visibilidad de la ventana del chat
   alternarChat() { this.abrirVen = !this.abrirVen; }
 
+  // inicia el arrastre de la ventana del chat
   iniciarArrastre(e: MouseEvent) {
     this.Arrastre = true;
     this.inicio = { x: e.clientX, y: e.clientY };
     e.preventDefault();
   }
 
+  // mueve la ventana del chat segun la posicion del mouse
   @HostListener('document:mousemove', ['$event'])
   mover(e: MouseEvent) {
     if (!this.Arrastre) return;
@@ -34,9 +37,11 @@ export class ChatbotComponent {
     this.inicio = { x: e.clientX, y: e.clientY };
   }
 
+  // finaliza el arrastre de la ventana
   @HostListener('document:mouseup')
   soltar() { this.Arrastre = false; }
 
+  // agrega un mensaje al contenedor del chat
   agregarMensaje(mensaje: string, remitente: string, esHTML = false) {
     let contenedor: HTMLElement | null, div: HTMLElement;
     contenedor = document.getElementById("contenedorMensajes");
@@ -49,6 +54,7 @@ export class ChatbotComponent {
     contenedor.scrollTop = contenedor.scrollHeight;
   }
 
+  // envia el mensaje al bot y procesamos la respuesta
   async enviarMensaje(mensaje: string) {
     let contenedor: HTMLElement | null, res: Response, data: any, reply: string, esHTML: boolean, botMsg: HTMLElement | null;
 
@@ -112,6 +118,7 @@ export class ChatbotComponent {
     }
   }
 
+  // envio del mensaje desde el input
   enviarMsg(mensaje: string) {
     this.enviarMensaje(mensaje.trim());
     (document.getElementById('barraBusqueda') as HTMLInputElement).value = '';

@@ -1,8 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core'; 
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../services/api.service'; 
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-catalog',
@@ -12,22 +12,24 @@ import { ApiService } from '../../../services/api.service';
   styleUrl: './catalog.css'
 })
 export class CatalogComponent implements OnInit {
-  private api = inject(ApiService); 
+  private api = inject(ApiService);
 
   searchTerm: string = '';
   selectedCategory: string = 'Todos';
 
   products: any[] = [];
 
+  // al iniciar cargamos los productos del catalogo
   ngOnInit() {
     this.cargarProductos();
   }
 
+  // obtenemos los productos desde la api
   cargarProductos() {
     this.api.getProductos().subscribe({
       next: (res: any) => {
         if (res.exito) {
-          this.products = res.productos; 
+          this.products = res.productos;
         }
       },
       error: (e) => console.error('Error cargando catálogo', e)
@@ -43,12 +45,13 @@ export class CatalogComponent implements OnInit {
     });
   }
 
+  // agrega un producto al carrito de compras
   addToCart(product: any) {
 
     const userId = localStorage.getItem('userId');
-    
+
     if (userId) {
-      
+
       this.api.addAlCarrito(userId, product.id).subscribe({
         next: () => {
           alert(`¡${product.name} agregado al carrito!`);

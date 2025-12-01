@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewChecked, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../services/api.service'; 
+import { ApiService } from '../../../services/api.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 declare var instgrm: any;
@@ -22,10 +22,12 @@ export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
 
   posts: any[] = [];
 
+  // al iniciar carga la galeria
   ngOnInit(): void {
     this.cargarGaleria();
   }
 
+  // obtiene los posts de la galeria desde la api
   cargarGaleria() {
     this.api.getGaleria().subscribe({
       next: (data: any[]) => {
@@ -38,21 +40,24 @@ export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  // verifica si el usuario esta logueado
   get isLoggedIn(): boolean {
     return !!localStorage.getItem('userId');
   }
 
-  //solo se muestran las aprobadas
+  // solo se muestran las aprobadas
   get approvedPosts() {
     return this.posts.filter(post => post.status === 'Aprobada');
   }
 
+  // procesa los embeds de instagram despues de cargar la vista
   ngAfterViewChecked(): void {
     if (typeof instgrm !== 'undefined') {
-        setTimeout(() => instgrm.Embeds.process(), 0);
+      setTimeout(() => instgrm.Embeds.process(), 0);
     }
   }
 
+  // genera html seguro para los embeds de instagram
   private generateSafeHtml(url: string): SafeHtml {
     if (!url) return '';
     const cleanUrl = url.split('?')[0];
@@ -66,17 +71,18 @@ export class CommunityGalleryComponent implements OnInit, AfterViewChecked {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
+  // publica un nuevo post en la galeria
   publishPost() {
     const instagramRegex = /^https:\/\/(www\.)?instagram\.com\/p\/[a-zA-Z0-9_-]+\/?/;
 
-    if(!instagramRegex.test(this.newPost.image)) {
+    if (!instagramRegex.test(this.newPost.image)) {
       alert('URL inválida. Debe ser un post de Instagram.');
       return;
     }
 
     const nuevoPost = {
       title: this.newPost.title,
-      author: localStorage.getItem('userName') || 'Anónimo', 
+      author: localStorage.getItem('userName') || 'Anónimo',
       image: this.newPost.image
     };
 

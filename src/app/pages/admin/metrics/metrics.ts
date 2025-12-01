@@ -14,23 +14,25 @@ Chart.register(...registerables);
   styleUrl: './metrics.css'
 })
 export class MetricsComponent implements OnInit {
-  private api = inject(ApiService); 
+  private api = inject(ApiService);
 
   @ViewChild('barCanvas') barCanvas!: ElementRef;
   @ViewChild('pieCanvas') pieCanvas!: ElementRef;
 
   isDragging = false;
   fileName: string | null = null;
-  selectedFile: File | null = null; 
-  
+  selectedFile: File | null = null;
+
   showCharts = false;
   barChart: any;
   pieChart: any;
 
+  // al iniciar carga los datos para los graficos
   ngOnInit() {
     this.cargarDatosGraficos();
   }
 
+  // la seleccion de un archivo csv
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
@@ -39,6 +41,7 @@ export class MetricsComponent implements OnInit {
     }
   }
 
+  // procesa el archivo csv y lo envia a la api
   processData() {
     if (!this.selectedFile) {
       alert('Por favor selecciona un archivo CSV válido.');
@@ -61,13 +64,14 @@ export class MetricsComponent implements OnInit {
     });
   }
 
+  // obtiene las metricas desde la api y muestra los graficos
   cargarDatosGraficos() {
     this.api.getMetricas().subscribe({
       next: (res: any) => {
-       
+
         if (res.ventas && res.ciudades) {
           this.showCharts = true;
-          
+
           setTimeout(() => {
             this.renderBarChart(res.ventas.labels, res.ventas.data);
             this.renderPieChart(res.ciudades.labels, res.ciudades.data);
@@ -78,10 +82,11 @@ export class MetricsComponent implements OnInit {
     });
   }
 
-  
-  
+
+
+  // renderiza el grafico de barras
   renderBarChart(labels: string[], data: number[]) {
-    if (this.barChart) this.barChart.destroy(); 
+    if (this.barChart) this.barChart.destroy();
 
     const ctx = this.barCanvas.nativeElement.getContext('2d');
     this.barChart = new Chart(ctx, {
@@ -99,13 +104,14 @@ export class MetricsComponent implements OnInit {
         responsive: true,
         plugins: { legend: { display: false } },
         scales: {
-          y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#cbd5e1'} },
-          x: { grid: { display: false }, ticks: { color: '#cbd5e1'} }
+          y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#cbd5e1' } },
+          x: { grid: { display: false }, ticks: { color: '#cbd5e1' } }
         }
       }
     });
   }
 
+  // renderiza el grafico de pastel
   renderPieChart(labels: string[], data: number[]) {
     if (this.pieChart) this.pieChart.destroy();
 
@@ -122,8 +128,8 @@ export class MetricsComponent implements OnInit {
       },
       options: {
         responsive: true,
-        plugins: { 
-          legend: { position: 'right', labels: { color: '#cbd5e1' } } 
+        plugins: {
+          legend: { position: 'right', labels: { color: '#cbd5e1' } }
         }
       }
     });
